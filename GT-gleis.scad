@@ -135,42 +135,43 @@ module kurve(winkel=120,scope=1){
 
 module loecher(angle=0){     
     translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
+    linear_extrude(height=plaettchenhoehe)
     circle(d=3,$fn=20);
-    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
-    rotate([0,0,0])
-    square([3,3.5]);
+//    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+//    rotate([0,0,0])
+//    square([3,3.5]);
     
     translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
+    linear_extrude(height=plaettchenhoehe)
     circle(d=3,$fn=20); 
-    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
-    rotate([0,0,0])
-    square([3,3.5]);
+//    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+//    rotate([0,0,0])
+//    square([3,3.5]);
     
-}module lochfill(angle=0){     
-    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
-    translate([0,0,-plaettchenhoehe])
-    linear_extrude(height=plaettchenhoehe/2)
-    circle(d=3,$fn=20);
-    
-    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])     
-    translate([0,0,-plaettchenhoehe])
-    linear_extrude(height=plaettchenhoehe*.8)
-    square([3,3.5]);
-    
-    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
-    translate([0,0,-plaettchenhoehe])
-    linear_extrude(height=plaettchenhoehe/2)
-    circle(d=3,$fn=20); 
-    
-    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
-    translate([0,0,-plaettchenhoehe])
-    linear_extrude(height=plaettchenhoehe*.8)
-    square([3,3.5]);
+}module hakenfill(angle=0){          
+    rotate([0,0,30]) 
+    translate([sechseckhoehe/2,spurweite/2,0])
+    rotate([0,0,180])
+    color("yellow")
+    haken();
+    rotate([0,0,30]) 
+    translate([sechseckhoehe/2,-spurweite/2,0])
+    rotate([0,0,180])    
+    color("yellow")
+    haken();
 }
 
 module canal(){//broken
     translate([-spurweite/2,sechseckhoehe/2,0])  
-    rotate ([90,0,0]) cylinder (h = 4, r=0.9, center = true, $fn=10);
+    rotate ([90,0,0]) cylinder (h = 10.5, r=1.5, center = true, $fn=10);
+    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])  
+    rotate ([0,0,0]) cylinder (h = 8, r=1.5, center = true, $fn=10);
+    
+    translate([+spurweite/2,sechseckhoehe/2,0])  
+    rotate ([90,0,0]) cylinder (h = 10.5, r=1.5, center = true, $fn=10);
+    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,0])  
+    rotate ([0,0,0]) cylinder (h = 8, r=1.5, center = true, $fn=10);
+      
 }
 
 module canals(){
@@ -187,39 +188,45 @@ module lochset(){
     }
 }
 
-module lochfillset(){
-    for(i=[0:5]){
+module hakenfillset(positionen=[0,1,2,3,4,5]){
+    for(i=positionen){
         rotate([0,0,60*i]) 
-        lochfill();
+        hakenfill();
     }
 }
 
-module plaettchen(color="yellow",kantenlaenge=sechseckkantenlaenge){     
-    color(color,0.8)  
+module plaettchen(color="yellow",kantenlaenge=sechseckkantenlaenge,hakenpositionen=[0,1,2,3,4,5]){     
+    color(color,0.6)  
+    difference() {
     translate([0,0,-plaettchenhoehe])
     linear_extrude(height=plaettchenhoehe)
-    difference() {
     circle($fn=6,r=sechseckkantenlaenge);
-    lochset();    
+    canals();    
     } 
-    color(color,0.8)  
-    lochfillset();  
+//    color(color,0.8)  
+    hakenfillset(positionen=hakenpositionen);  
+//    hakenfillset();  
 }
 
-//plaettchen(color="blue");
-
-//lochset();
+ 
 translate([1.5*sechseckkantenlaenge,sechseckhoehe*.5])
-plaettchen(color="red");
+plaettchen(color="red",hakenpositionen=[5]);
 
 translate([1.5*sechseckkantenlaenge,-sechseckhoehe*.5])
-plaettchen(color="purple");
+plaettchen(color="purple",hakenpositionen=[1]);
 
 translate([3*sechseckkantenlaenge,0])
-plaettchen(color="green");
+plaettchen(color="green",hakenpositionen=[]);
 
 translate([0,sechseckhoehe])
-plaettchen(color="pink");
+plaettchen(color="pink",hakenpositionen=[]);
+
+translate([0,0])
+plaettchen(color="orange",hakenpositionen=[0]);
+
+
+translate([-1.5*sechseckkantenlaenge,sechseckhoehe*.5])
+plaettchen(color="blue",hakenpositionen=[0]);
 
 //good
 //gleis(70,spurweite,extra_schwellen=2);
@@ -228,7 +235,7 @@ translate([sechseckkantenlaenge*1.5,0])
 kurve(120); 
 translate([sechseckkantenlaenge*3,-sechseckhoehe/2])
 kurve(60,scope=3); 
-color("brown")
+color("yellow")
 translate([sechseckkantenlaenge*1.5,0])
 kurve(120,scope=3); 
  

@@ -107,7 +107,7 @@ module fluegel(){
 
 
 module scheibe(){ 
-circle(gleisdicke);
+    circle(d=gleisdicke);
 }
 
 
@@ -118,11 +118,17 @@ module doppelscheibe(abstand=spurweite){
     scheibe();
 }
  
-module kurve(winkel=120){
-    translate([-sechseckkantenlaenge/2, 0])
+module kurve(winkel=120,scope=1){
+    rotate([0,0,270])
+    translate([0,.5*spurweite,0])
+    haken();
+    rotate([0,0,270])
+    translate([0,-.5*spurweite,0])
+    haken();
+    translate([-scope*0.5*sechseckkantenlaenge, 0])
     rotate_extrude(convexity = 10, angle=winkel, $fn=fn)
-    translate([.5*sechseckkantenlaenge, 0])
-    doppelscheibe();    
+    translate([scope*.5*sechseckkantenlaenge, 0])
+    doppelscheibe();         
 }
 
 sechseckhoehe=2*sqrt(sechseckkantenlaenge*sechseckkantenlaenge-(0.5*sechseckkantenlaenge)*(0.5*sechseckkantenlaenge));
@@ -134,11 +140,19 @@ circle($fn=6,d=2*sechseckkantenlaenge);
 translate([3*sechseckkantenlaenge,0])
 color("green")
 circle($fn=6,d=2*sechseckkantenlaenge);
+translate([0,sechseckhoehe])
+color("pink")
+circle($fn=6,d=2*sechseckkantenlaenge);
 
 //good
 //gleis(70,spurweite,extra_schwellen=2);
 
 translate([sechseckkantenlaenge*1.5,0])
 kurve(120); 
+translate([sechseckkantenlaenge*3,-sechseckhoehe/2])
+kurve(60,scope=3); 
+color("brown")
+translate([sechseckkantenlaenge*1.5,0])
+kurve(120,scope=3); 
  
 

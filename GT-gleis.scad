@@ -7,9 +7,11 @@ fluegeldicke=1;
 schwellenbreite=10;
 schwellensafety=6;// Abstand zwischen Hakenansatz und erster Schwelle
 rotationangle=80;
-rotationradius=5;
+hakenrotationradius=5;
 sechseckkantenlaenge=35;
+sechseckhoehe=2*sqrt(sechseckkantenlaenge*sechseckkantenlaenge-(0.5*sechseckkantenlaenge)*(0.5*sechseckkantenlaenge));
 fn=60;
+plaettchenhoehe=10;
 
 module prism(w,d,h,extraw=0){
 //   polyhedron(
@@ -86,7 +88,7 @@ module haken(xoffset=0){
     translate([xoffset,0,-5])
     rotate([90,270+rotationangle,0])
     rotate_extrude(convexity = 100, angle=rotationangle, $fn=fn)
-    translate([rotationradius, 0, 0])
+    translate([hakenrotationradius, 0, 0])
     circle(r = gleisdicke/2, $fn=fn); 
 }
 
@@ -131,18 +133,93 @@ module kurve(winkel=120,scope=1){
     doppelscheibe();         
 }
 
-sechseckhoehe=2*sqrt(sechseckkantenlaenge*sechseckkantenlaenge-(0.5*sechseckkantenlaenge)*(0.5*sechseckkantenlaenge));
-color("blue")
-circle($fn=6,d=2*sechseckkantenlaenge);
+module loecher(angle=0){     
+    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
+    circle(d=3,$fn=20);
+    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+    rotate([0,0,0])
+    square([3,3.5]);
+    
+    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
+    circle(d=3,$fn=20); 
+    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+    rotate([0,0,0])
+    square([3,3.5]);
+    
+}module lochfill(angle=0){     
+    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
+    translate([0,0,-plaettchenhoehe])
+    linear_extrude(height=plaettchenhoehe/2)
+    circle(d=3,$fn=20);
+    
+    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])     
+    translate([0,0,-plaettchenhoehe])
+    linear_extrude(height=plaettchenhoehe*.8)
+    square([3,3.5]);
+    
+    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,0])
+    translate([0,0,-plaettchenhoehe])
+    linear_extrude(height=plaettchenhoehe/2)
+    circle(d=3,$fn=20); 
+    
+    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+    translate([0,0,-plaettchenhoehe])
+    linear_extrude(height=plaettchenhoehe*.8)
+    square([3,3.5]);
+}
+
+module canal(){//broken
+    translate([-spurweite/2,sechseckhoehe/2,0])  
+    rotate ([90,0,0]) cylinder (h = 4, r=0.9, center = true, $fn=10);
+}
+
+module canals(){
+    for(i=[0:5]){
+        rotate([0,0,60*i]) 
+        canal();
+    }    
+}
+
+module lochset(){
+    for(i=[0:5]){
+        rotate([0,0,60*i]) 
+        loecher();
+    }
+}
+
+module lochfillset(){
+    for(i=[0:5]){
+        rotate([0,0,60*i]) 
+        lochfill();
+    }
+}
+
+module plaettchen(color="yellow",kantenlaenge=sechseckkantenlaenge){     
+    color(color,0.8)  
+    translate([0,0,-plaettchenhoehe])
+    linear_extrude(height=plaettchenhoehe)
+    difference() {
+    circle($fn=6,r=sechseckkantenlaenge);
+    lochset();    
+    } 
+    color(color,0.8)  
+    lochfillset();  
+}
+
+//plaettchen(color="blue");
+
+//lochset();
 translate([1.5*sechseckkantenlaenge,sechseckhoehe*.5])
-color("red")
-circle($fn=6,d=2*sechseckkantenlaenge);
+plaettchen(color="red");
+
+translate([1.5*sechseckkantenlaenge,-sechseckhoehe*.5])
+plaettchen(color="purple");
+
 translate([3*sechseckkantenlaenge,0])
-color("green")
-circle($fn=6,d=2*sechseckkantenlaenge);
+plaettchen(color="green");
+
 translate([0,sechseckhoehe])
-color("pink")
-circle($fn=6,d=2*sechseckkantenlaenge);
+plaettchen(color="pink");
 
 //good
 //gleis(70,spurweite,extra_schwellen=2);

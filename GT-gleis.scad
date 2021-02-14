@@ -4,7 +4,7 @@ gleisdicke=2;
 fluegelbreite=10;
 fluegelhoehe=5;
 fluegeldicke=1;
-schwellenbreite=10;
+schwellenbreite=5;
 schwellensafety=6;// Abstand zwischen Hakenansatz und erster Schwelle
 rotationangle=80;
 hakenrotationradius=5;
@@ -13,7 +13,7 @@ sechseckhoehe=2*sqrt(sechseckkantenlaenge*sechseckkantenlaenge-(0.5*sechseckkant
 fn=60;
 plaettchenhoehe=10;
 fahrbahnhoehe=4;
-fahrbahnbreite=spurweite+4;
+fahrbahnbreite=spurweite+6;
 module prism(w,d,h,extraw=0){
 //   polyhedron(
 ////           points=[[0,0,0], [0,0,h], [w,0,0], [0,d,0], [0,d,h], [w,d,0]],
@@ -45,24 +45,24 @@ module gleis(laenge, spurweite, extra_schwellen=0){
     faecher=1+extra_schwellen; 
     schwellenoffset=(laenge-2*schwellensafety-10)/faecher;
     for (i=[0:faecher]){
-        translate([schwellensafety+schwellenoffset*i-hakenrotationradius/2,0,0])
+        translate([schwellensafety+schwellenoffset*i-hakenrotationradius/2,0,fahrbahnhoehe])
         schwelle(spurweite);
     }     
 //    color("red")
 //    translate([laenge-schwellensafety,0,0])
 //    schwelle(spurweite);
-    translate([-hakenrotationradius/2,0,0])
+    translate([-hakenrotationradius/2,0,fahrbahnhoehe])
     fluegel();
 //       
-    translate([laenge-hakenrotationradius/2,0,0])//mirrored on y axis, hence safety offset already included
+    translate([laenge-hakenrotationradius/2,0,fahrbahnhoehe])//mirrored on y axis, hence safety offset already included
     mirror([1,0,0])
     fluegel();
 //     
-    translate([-hakenrotationradius/2,spurweite,0])
+    translate([-hakenrotationradius/2,spurweite,fahrbahnhoehe])
     mirror([0,1,0])
     fluegel();
 //    
-    translate([laenge-hakenrotationradius/2,spurweite,0])
+    translate([laenge-hakenrotationradius/2,spurweite,fahrbahnhoehe])
     mirror([1,0,0])
     mirror([0,1,0])
     fluegel();
@@ -81,11 +81,21 @@ module stange(laenge,radius=gleisdicke/2){
 }
 
 
-module schwelle(spurweite){
+module schwelle(spurweite=spurweite){
     translate([0,0,gleisdicke/48])
     color("green")
     rotate([-90,0,0])
     cube([schwellenbreite,1,spurweite]);     
+}
+
+ 
+module drehschwelle(spurweite=spurweite,rotationangle=120,scope=1){ 
+    for (i = [0:3]){
+        rotate([0,0,20*i])
+        rotate_extrude(convexity = 10, angle=10, $fn=fn)
+        translate([scope*.5*5,0,0])
+        square([spurweite,1]);
+    }
 }
 
 module haken(xoffset=0){   
@@ -125,6 +135,16 @@ module doppelscheibe(abstand=spurweite){
 }
  
 module kurve(winkel=120,scope=1){
+    drehschwelle();
+    rotate([0,0,30])
+    translate([scope*.5*5,scope*.5*20])
+    translate([spurweite/2,0])
+    rotate([0,0,90])
+    schwelle(); 
+    translate([spurweite/2,0])
+    rotate([0,0,90])
+    schwelle();
+//    haken
     rotate([0,0,270])
     translate([0,.5*spurweite,fahrbahnhoehe])
     haken();
@@ -135,8 +155,8 @@ module kurve(winkel=120,scope=1){
     rotate_extrude(convexity = 10, angle=winkel, $fn=fn)
     translate([scope*.5*sechseckkantenlaenge, fahrbahnhoehe])
     doppelscheibe();
-//    translate([-schwellenbreite/2,0])
-//    schwelle();
+//    translate([-schwellenbreite/2,0]) 
+
 }
 
 module loecher(angle=0){     
@@ -198,19 +218,25 @@ module runways(geometry=false,rotate=0){
         rotate([0,0,rotate])
         rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
     }
+    if (geometry=="X"){   
+        rotate([0,0,rotate])
+        rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
+        rotate([0,0,rotate+60])
+        rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
+    }
     if (geometry=="c"){  
         rotate([0,0,rotate])
         translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
         rotate_extrude(convexity = 10, angle=120, $fn=fn)
         translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
-        circle(d=fahrbahnbreite+2);
+        circle(d=fahrbahnbreite);
     }
     if (geometry=="C"){  
         rotate([0,0,rotate])
         translate([-3*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
         rotate_extrude(convexity = 10, angle=61, $fn=fn)
         translate([3*.5*sechseckkantenlaenge, fahrbahnhoehe])
-        circle(d=fahrbahnbreite+2);
+        circle(d=fahrbahnbreite);
     }
 }
 
@@ -264,7 +290,7 @@ module plaettchen(hex_x=0,
 }
 
  
-
+drehschwelle(spurweite,rotationangle=120);
 
 
 
@@ -272,10 +298,10 @@ module plaettchen(hex_x=0,
 
 plaettchen(-1,2,hakenpositionen=[0,1],geometry="c",runwayrotate=180);
 plaettchen(0,1,geometry="I");
-plaettchen(1,-2,geometry="c",runwayrotate=180);
+plaettchen(1,-2,geometry="c",runwayrotate=240);
 plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
 plaettchen(2,-1,geometry="c",runwayrotate=180);
-plaettchen(4,-1,geometry="I",runwayrotate=120);
+plaettchen(4,-1,geometry="X",runwayrotate=120);
 
 translate([132,10,0]) 
 rotate([0,0,30])

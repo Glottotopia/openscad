@@ -37,29 +37,30 @@ module prism(w,d,h,extraw=0){
        
 
 module gleis(laenge, spurweite, extra_schwellen=0){
-    schiene(laenge);
+    schiene(laenge-hakenrotationradius);
     translate([0,spurweite, 0])
-    schiene(laenge);
+    schiene(laenge-hakenrotationradius);
     faecher=1+extra_schwellen; 
     schwellenoffset=(laenge-2*schwellensafety-10)/faecher;
     for (i=[0:faecher]){
-        translate([schwellensafety+schwellenoffset*i,0,0])
+        translate([schwellensafety+schwellenoffset*i-hakenrotationradius/2,0,0])
         schwelle(spurweite);
     }     
 //    color("red")
 //    translate([laenge-schwellensafety,0,0])
 //    schwelle(spurweite);
+    translate([-hakenrotationradius/2,0,0])
     fluegel();
 //       
-    translate([laenge,0,0])//mirrored on y axis, hence safety offset already included
+    translate([laenge-hakenrotationradius/2,0,0])//mirrored on y axis, hence safety offset already included
     mirror([1,0,0])
     fluegel();
 //     
-    translate([0,spurweite,0])
+    translate([-hakenrotationradius/2,spurweite,0])
     mirror([0,1,0])
     fluegel();
 //    
-    translate([laenge,spurweite,0])
+    translate([laenge-hakenrotationradius/2,spurweite,0])
     mirror([1,0,0])
     mirror([0,1,0])
     fluegel();
@@ -67,6 +68,7 @@ module gleis(laenge, spurweite, extra_schwellen=0){
 
 module schiene(laenge, radius=gleisdicke/2){
     stange(laenge,radius=radius);
+    color("red")
     haken(xoffset=laenge);
     rotatehaken(xoffset=0);
 }
@@ -154,16 +156,16 @@ module loecher(angle=0){
     rotate([0,0,30]) 
     translate([sechseckhoehe/2,spurweite/2,0])
     rotate([0,0,180])
-    color("yellow")
+    color("red")
     haken();
     rotate([0,0,30]) 
     translate([sechseckhoehe/2,-spurweite/2,0])
     rotate([0,0,180])    
-    color("yellow")
+    color("red")
     haken();
 }
 
-module canal(){//broken
+module canal(){ 
     translate([-spurweite/2,sechseckhoehe/2,0])  
     rotate ([90,0,0]) cylinder (h = 10.5, r=1.5, center = true, $fn=10);
     translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])  
@@ -197,55 +199,39 @@ module hakenfillset(positionen=[0,1,2,3,4,5]){
     }
 }
 
-module plaettchen(color="yellow",kantenlaenge=sechseckkantenlaenge,hakenpositionen=[0,1,2,3,4,5]){     
-//    color(color,0.6)  
-    color(color)  
+module plaettchen(hex_x=0, hex_y=0, color="orange",kantenlaenge=sechseckkantenlaenge,hakenpositionen=[]){     
+//    color(color,0.6)    
+    x_offset=hex_x*1.5*sechseckkantenlaenge;
+    y_offset=hex_x*0.5*sechseckhoehe+hex_y*sechseckhoehe;
+    color([cos((hex_x+1)*122)/2+0.5,
+            cos((hex_y+1)*104)/2+0.5,
+            cos((hex_x+hex_y+1)*133)/2+0.5],0.8) 
     difference() {
-    translate([0,0,-plaettchenhoehe])
+    translate([x_offset,y_offset,-plaettchenhoehe])
     linear_extrude(height=plaettchenhoehe)
     circle($fn=6,r=sechseckkantenlaenge);
+    translate([x_offset,y_offset,0])
     canals();    
     } 
-//    color(color,0.8)  
+    translate([x_offset,y_offset])
     hakenfillset(positionen=hakenpositionen);  
-//    hakenfillset();  
 }
 
  
-//good
 
-for (i=[0:3])
-    {for (j=[0:5]){    
-    translate([-4.5*sechseckkantenlaenge+sechseckkantenlaenge*3*i,sechseckhoehe*(j-2.5)])
-        plaettchen(color=[1/i,1/j,1/(i+j)],hakenpositionen=[]);
-    translate([-3*sechseckkantenlaenge+3*i*sechseckkantenlaenge,sechseckhoehe*(j-2)])
-        plaettchen(color=[1/i,1/j,1/(i-j)],hakenpositionen=[]);
-    }
-}
+ 
 
-//translate([1.5*sechseckkantenlaenge,sechseckhoehe*.5])
-//plaettchen(color="red",hakenpositionen=[5]);
-//
-//translate([1.5*sechseckkantenlaenge,-sechseckhoehe*.5])
-//plaettchen(color="purple",hakenpositionen=[1]);
-//
-//translate([3*sechseckkantenlaenge,0])
-//plaettchen(color="green",hakenpositionen=[]);
-//
-//translate([0,sechseckhoehe])
-//plaettchen(color="pink",hakenpositionen=[1]);
-//
-//translate([0,0])
-//plaettchen(color="orange",hakenpositionen=[]);
-//
-//
-//translate([-1.5*sechseckkantenlaenge,sechseckhoehe*.5])
-//plaettchen(color="blue",hakenpositionen=[0]);
-//
-//translate([-1.5*sechseckkantenlaenge,3*sechseckhoehe*.5])
-//plaettchen(color="salmon",hakenpositionen=[0]);
+plaettchen(-1,2,hakenpositionen=[0,1]);
+plaettchen(0,1);
+plaettchen(1,-2);
+plaettchen(1,1,hakenpositionen=[5]);
+plaettchen(2,-1);
+plaettchen(4,-1);
 
-//gleis(70,spurweite,extra_schwellen=2);
+translate([132,10,0]) 
+rotate([0,0,30])
+gleis(2*sechseckkantenlaenge,spurweite,extra_schwellen=1);
+
 
 //enge kurve
 translate([0,sechseckhoehe*1.5])
@@ -253,11 +239,11 @@ kurve(120);
 
 
 //weite kurve
-translate([sechseckkantenlaenge*3,-sechseckhoehe/2])
+translate([sechseckkantenlaenge*3,sechseckhoehe/2])
 kurve(60,scope=3); 
 
 //U-turn
-translate([sechseckkantenlaenge*1.5,0])
+translate([sechseckkantenlaenge*1.5,2*sechseckhoehe])
 kurve(180,scope=3); 
  
 

@@ -89,12 +89,29 @@ module schwelle(spurweite=spurweite){
 }
 
  
-module drehschwelle(spurweite=spurweite,rotationangle=120,scope=1){ 
-    for (i = [0:3]){
-        rotate([0,0,20*i])
-        rotate_extrude(convexity = 10, angle=10, $fn=fn)
-        translate([scope*.5*5,0,0])
-        square([spurweite,1]);
+module drehschwelle(spurweite=spurweite,winkel=120,scope=1){ 
+    if (scope==1){
+        skip = 40; 
+        limit = winkel/skip-1;
+        echo(limit);
+        for (i = [0:limit]){
+            translate([-scope*12.5-spurweite/2,0,3]) 
+            rotate([0,0,skip*i+skip/4])
+            rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
+            translate([scope*12.5,0,0])
+            square([spurweite,1]);
+        }
+    }
+    if (scope==3){//needs computation instead of guesswork
+        skip = 20; 
+        limit = winkel/skip-1;
+        for (i = [0:limit]){
+            translate([-scope*16-spurweite/2,0,3])
+            rotate([0,0,skip*i+skip/4])
+            rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
+            translate([scope*16,0,0])
+            square([spurweite,1]);
+        }
     }
 }
 
@@ -135,15 +152,15 @@ module doppelscheibe(abstand=spurweite){
 }
  
 module kurve(winkel=120,scope=1){
-    drehschwelle();
-    rotate([0,0,30])
-    translate([scope*.5*5,scope*.5*20])
-    translate([spurweite/2,0])
-    rotate([0,0,90])
-    schwelle(); 
-    translate([spurweite/2,0])
-    rotate([0,0,90])
-    schwelle();
+    drehschwelle(spurweite=spurweite,winkel=winkel,scope=scope);
+//    rotate([0,0,30])
+//    translate([scope*.5*5,scope*.5*20])
+//    translate([spurweite/2,0])
+//    rotate([0,0,90])
+//    schwelle(); 
+//    translate([spurweite/2,0])
+//    rotate([0,0,90])
+//    schwelle();
 //    haken
     rotate([0,0,270])
     translate([0,.5*spurweite,fahrbahnhoehe])
@@ -176,12 +193,12 @@ module loecher(angle=0){
     
 }module hakenfill(angle=0){          
     rotate([0,0,30]) 
-    translate([sechseckhoehe/2,spurweite/2,fahrbahnhoehe+1])
+    translate([sechseckhoehe/2,spurweite/2,fahrbahnhoehe])
     rotate([0,0,180])
     color("red")
     haken();
     rotate([0,0,30]) 
-    translate([sechseckhoehe/2,-spurweite/2,fahrbahnhoehe+1])
+    translate([sechseckhoehe/2,-spurweite/2,fahrbahnhoehe])
     rotate([0,0,180])    
     color("red")
     haken();
@@ -278,7 +295,7 @@ module plaettchen(hex_x=0,
         translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2])
         runways(geometry=geometry,rotate=runwayrotate);
     } 
-//    runways();    
+    runways();    
 //    add haken
     translate([x_offset,y_offset])
     hakenfillset(positionen=hakenpositionen);  
@@ -289,8 +306,7 @@ module plaettchen(hex_x=0,
     text(str(hex_y));    
 }
 
- 
-drehschwelle(spurweite,rotationangle=120);
+  
 
 
 

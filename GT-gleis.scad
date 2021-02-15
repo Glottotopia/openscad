@@ -102,7 +102,7 @@ module drehschwelle(spurweite=spurweite,winkel=120,scope=1){
             square([spurweite,1]);
         }
     }
-    if (scope==3){//needs computation instead of guesswork
+    if (scope==3){//needs computation instead of guesswork 
         skip = 20; 
         limit = winkel/skip-1;
         for (i = [0:limit]){
@@ -111,9 +111,27 @@ module drehschwelle(spurweite=spurweite,winkel=120,scope=1){
             rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
             translate([scope*16,0,0])
             square([spurweite,1]);
+//            banana();
         }
     }
 }
+
+module banana(){   
+//            translate([-spurweite/2,0,12]) 
+    difference() { 
+                translate([0.5*spurweite,0,0])
+                rotate([90,0,0])
+                circle(r=spurweite);
+                translate([0.5*spurweite,0,0])
+                rotate([90,0,0])
+                circle(r=.9*spurweite);
+                translate([-0.5*spurweite,0,-0.8*spurweite])
+                rotate([90,0,0])
+                square(spurweite*2);               
+            }
+}
+
+    
 
 module haken(xoffset=0){   
     translate([xoffset,0,-5])
@@ -306,7 +324,9 @@ module plaettchen(hex_x=0,
     text(str(hex_y));    
 }
 
+
   
+banana();
 
 
 

@@ -1,10 +1,10 @@
 
 spurweite=10; 
-gleisdicke=2;
+gleisdicke=4;
 fluegelbreite=10;
-fluegelhoehe=5;
+fluegelhoehe=7;
 fluegeldicke=1;
-schwellenbreite=5;
+schwellenbreite=10;
 schwellensafety=6;// Abstand zwischen Hakenansatz und erster Schwelle
 rotationangle=80;
 hakenrotationradius=5;
@@ -43,9 +43,9 @@ module gleis(laenge, spurweite, extra_schwellen=0){
     translate([0,spurweite, fahrbahnhoehe])
     schiene(laenge-hakenrotationradius);
     faecher=1+extra_schwellen; 
-    schwellenoffset=(laenge-2*schwellensafety-10)/faecher;
+    schwellenoffset=(laenge-2*schwellensafety-schwellenbreite)/faecher;
     for (i=[0:faecher]){
-        translate([schwellensafety+schwellenoffset*i-hakenrotationradius/2,0,fahrbahnhoehe])
+        translate([schwellensafety+schwellenoffset*i-hakenrotationradius/2,0,fahrbahnhoehe-1])
         schwelle(spurweite);
     }     
 //    color("red")
@@ -81,12 +81,6 @@ module stange(laenge,radius=gleisdicke/2){
 }
 
 
-module schwelle(spurweite=spurweite){
-    translate([0,0,gleisdicke/48])
-    color("green")
-    rotate([-90,0,0])
-    cube([schwellenbreite,1,spurweite]);     
-}
 
  
 module drehschwelle(spurweite=spurweite,winkel=120,scope=1){ 
@@ -95,40 +89,51 @@ module drehschwelle(spurweite=spurweite,winkel=120,scope=1){
         limit = winkel/skip-1;
         echo(limit);
         for (i = [0:limit]){
-            translate([-scope*12.5-spurweite/2,0,3]) 
-            rotate([0,0,skip*i+skip/4])
-            rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
-            translate([scope*12.5,0,0])
-            square([spurweite,1]);
+            translate([-scope*11.9-spurweite/2,0,6]) 
+            rotate([0,0,skip*i+skip/4])           
+            difference() {
+//                outer cylinder
+                rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
+                translate([scope*17.5,0,0])
+                circle(d=spurweite*1.15);
+//                inner cylinder
+                rotate([0,0,-.1])     //drop initial membrane      
+                rotate_extrude(convexity = 10, angle=skip/2+1, $fn=fn)
+                translate([scope*17.5,0,0])
+                circle(d=spurweite*.9);
+    //                rather radical crop for schwellen
+                translate([0,0,fahrbahnhoehe/2-4])
+                cylinder(d=scope*sechseckkantenlaenge*2,h=8);
+            }
         }
     }
     if (scope==3){//needs computation instead of guesswork 
         skip = 20; 
         limit = winkel/skip-1;
         for (i = [0:limit]){
-            translate([-scope*16-spurweite/2,0,3])
-            rotate([0,0,skip*i+skip/4])
-            rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
-            translate([scope*16,0,0])
-            square([spurweite,1]);
-//            banana();
+//            translate([-scope*16-spurweite/2,0,3])
+//            rotate([0,0,skip*i+skip/4])
+//            rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
+//            translate([scope*16,0,0])
+//            square([spurweite,1]);             
+            translate([-scope*15.8-spurweite/2,0,6]) 
+            rotate([0,0,skip*i+skip/4])           
+            difference() {
+//                outer cylinder
+                rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
+                translate([scope*17.5,0,0])
+                circle(d=spurweite*1.15);
+//                inner cylinder
+                rotate([0,0,-.1])     //drop initial membrane      
+                rotate_extrude(convexity = 10, angle=skip/2+1, $fn=fn)
+                translate([scope*17.5,0,0])
+                circle(d=spurweite*.9);
+    //                rather radical crop for schwellen
+                translate([0,0,fahrbahnhoehe/2-4])
+                cylinder(d=scope*sechseckkantenlaenge*2,h=8);
+            }            
         }
     }
-}
-
-module banana(){   
-//            translate([-spurweite/2,0,12]) 
-    difference() { 
-                translate([0.5*spurweite,0,0])
-                rotate([90,0,0])
-                circle(r=spurweite);
-                translate([0.5*spurweite,0,0])
-                rotate([90,0,0])
-                circle(r=.9*spurweite);
-                translate([-0.5*spurweite,0,-0.8*spurweite])
-                rotate([90,0,0])
-                square(spurweite*2);               
-            }
 }
 
     
@@ -150,8 +155,8 @@ module rotatehaken(xoffset=0){
 
 module fluegel(){
     color("blue")
-    translate([schwellensafety,0,0])
-    rotate([30,0,0])    
+    translate([schwellensafety,-1,0])
+    rotate([45,0,0])    
 //    cube([fluegelbreite,fluegelhoehe,1]); 
     prism(10,1,6,extraw=3);
 }
@@ -273,6 +278,30 @@ module runways(geometry=false,rotate=0){
         translate([3*.5*sechseckkantenlaenge, fahrbahnhoehe])
         circle(d=fahrbahnbreite);
     }
+    if (geometry=="cC"){  
+        rotate([0,0,rotate])
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=120, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);
+        rotate([0,0,rotate+240])
+        translate([-3*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=61, $fn=fn)
+        translate([3*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);        
+    }
+    if (geometry=="Cc"){  
+        rotate([0,0,rotate])
+        translate([-3*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=61, $fn=fn)
+        translate([3*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);   
+        rotate([0,0,rotate+180])
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=120, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);     
+    }
 }
 
 module lochset(){
@@ -325,29 +354,52 @@ module plaettchen(hex_x=0,
 }
 
 
-  
-banana();
 
+  
+//rotate
+module schwelle(spurweite=spurweite){   
+   translate([0,0,gleisdicke*1.5])      
+    rotate([90,0,90])
+    difference() { 
+                translate([0.5*spurweite,0,0])
+//                rotate([90,0,0])
+                cylinder(d=1.1*spurweite,h=schwellenbreite);
+                translate([0.5*spurweite,0,-1])
+//                rotate([90,0,0])
+                cylinder(d=.9*spurweite,h=schwellenbreite+2);
+                translate([-0.5*spurweite,-2,-.8*spurweite])
+//                rotate([90,0,0])
+                cube(spurweite*2);               
+            }
+}
+
+module schwelleold(spurweite=spurweite){
+    translate([0,0,gleisdicke/48])
+    color("green")
+    rotate([-90,0,0])
+    cube([schwellenbreite,1,spurweite]);     
+}
 
 
 // good
 
 plaettchen(-1,2,hakenpositionen=[0,1],geometry="c",runwayrotate=180);
 plaettchen(0,1,geometry="I");
-plaettchen(1,-2,geometry="c",runwayrotate=240);
+plaettchen(1,-2,geometry="cC",runwayrotate=240);
 plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
-plaettchen(2,-1,geometry="c",runwayrotate=180);
+plaettchen(2,-1,geometry="Cc",runwayrotate=0);
 plaettchen(4,-1,geometry="X",runwayrotate=120);
 
 translate([132,10,0]) 
 rotate([0,0,30])
-gleis(2*sechseckkantenlaenge,spurweite,extra_schwellen=1);
+gleis(8*sechseckkantenlaenge,spurweite,extra_schwellen=5);
+  
 
-
+ 
 //enge kurve
 translate([0,sechseckhoehe*1.5])
 kurve(120); 
-
+//
 
 //weite kurve
 translate([sechseckkantenlaenge*3,sechseckhoehe/2])

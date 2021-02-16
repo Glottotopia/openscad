@@ -1,6 +1,6 @@
 
 spurweite=10; 
-gleisdicke=4;
+gleisdicke=3; //4 is too much 
 fluegelbreite=10;
 fluegelhoehe=7;
 fluegeldicke=1;
@@ -271,6 +271,23 @@ module runways(geometry=false,rotate=0){
         translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
         circle(d=fahrbahnbreite);
     }
+    if (geometry=="ccc"){  
+        rotate([0,0,rotate])
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=120, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);
+        rotate([0,0,120+rotate])
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=120, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);
+        rotate([0,0,240+rotate])
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate_extrude(convexity = 10, angle=120, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
+        circle(d=fahrbahnbreite);
+    }
     if (geometry=="C"){  
         rotate([0,0,rotate])
         translate([-3*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
@@ -383,7 +400,7 @@ module schwelleold(spurweite=spurweite){
 
 // good
 
-plaettchen(-1,2,hakenpositionen=[0,1],geometry="c",runwayrotate=180);
+plaettchen(-1,2,hakenpositionen=[0,1],geometry="ccc",runwayrotate=180);
 plaettchen(0,1,geometry="I");
 plaettchen(1,-2,geometry="cC",runwayrotate=240);
 plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);

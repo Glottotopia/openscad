@@ -71,8 +71,8 @@ module gleis(laenge, spurweite, extra_schwellen=0){
 module schiene(laenge, radius=gleisdicke/2){
     stange(laenge,radius=radius);
     color("red")
-    haken(xoffset=laenge);
-    rotatehaken(xoffset=0);
+    haken(xoffset=laenge,knob=false);
+    rotatehaken(xoffset=0, knob=false);
 }
 
 module stange(laenge,radius=gleisdicke/2){
@@ -146,14 +146,14 @@ module haken(xoffset=0, knob=true){
     circle(r = gleisdicke/2, $fn=fn); 
     if(knob){
         translate([hakenrotationradius-0.5, 0, (-fahrbahnhoehe+2)])
-        cylinder(r = 1.3*gleisdicke/2,h=1.1,$fn=fn);
+        cylinder(r = 1.2*gleisdicke/2,h=1.1,$fn=fn);
     }
 }
 
-module rotatehaken(xoffset=0){
+module rotatehaken(xoffset=0,knob=false){
     translate([xoffset,0,0])
     mirror([1,0,0]){
-        haken();
+        haken(knob=knob);
     }
 }
 
@@ -404,7 +404,7 @@ module schwelleold(spurweite=spurweite){
 
 // good
 
-plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0);
+//plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0);
 //plaettchen(0,1,geometry="I");
 //plaettchen(1,-2,geometry="ccc",runwayrotate=240);
 //plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
@@ -413,16 +413,16 @@ plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0);
 //
 //translate([132,10,0]) 
 //rotate([0,0,30])
-//gleis(8*sechseckkantenlaenge,spurweite,extra_schwellen=5);
+gleis(sechseckhoehe,spurweite,extra_schwellen=0);
   
 
  
 //enge kurve
-translate([0,sechseckhoehe*1.5])
-kurve(120); 
+//translate([0,sechseckhoehe*1.5])
+//kurve(120); 
 //
 
-////weite kurve
+//weite kurve
 //translate([sechseckkantenlaenge*3,sechseckhoehe/2])
 //kurve(60,scope=3); 
 //

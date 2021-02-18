@@ -7,7 +7,7 @@ fluegeldicke=1;
 schwellenbreite=10;
 schwellensafety=6;// Abstand zwischen Hakenansatz und erster Schwelle
 rotationangle=80;
-hakenrotationradius=5;
+hakenrotationradius=3;
 sechseckkantenlaenge=35;
 sechseckhoehe=2*sqrt(sechseckkantenlaenge*sechseckkantenlaenge-(0.5*sechseckkantenlaenge)*(0.5*sechseckkantenlaenge));
 fn=60;
@@ -138,12 +138,16 @@ module drehschwelle(spurweite=spurweite,winkel=120,scope=1){
 
     
 
-module haken(xoffset=0){   
-    translate([xoffset,0,-5])
+module haken(xoffset=0, knob=true){   
+    translate([xoffset,0,-hakenrotationradius])
     rotate([90,270+rotationangle,0])
     rotate_extrude(convexity = 10, angle=rotationangle, $fn=fn)
     translate([hakenrotationradius, 0, 0])
     circle(r = gleisdicke/2, $fn=fn); 
+    if(knob){
+        translate([hakenrotationradius-0.5, 0, (-fahrbahnhoehe+2)])
+        cylinder(r = 1.3*gleisdicke/2,h=1.1,$fn=fn);
+    }
 }
 
 module rotatehaken(xoffset=0){
@@ -350,15 +354,15 @@ module plaettchen(hex_x=0,
             cos((hex_y+1)*104)/2+0.5,
             cos((hex_x+hex_y+1)*133)/2+0.5],0.8)     
 //add holes    
-    difference() {
-        translate([x_offset,y_offset,0])
-        linear_extrude(height=plaettchenhoehe)
-        circle($fn=6,r=sechseckkantenlaenge);
-        translate([x_offset,y_offset,0])
-        canals();    
-        translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2])
-        runways(geometry=geometry,rotate=runwayrotate);
-    } 
+//    difference() {
+//        translate([x_offset,y_offset,0])
+//        linear_extrude(height=plaettchenhoehe)
+//        circle($fn=6,r=sechseckkantenlaenge);
+//        translate([x_offset,y_offset,0])
+//        canals();    
+//        translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2])
+//        runways(geometry=geometry,rotate=runwayrotate);
+//    } 
     runways();    
 //    add haken
     translate([x_offset,y_offset])
@@ -380,11 +384,11 @@ module schwelle(spurweite=spurweite){
     difference() { 
                 translate([0.5*spurweite,0,0])
 //                rotate([90,0,0])
-                cylinder(d=1.1*spurweite,h=schwellenbreite);
+                cylinder(d=1.15*spurweite,h=schwellenbreite);
                 translate([0.5*spurweite,0,-1])
 //                rotate([90,0,0])
-                cylinder(d=.9*spurweite,h=schwellenbreite+2);
-                translate([-0.5*spurweite,-2,-.8*spurweite])
+                cylinder(d=.95*spurweite,h=schwellenbreite+2);
+                translate([-0.5*spurweite,-2.8,-.8*spurweite])
 //                rotate([90,0,0])
                 cube(spurweite*2);               
             }
@@ -400,16 +404,16 @@ module schwelleold(spurweite=spurweite){
 
 // good
 
-plaettchen(-1,2,hakenpositionen=[0,1],geometry="ccc",runwayrotate=180);
-plaettchen(0,1,geometry="I");
-plaettchen(1,-2,geometry="cC",runwayrotate=240);
-plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
-plaettchen(2,-1,geometry="Cc",runwayrotate=0);
-plaettchen(4,-1,geometry="X",runwayrotate=120);
-
-translate([132,10,0]) 
-rotate([0,0,30])
-gleis(8*sechseckkantenlaenge,spurweite,extra_schwellen=5);
+plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0);
+//plaettchen(0,1,geometry="I");
+//plaettchen(1,-2,geometry="ccc",runwayrotate=240);
+//plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
+//plaettchen(2,-1,geometry="cC",runwayrotate=180);
+//plaettchen(4,-1,geometry="X",runwayrotate=120);
+//
+//translate([132,10,0]) 
+//rotate([0,0,30])
+//gleis(8*sechseckkantenlaenge,spurweite,extra_schwellen=5);
   
 
  
@@ -418,22 +422,22 @@ translate([0,sechseckhoehe*1.5])
 kurve(120); 
 //
 
-//weite kurve
-translate([sechseckkantenlaenge*3,sechseckhoehe/2])
-kurve(60,scope=3); 
-
-//U-turn
-translate([sechseckkantenlaenge*1.5,2*sechseckhoehe])
-kurve(180,scope=3); 
- 
-
-//S-Kurve
-translate([sechseckkantenlaenge*1.5,-sechseckhoehe])
-kurve(60,scope=3); 
-rotate([0,0,180])
-translate([0,-sechseckhoehe/2])
-kurve(60,scope=3); 
-
+////weite kurve
+//translate([sechseckkantenlaenge*3,sechseckhoehe/2])
+//kurve(60,scope=3); 
+//
+////U-turn
+//translate([sechseckkantenlaenge*1.5,2*sechseckhoehe])
+//kurve(180,scope=3); 
+// 
+//
+////S-Kurve
+//translate([sechseckkantenlaenge*1.5,-sechseckhoehe])
+//kurve(60,scope=3); 
+//rotate([0,0,180])
+//translate([0,-sechseckhoehe/2])
+//kurve(60,scope=3); 
+//
 
 
 

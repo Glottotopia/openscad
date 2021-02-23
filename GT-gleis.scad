@@ -95,7 +95,7 @@ module drehschwelle(spurweite=spurweite,winkel=120,scope=1){
 //                outer cylinder
                 rotate_extrude(convexity = 10, angle=skip/2, $fn=fn)
                 translate([scope*17.5,0,0])
-                circle(d=spurweite*1.15);
+                circle(d=spurweite*1.2);
 //                inner cylinder
                 rotate([0,0,-.1])     //drop initial membrane      
                 rotate_extrude(convexity = 10, angle=skip/2+1, $fn=fn)
@@ -103,7 +103,7 @@ module drehschwelle(spurweite=spurweite,winkel=120,scope=1){
                 circle(d=spurweite*.9);
     //                rather radical crop for schwellen
                 translate([0,0,fahrbahnhoehe/2-4])
-                cylinder(d=scope*sechseckkantenlaenge*2,h=8);
+                cylinder(d=scope*sechseckkantenlaenge*2,h=12);
             }
         }
     }
@@ -345,7 +345,8 @@ module plaettchen(hex_x=0,
         kantenlaenge=sechseckkantenlaenge,
         hakenpositionen=[],
         geometry=false,
-        runwayrotate=0
+        runwayrotate=0,
+        solid=true
         ){     
 //    color(color,0.6)    
     x_offset=hex_x*1.5*sechseckkantenlaenge;
@@ -353,16 +354,17 @@ module plaettchen(hex_x=0,
     color([cos((hex_x+1)*122)/2+0.5,
             cos((hex_y+1)*104)/2+0.5,
             cos((hex_x+hex_y+1)*133)/2+0.5],0.8)     
-//add holes    
-//    difference() {
-//        translate([x_offset,y_offset,0])
-//        linear_extrude(height=plaettchenhoehe)
-//        circle($fn=6,r=sechseckkantenlaenge);
-//        translate([x_offset,y_offset,0])
-//        canals();    
-//        translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2])
-//        runways(geometry=geometry,rotate=runwayrotate);
-//    } 
+if (solid){
+    difference() {
+            translate([x_offset,y_offset,0])
+            linear_extrude(height=plaettchenhoehe)
+            circle($fn=6,r=sechseckkantenlaenge);
+            translate([x_offset,y_offset,0])
+            canals();    
+            translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2])
+            runways(geometry=geometry,rotate=runwayrotate);
+        } 
+    }
     runways();    
 //    add haken
     translate([x_offset,y_offset])
@@ -404,23 +406,23 @@ module schwelleold(spurweite=spurweite){
 
 // good
 
-//plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0);
+plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0,solid=false);
 //plaettchen(0,1,geometry="I");
 //plaettchen(1,-2,geometry="ccc",runwayrotate=240);
 //plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
 //plaettchen(2,-1,geometry="cC",runwayrotate=180);
 //plaettchen(4,-1,geometry="X",runwayrotate=120);
 //
-//translate([132,10,0]) 
+////translate([132,10,0]) 
 //rotate([0,0,30])
-gleis(sechseckhoehe,spurweite,extra_schwellen=0);
+//gleis(1.07*sechseckhoehe*4,spurweite,extra_schwellen=5);
   
 
  
 //enge kurve
-//translate([0,sechseckhoehe*1.5])
-//kurve(120); 
-//
+translate([0,sechseckhoehe*1.5])
+kurve(120); 
+
 
 //weite kurve
 //translate([sechseckkantenlaenge*3,sechseckhoehe/2])
@@ -431,13 +433,13 @@ gleis(sechseckhoehe,spurweite,extra_schwellen=0);
 //kurve(180,scope=3); 
 // 
 //
-////S-Kurve
+//S-Kurve
 //translate([sechseckkantenlaenge*1.5,-sechseckhoehe])
 //kurve(60,scope=3); 
 //rotate([0,0,180])
 //translate([0,-sechseckhoehe/2])
 //kurve(60,scope=3); 
-//
+////
 
 
 

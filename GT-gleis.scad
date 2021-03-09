@@ -206,7 +206,7 @@ module kurve(winkel=120,scope=1){
 module loecher(angle=0){     
     translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,fahrbahnhoehe])
     linear_extrude(height=plaettchenhoehe)
-    circle(d=3,$fn=20);
+    circle(d=13,$fn=20);
 //    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
 //    rotate([0,0,0])
 //    square([3,3.5]);
@@ -234,13 +234,13 @@ module loecher(angle=0){
 module canal(){ 
     translate([-spurweite/2,sechseckhoehe/2,fahrbahnhoehe])  
     rotate ([90,0,0]) cylinder (h = 12, r=1.5, center = true, $fn=10);
-    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,0])  
-    rotate ([0,0,0]) cylinder (h = 8, r=1.5, center = true, $fn=10);
+    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
+    rotate ([0,0,0]) cylinder (h = 8, r=2, center = true, $fn=10);
     
     translate([+spurweite/2,sechseckhoehe/2,fahrbahnhoehe])  
     rotate ([90,0,0]) cylinder (h = 12, r=1.5, center = true, $fn=10);
-    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,0])  
-    rotate ([0,0,0]) cylinder (h = 8, r=1.5, center = true, $fn=10);
+    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
+    rotate ([0,0,0]) cylinder (h = 8, r=2, center = true, $fn=10);
       
 }
 
@@ -261,7 +261,7 @@ module runways(geometry=false,rotate=0){
     if (geometry=="I"){   
         rotate([0,0,rotate])
         rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
-    }
+    } 
     if (geometry=="X"){   
         rotate([0,0,rotate])
         rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
@@ -277,20 +277,23 @@ module runways(geometry=false,rotate=0){
     }
     if (geometry=="ccc"){  
         rotate([0,0,rotate])
-        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
-        rotate_extrude(convexity = 10, angle=120, $fn=fn)
-        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
-        circle(d=fahrbahnbreite);
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate([0,0,-10])
+        rotate_extrude(convexity = 10, angle=140, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe+2])
+        circle(d=fahrbahnbreite+1);
         rotate([0,0,120+rotate])
-        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
-        rotate_extrude(convexity = 10, angle=120, $fn=fn)
-        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
-        circle(d=fahrbahnbreite);
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate([0,0,-10])
+        rotate_extrude(convexity = 10, angle=140, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe+2])
+        circle(d=fahrbahnbreite+1);
         rotate([0,0,240+rotate])
-        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2-1,-fahrbahnbreite/2+fahrbahnhoehe])
-        rotate_extrude(convexity = 10, angle=120, $fn=fn)
-        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe])
-        circle(d=fahrbahnbreite);
+        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
+        rotate([0,0,-10])
+        rotate_extrude(convexity = 10, angle=140, $fn=fn)
+        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe+2])
+        circle(d=fahrbahnbreite+1);
     }
     if (geometry=="C"){  
         rotate([0,0,rotate])
@@ -374,6 +377,10 @@ if (solid){
     text(str(hex_x));
     translate([x_offset+5,y_offset,plaettchenhoehe])
     text(str(hex_y));    
+//    inset    
+    translate([x_offset,y_offset,-3])
+    linear_extrude(height=4)
+    circle($fn=6,d=34);
 }
 
 
@@ -403,25 +410,46 @@ module schwelleold(spurweite=spurweite){
     cube([schwellenbreite,1,spurweite]);     
 }
 
+module gleis2(){ //0.1 is the right spiel
+gleis(0.1*sechseckhoehe+sechseckhoehe*2,spurweite,extra_schwellen=1);
+}
+
+module gleis3(){
+gleis(0.1*sechseckhoehe+sechseckhoehe*3,spurweite,extra_schwellen=2);//.2 spiel zu viel
+}
+
+module gleis4(){
+gleis(0.0*sechseckhoehe+sechseckhoehe*4,spurweite,extra_schwellen=3);
+}
+
+module gleis5(){
+gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=3);
+}
 
 // good
 
-plaettchen(-1,2,hakenpositionen=[0],geometry="Cc",runwayrotate=0,solid=false);
-//plaettchen(0,1,geometry="I");
-//plaettchen(1,-2,geometry="ccc",runwayrotate=240);
-//plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180);
+//plaettchen(-1,2,geometry="Cc",runwayrotate=0,solid=true);
+//plaettchen(0,1,hakenpositionen=[],geometry="ccc",solid=true);
+//plaettchen(1,-2,geometry="I",runwayrotate=240);
+//plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180, solid=false);
 //plaettchen(2,-1,geometry="cC",runwayrotate=180);
 //plaettchen(4,-1,geometry="X",runwayrotate=120);
 //
+
+//gleis2
 ////translate([132,10,0]) 
 //rotate([0,0,30])
-//gleis(1.07*sechseckhoehe*4,spurweite,extra_schwellen=5);
+//gleis2();
+//gleis4();
+//gleis5();
+//gleis(0.1*sechseckhoehe+sechseckhoehe,spurweite);
+
   
 
  
 //enge kurve
-translate([0,sechseckhoehe*1.5])
-kurve(120); 
+//translate([0,sechseckhoehe*1.5])
+//kurve(240); 
 
 
 //weite kurve
@@ -440,6 +468,54 @@ kurve(120);
 //translate([0,-sechseckhoehe/2])
 //kurve(60,scope=3); 
 ////
+
+module haube(hoehe=30,r=sechseckkantenlaenge,wandstaerke=2,hoehenfaktor=1.75,durchschuss=false,safety=true){
+rotate([0,0,-60])
+translate([0,0,plaettchenhoehe])       
+    difference (){
+        union() {
+//        aussenpyramide
+            cylinder(h=hoehe, r1=r, r2=r/hoehenfaktor, center=false, $fn=6);
+            if(safety){
+                rotate([0,0,90])
+                    translate([-sechseckhoehe/2,-sechseckkantenlaenge/2,-plaettchenhoehe])
+                        cube([wandstaerke,sechseckkantenlaenge,plaettchenhoehe]);     
+            }  
+        }
+//        innenpyramide
+        translate([0,0,-1])
+            cylinder(h=hoehe-wandstaerke, r1=r-wandstaerke, r2=r/hoehenfaktor-wandstaerke, center=false, $fn=6);
+//        aussparung
+        translate([0,sechseckhoehe/2,2])
+            rotate([0,0,30])
+                linear_extrude(0,0,hoehe*1.1)
+                    circle(r = sechseckkantenlaenge, $fn=3); 
+//        kappung 
+        translate([-sechseckhoehe,-sechseckhoehe,hoehe-wandstaerke-2])
+            cube(sechseckhoehe*2); 
+        if (durchschuss){
+            translate([0,-15,-plaettchenhoehe+fahrbahnhoehe]) 
+                rotate ([-90,0,0])
+                    cylinder (h = sechseckhoehe, d=fahrbahnbreite+3, center = true, $fn=20); 
+        }
+    } 
+}
+
+difference() {
+plaettchen(geometry="i");
+    rotate([10,0,0])
+        translate([0,4,plaettchenhoehe*1.5])
+            resize(newsize=[sechseckhoehe*.95,sechseckhoehe*1.25,plaettchenhoehe*2])
+                sphere(sechseckhoehe/2);  
+    translate([0,-15,11])
+        rotate([5,0,0])
+            rotate ([-90,0,0])
+                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite, center = true, $fn=20); 
+}
+rotate([0,0,60])
+haube(durchschuss=true, safety=true);
+
+
 
 
 

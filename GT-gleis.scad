@@ -203,22 +203,24 @@ module kurve(winkel=120,scope=1){
 
 }
 
-module loecher(angle=0){     
-    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,fahrbahnhoehe])
-    linear_extrude(height=plaettchenhoehe)
-    circle(d=13,$fn=20);
-//    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
-//    rotate([0,0,0])
-//    square([3,3.5]);
-    
-    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,fahrbahnhoehe])
-    linear_extrude(height=plaettchenhoehe)
-    circle(d=3,$fn=20); 
-//    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
-//    rotate([0,0,0])
-//    square([3,3.5]);
-    
-}module hakenfill(angle=0){          
+//module loecher(angle=0){     
+//    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,fahrbahnhoehe])
+//    linear_extrude(height=plaettchenhoehe)
+//    circle(d=13,$fn=20);
+////    translate([-spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+////    rotate([0,0,0])
+////    square([3,3.5]);
+//    
+//    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,fahrbahnhoehe])
+//    linear_extrude(height=plaettchenhoehe)
+//    circle(d=3,$fn=20); 
+////    translate([spurweite/2-1.5,sechseckhoehe/2-hakenrotationradius+1,0])    
+////    rotate([0,0,0])
+////    square([3,3.5]);
+//    
+//}
+
+module hakenfill(angle=0){          
     rotate([0,0,30]) 
     translate([sechseckhoehe/2,spurweite/2,fahrbahnhoehe])
     rotate([0,0,180])
@@ -232,16 +234,19 @@ module loecher(angle=0){
 }
 
 module canal(){ 
-    translate([-spurweite/2,sechseckhoehe/2,fahrbahnhoehe])  
-    rotate ([90,0,0]) cylinder (h = 12, r=1.5, center = true, $fn=10);
-    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
-    rotate ([0,0,0]) cylinder (h = 8, r=2, center = true, $fn=10);
+    translate([-spurweite/2,sechseckhoehe/2-4,fahrbahnhoehe-2])  
+        rotate ([90,45,0])
+            cylinder (h = 6, r=2.5, center = true, $fn=4);
+//    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
+//        rotate ([0,0,0]) 
+//            cylinder (h = 8, r=2, center = true, $fn=10);
     
-    translate([+spurweite/2,sechseckhoehe/2,fahrbahnhoehe])  
-    rotate ([90,0,0]) cylinder (h = 12, r=1.5, center = true, $fn=10);
-    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
-    rotate ([0,0,0]) cylinder (h = 8, r=2, center = true, $fn=10);
-      
+    translate([+spurweite/2,sechseckhoehe/2-4,fahrbahnhoehe-2])  
+        rotate ([90,45,0])
+            cylinder (h = 6, r=2.5, center = true, $fn=4);
+//    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
+//        rotate ([0,0,0]) 
+//            cylinder (h = 8, r=2, center = true, $fn=10);      
 }
 
 module canals(){
@@ -259,8 +264,9 @@ module runways(geometry=false,rotate=0){
         }    
     }    
     if (geometry=="I"){   
-        rotate([0,0,rotate])
-        rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
+        rotate([0,45,rotate])
+            rotate ([-90,0,0])
+                cylinder (h = sechseckhoehe+1, d=fahrbahnbreite+4, center = true, $fn=4); 
     } 
     if (geometry=="X"){   
         rotate([0,0,rotate])
@@ -280,20 +286,23 @@ module runways(geometry=false,rotate=0){
         translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
         rotate([0,0,-10])
         rotate_extrude(convexity = 10, angle=140, $fn=fn)
-        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe+2])
-        circle(d=fahrbahnbreite+1);
+            translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe-2])
+                rotate([0,0,45])
+                    circle(d=fahrbahnbreite+1,$fn=4);
         rotate([0,0,120+rotate])
-        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
-        rotate([0,0,-10])
-        rotate_extrude(convexity = 10, angle=140, $fn=fn)
-        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe+2])
-        circle(d=fahrbahnbreite+1);
+            translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
+                rotate([0,0,-10])
+                    rotate_extrude(convexity = 10, angle=140, $fn=fn)
+                        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe-2])
+                            rotate([0,0,45])
+                                circle(d=fahrbahnbreite+1,$fn=4);
         rotate([0,0,240+rotate])
-        translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
-        rotate([0,0,-10])
-        rotate_extrude(convexity = 10, angle=140, $fn=fn)
-        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe+2])
-        circle(d=fahrbahnbreite+1);
+            translate([-1*0.5*sechseckkantenlaenge, -sechseckhoehe/2,-fahrbahnbreite/2+fahrbahnhoehe])
+                rotate([0,0,-10])
+                    rotate_extrude(convexity = 10, angle=140, $fn=fn)
+                        translate([1*.5*sechseckkantenlaenge, fahrbahnhoehe-2])                            
+                            rotate([0,0,45])
+                                circle(d=fahrbahnbreite+1,$fn=4);
     }
     if (geometry=="C"){  
         rotate([0,0,rotate])
@@ -364,11 +373,11 @@ if (solid){
             circle($fn=6,r=sechseckkantenlaenge);
             translate([x_offset,y_offset,0])
             canals();    
-            translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2])
+            translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2+1])
             runways(geometry=geometry,rotate=runwayrotate);
         } 
     }
-    runways();    
+//    runways();    
 //    add haken
     translate([x_offset,y_offset])
     hakenfillset(positionen=hakenpositionen);  
@@ -429,8 +438,8 @@ gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=3);
 // good
 
 //plaettchen(-1,2,geometry="Cc",runwayrotate=0,solid=true);
-//plaettchen(0,1,hakenpositionen=[],geometry="ccc",solid=true);
-//plaettchen(1,-2,geometry="I",runwayrotate=240);
+plaettchen(0,-1,hakenpositionen=[],geometry="ccc",solid=true);
+plaettchen(1,-2,geometry="I",runwayrotate=240);
 //plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180, solid=false);
 //plaettchen(2,-1,geometry="cC",runwayrotate=180);
 //plaettchen(4,-1,geometry="X",runwayrotate=120);
@@ -507,10 +516,10 @@ plaettchen(geometry="i");
         translate([0,4,plaettchenhoehe*1.5])
             resize(newsize=[sechseckhoehe*.95,sechseckhoehe*1.25,plaettchenhoehe*2])
                 sphere(sechseckhoehe/2);  
-    translate([0,-15,11])
-        rotate([5,0,0])
-            rotate ([-90,0,0])
-                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite, center = true, $fn=20); 
+    translate([0,-15,10])
+        rotate([2,0,0])
+            rotate ([-90,45,0])
+                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite+4, center = true, $fn=4); 
 }
 rotate([0,0,60])
 haube(durchschuss=true, safety=true);

@@ -12,8 +12,9 @@ sechseckkantenlaenge=35;
 sechseckhoehe=2*sqrt(sechseckkantenlaenge*sechseckkantenlaenge-(0.5*sechseckkantenlaenge)*(0.5*sechseckkantenlaenge));
 fn=60;
 plaettchenhoehe=10;
-fahrbahnhoehe=4;
+fahrbahnhoehe=4.5;
 fahrbahnbreite=spurweite+6;
+fahrbahnbreite2=18;
 module prism(w,d,h,extraw=0){
 //   polyhedron(
 ////           points=[[0,0,0], [0,0,h], [w,0,0], [0,d,0], [0,d,h], [w,d,0]],
@@ -234,23 +235,25 @@ module hakenfill(angle=0){
 }
 
 module canal(){ 
-    translate([-spurweite/2,sechseckhoehe/2-4,fahrbahnhoehe-2])  
+    translate([-spurweite/2,sechseckhoehe/2-4,-7])  
         rotate ([90,45,0])
             cylinder (h = 6, r=2.5, center = true, $fn=4);
 //    translate([-spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
 //        rotate ([0,0,0]) 
 //            cylinder (h = 8, r=2, center = true, $fn=10);
     
-    translate([+spurweite/2,sechseckhoehe/2-4,fahrbahnhoehe-2])  
+    translate([+spurweite/2,sechseckhoehe/2-4,-7])  
         rotate ([90,45,0])
             cylinder (h = 6, r=2.5, center = true, $fn=4);
 //    translate([+spurweite/2,sechseckhoehe/2-hakenrotationradius,4.5])  
 //        rotate ([0,0,0]) 
-//            cylinder (h = 8, r=2, center = true, $fn=10);      
+//            cylinder (h = 8, r=2, center = true, $fn=10);    
+  translate([0,sechseckhoehe/2+1,2])  
+    cube(fahrbahnbreite,center=true)  ;
 }
 
-module canals(){
-    for(i=[0:5]){
+module canals(slots=[0:5]){
+    for(i=slots){
         rotate([0,0,60*i]) 
         canal();
     }    
@@ -264,9 +267,9 @@ module runways(geometry=false,rotate=0){
         }    
     }    
     if (geometry=="I"){   
-        rotate([0,45,rotate])
-            rotate ([-90,0,0])
-                cylinder (h = sechseckhoehe+1, d=fahrbahnbreite+4, center = true, $fn=4); 
+        rotate([0,0,rotate]) 
+            rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20); 
+        canals(slots=[0,3]);
     } 
     if (geometry=="X"){   
         rotate([0,0,rotate])
@@ -369,12 +372,12 @@ module plaettchen(hex_x=0,
 if (solid){
     difference() {
             translate([x_offset,y_offset,0])
-            linear_extrude(height=plaettchenhoehe)
-            circle($fn=6,r=sechseckkantenlaenge);
+                linear_extrude(height=plaettchenhoehe)
+                    circle($fn=6,r=sechseckkantenlaenge);
             translate([x_offset,y_offset,0])
-            canals();    
+                canals(slots=hakenpositionen);    
             translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2+1])
-            runways(geometry=geometry,rotate=runwayrotate);
+                runways(geometry=geometry,rotate=runwayrotate);
         } 
     }
 //    runways();    
@@ -388,8 +391,22 @@ if (solid){
     text(str(hex_y));    
 //    inset    
     translate([x_offset,y_offset,-3])
-    linear_extrude(height=4)
-    circle($fn=6,d=34);
+    difference() {
+        linear_extrude(height=4)
+//            circle($fn=6,d=34); //fits well
+            circle($fn=6,d=34.5); 
+        translate([0,0,-1])
+            linear_extrude(height=5)
+                circle($fn=6,d=32);        
+        translate([0,0,-1])
+            rotate([0,0,0])
+                linear_extrude(height=5)
+                    circle($fn=3,d=35);
+        translate([0,0,-1])
+            rotate([0,0,60])
+                linear_extrude(height=5)
+                    circle($fn=3,d=35);
+    }
 }
 
 
@@ -437,9 +454,11 @@ gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=3);
 
 // good
 
+//plaettchen(0,0,geometry="",runwayrotate=0,solid=true);
 //plaettchen(-1,2,geometry="Cc",runwayrotate=0,solid=true);
-plaettchen(0,-1,hakenpositionen=[],geometry="ccc",solid=true);
-plaettchen(1,-2,geometry="I",runwayrotate=240);
+//plaettchen(0,-1,hakenpositionen=[],geometry="I",solid=true,runwayrotate=180);
+//plaettchen(0,-2,hakenpositionen=[],geometry="*",solid=true,runwayrotate=180);
+//plaettchen(1,-2,geometry="I",runwayrotate=240);
 //plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180, solid=false);
 //plaettchen(2,-1,geometry="cC",runwayrotate=180);
 //plaettchen(4,-1,geometry="X",runwayrotate=120);
@@ -510,19 +529,60 @@ translate([0,0,plaettchenhoehe])
     } 
 }
 
-difference() {
-plaettchen(geometry="i");
-    rotate([10,0,0])
-        translate([0,4,plaettchenhoehe*1.5])
-            resize(newsize=[sechseckhoehe*.95,sechseckhoehe*1.25,plaettchenhoehe*2])
-                sphere(sechseckhoehe/2);  
-    translate([0,-15,10])
-        rotate([2,0,0])
-            rotate ([-90,45,0])
-                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite+4, center = true, $fn=4); 
+module trichter(hoehe=40,r=30,wandstaerke=3){
+    translate([0,7,31.8])
+    rotate([130,0,0])
+        difference (){
+            cylinder(h=hoehe, r1=r, r2=0, center=false, $fn=100);  
+            translate([0,0,-2])
+                cylinder(h=hoehe, r1=r, r2=0, center=false, $fn=100);  
+//            translate([0,-5,25])
+//                rotate([-20,0,0])
+//                    cylinder(d=16,h=35);
+        }
 }
-rotate([0,0,60])
-haube(durchschuss=true, safety=true);
+
+module trichterklein(hoehe=30,r=15,wandstaerke=3){
+    translate([0,7,20.8])
+    rotate([130,0,0])
+        difference (){
+            cylinder(h=hoehe, r1=r, r2=0, center=false, $fn=100);  
+            translate([0,0,-2])
+                cylinder(h=hoehe, r1=r, r2=0, center=false, $fn=100);  
+//            translate([0,-5,25])
+//                rotate([-20,0,0])
+//                    cylinder(d=16,h=35);
+        }
+}
+
+difference() {
+    union() {
+        trichter();
+        plaettchen(geometry="i");
+    }
+//    rotate([10,0,0])
+//        translate([0,4,plaettchenhoehe*1.5])
+//            resize(newsize=[sechseckhoehe*.95,sechseckhoehe*1.25,plaettchenhoehe*2])
+//                sphere(sechseckhoehe/2);  
+    translate([0,5.5-sechseckhoehe/2,11.5])
+        rotate([10,0,0])
+            rotate ([-90,45,0])
+//                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite+4, center = true, $fn=4); 
+                cylinder (h = sechseckhoehe, d=15, $fn=100); 
+    translate([0,0,10])
+    canals(slots=[3]);
+}
+
+////rotate([0,0,60])
+////haube(durchschuss=true, safety=true);
+//
+//color("brown",.9)
+
+//translate([0,-20,9])
+//sphere(d=10);
+
+
+ 
 
 
 

@@ -16,3 +16,4 @@ fahrbahnhoehe=4.5;
 fahrbahnbreite=spurweite+6;
 fahrbahnbreite2=18;
 stopfengroesse=34.5;
+schlupf=0.5; //how much smaller should tiles be as compared to their perfect fit

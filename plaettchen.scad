@@ -15,12 +15,12 @@ module canal(){
 //            cylinder (h = 8, r=2, center = true, $fn=10);
   translate([0,sechseckhoehe/2+1,2])
     cube(fahrbahnbreite,center=true)  ;
-  translate([spurweite/2,sechseckhoehe/2,-6])
-    rotate([90,0,0])
-        cylinder(d=gleisdicke*1.05,h=4,center=true,$fn=10);
-  translate([-spurweite/2,sechseckhoehe/2,-6])
-    rotate([90,0,0])
-        cylinder(d=gleisdicke*1.05,h=4,center=true,$fn=10);
+  translate([spurweite/2,sechseckhoehe/2,-7])
+    rotate([90,45,0])
+        cylinder(d=gleisdicke*1.05,h=4,center=true,$fn=4);
+  translate([-spurweite/2,sechseckhoehe/2,-7])
+    rotate([90,45,0])
+        cylinder(d=gleisdicke*1.05,h=4,center=true,$fn=4);
 }
 
 module canals(slots=[0:5]){
@@ -144,7 +144,7 @@ if (solid){
     difference() {
             translate([x_offset,y_offset,0])
                 linear_extrude(height=plaettchenhoehe)
-                    circle($fn=6,r=sechseckkantenlaenge);
+                    circle($fn=6,r=sechseckkantenlaenge-schlupf);
             translate([x_offset,y_offset,0])
                 canals(slots=hakenpositionen);
             translate([x_offset,y_offset,fahrbahnhoehe+spurweite/2+1])

@@ -1,5 +1,5 @@
 
-module gleis(laenge, spurweite, extra_schwellen=0){
+module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true){
     translate([0,0, fahrbahnhoehe])
     schiene(laenge-hakenrotationradius);
     translate([0,spurweite, fahrbahnhoehe])
@@ -13,28 +13,32 @@ module gleis(laenge, spurweite, extra_schwellen=0){
 //    color("red")
 //    translate([laenge-schwellensafety,0,0])
 //    schwelle(spurweite);
-    translate([-hakenrotationradius/2,0,fahrbahnhoehe])
-    fluegel();
-//
-    translate([laenge-hakenrotationradius/2,0,fahrbahnhoehe])//mirrored on y axis, hence safety offset already included
-    mirror([1,0,0])
-    fluegel();
-//
-    translate([-hakenrotationradius/2,spurweite,fahrbahnhoehe])
-    mirror([0,1,0])
-    fluegel();
-//
-    translate([laenge-hakenrotationradius/2,spurweite,fahrbahnhoehe])
-    mirror([1,0,0])
-    mirror([0,1,0])
-    fluegel();
+//    if (fluegel){
+        translate([-hakenrotationradius/2,0,fahrbahnhoehe])
+        fluegel();
+    //
+        translate([laenge-hakenrotationradius/2,0,fahrbahnhoehe])//mirrored on y axis, hence safety offset already included
+        mirror([1,0,0])
+        fluegel();
+    //
+        translate([-hakenrotationradius/2,spurweite,fahrbahnhoehe])
+        mirror([0,1,0])
+        fluegel();
+    //
+        translate([laenge-hakenrotationradius/2,spurweite,fahrbahnhoehe])
+        mirror([1,0,0])
+        mirror([0,1,0])
+        fluegel();
+//    }
 }
 
-module schiene(laenge, radius=gleisdicke/2){
+module schiene(laenge, radius=gleisdicke/2, double=true){
     stange(laenge,radius=radius);
     color("red")
     haken(xoffset=laenge,knob=false);
-    rotatehaken(xoffset=0, knob=false);
+    if (double){
+        rotatehaken(xoffset=0, knob=false);
+    }
 }
 
 module stange(laenge,radius=gleisdicke/2){

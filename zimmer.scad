@@ -227,6 +227,7 @@ module peggywall(y,offsetX,offsetY){
 }
 
 module myfloor(points){
+    linear_extrude([0,0,3])
     color("#664400",0.5)   
     polyhedron(
         points=points,
@@ -239,32 +240,32 @@ module myfloor(points){
 //    circle(90);
 
 
-myfloor([[0,0],[351,0],[351,62],[363,62],[363,650],[-90,650],[-90,450],[0,350]]);
+//myfloor([[0,0],[351,0],[351,62],[363,62],[363,650],[-90,650],[-90,450],[0,350]]);
 
-cube(363,650,2);
+//cube(363,650,2);
 
-upperflurwall(151,0,0);
-color("blue", 0.25) 
-translate([0, 0,306]) 
-rotate([315,0,0]) 
-cube(351, 3, 22);
+//upperflurwall(151,0,0);
+//color("blue", 0.25) 
+//translate([0, 0,306]) 
+//rotate([315,0,0]) 
+//cube(351, 3, 22);
 
 //color("blue", 0.25) 
 //translate([0, 0,306]) 
 //rotate([0,45,0]) 
 //cube(3, 200, 22);
 
-color("blue", 0.25) 
-translate([351, 0,306]) 
-rotate([0,315,0]) 
-cube(3, 61, 22);
+//color("blue", 0.25) 
+//translate([351, 0,306]) 
+//rotate([0,315,0]) 
+//cube(3, 61, 22);
  
-flurwall(200,151,0);
-flurwall(13,351,62);
-peggywall(62,351,0);   
+//flurwall(200,151,0);
+//flurwall(13,351,62);
+//peggywall(62,351,0);   
 //peggywall(590,363,62);      
             
-door(33,0);
+//door(33,0);
 
 //schrankweiss(300,540);
 //schrankbraun(307,261);
@@ -281,21 +282,21 @@ door(33,0);
  
 
 hochebene1(0,0);
-hochebene2(0,0);
+//hochebene2(0,0);
 pfosten(151,210);
 pfosten(151,0);
 //matratze(30,0,"white",247);
 //matratze(185,0,"white",200);
 
-heizung(288,0);
+//heizung(288,0);
 
-regalwand1(161,0);
-regalwand1(249,0);
-//brett(151,0,40);
-brett(151,0,80);
-brett(151,0,115);
-brett(151,0,150);
-regalwand1(348,0);
+//regalwand1(161,0);
+//regalwand1(249,0);
+////brett(151,0,40);
+//brett(151,0,80);
+//brett(151,0,115);
+//brett(151,0,150);
+//regalwand1(348,0);
  
  
 
@@ -320,19 +321,19 @@ brett2(0,100,275);
 regalwand2(0,200); 
  
 
-regalwand3(321,1);  
-brett3(321,0,240);
-brett3(321,0,265);
-brett3(321,0,290); 
-regalwand3(321,61);  
+//regalwand3(321,1);  
+//brett3(321,0,240);
+//brett3(321,0,265);
+//brett3(321,0,290); 
+//regalwand3(321,61);  
 
 //vorhang(300,61);
 //stange(340,61); 
 
 
-regalwand4(314,63); 
-brett4(334,63,25);
-brett4(334,63,50); 
+//regalwand4(314,63); 
+//brett4(334,63,25);
+//brett4(334,63,50); 
 //brett4(334,63,150); 
 //regalwand4(314,210);
 
@@ -388,67 +389,67 @@ brett4(334,63,50);
 //    color("turquoise", 0.3)
 //    cube(2,80,180);
                 
- 
-translate([310,367,0])
-    color("#aa7700",0.5)
-    cube(50,3,50); 
-translate([310,317,0])
-    color("#aa7700",0.5)
-    cube(50,3,100); 
-translate([310,267,0])
-    color("#aa7700",0.5)
-    cube(50,3,150); 
-translate([310,217,0])
-    color("#aa7700",0.5)
-    cube(50,3,200); 
-    
-     
-translate([310,270,50])
-    color("#aa7700",0.5)
-    cube(50,100,3); 
-translate([310,220,100])
-    color("#aa7700",0.5)
-    cube(50,100,3); 
-translate([310,30,150])
-    color("#aa7700",0.5)
-    cube(50,240,3); 
-    
-color("#00cc00")
-    translate([100,220,237])
-    rotate([90,0,180])
-    text("1");
-    
-color("#00cc00")
-    translate([250,220,190])
-    rotate([90,0,180])
-    text("2");
-    
-color("#00cc00")
-    translate([340,320,75])
-    rotate([90,0,180])
-    text("3"); 
-    
-color("#00cc00")
-    translate([20,205,175])
-    rotate([90,0,180])
-    text("4");
-    
-color("#00cc00")
-    translate([340,65,270])
-    rotate([90,0,180])
-    text("5");
-    
-
-color("#00cc00")
-    translate([250,35,120])
-    rotate([90,0,180])
-    text("6");
-    
-color("#00cc00")
-    translate([330,75,80])
-    rotate([90,0,180])
-    text("7");
-                
+// 
+//translate([310,367,0])
+//    color("#aa7700",0.5)
+//    cube(50,3,50); 
+//translate([310,317,0])
+//    color("#aa7700",0.5)
+//    cube(50,3,100); 
+//translate([310,267,0])
+//    color("#aa7700",0.5)
+//    cube(50,3,150); 
+//translate([310,217,0])
+//    color("#aa7700",0.5)
+//    cube(50,3,200); 
+//    
+//     
+//translate([310,270,50])
+//    color("#aa7700",0.5)
+//    cube(50,100,3); 
+//translate([310,220,100])
+//    color("#aa7700",0.5)
+//    cube(50,100,3); 
+//translate([310,30,150])
+//    color("#aa7700",0.5)
+//    cube(50,240,3); 
+//    
+//color("#00cc00")
+//    translate([100,220,237])
+//    rotate([90,0,180])
+//    text("1");
+//    
+//color("#00cc00")
+//    translate([250,220,190])
+//    rotate([90,0,180])
+//    text("2");
+//    
+//color("#00cc00")
+//    translate([340,320,75])
+//    rotate([90,0,180])
+//    text("3"); 
+//    
+//color("#00cc00")
+//    translate([20,205,175])
+//    rotate([90,0,180])
+//    text("4");
+//    
+//color("#00cc00")
+//    translate([340,65,270])
+//    rotate([90,0,180])
+//    text("5");
+//    
+//
+//color("#00cc00")
+//    translate([250,35,120])
+//    rotate([90,0,180])
+//    text("6");
+//    
+//color("#00cc00")
+//    translate([330,75,80])
+//    rotate([90,0,180])
+//    text("7");
+//                
                 
                 
             

@@ -88,3 +88,143 @@ module trichterplaettchen(){
             canals(slots=[3]);
 }
   }
+
+
+
+module spirale() {
+    difference() {
+            union() {
+                difference (){
+                    plaettchen();
+    //                exit
+                    translate([0,-8,15])
+                        rotate([0,0,-90])
+                        rotate([0,100,0])
+                            difference() {
+                            cylinder(h=20,d=fahrbahnbreite);
+                            translate([-1,-10,-1])
+                            rotate([0,0,0])
+                            rotate([0,90,0])
+                            cylinder($fn=4,h=10,r=15)    ;
+                            }
+                    rotate([5,0,240])
+                    translate([0,0,plaettchenhoehe+2])
+                        for (i=[1:18]){
+                            translate([0,0,i/2])
+                            rotate([0,0,10*i+60])
+                                rotate([90,0,0])
+                                translate([15,0,0])
+                                rotate([0,0,i*35])
+                                color("red")
+                                linear_extrude(height=10)
+                                            circle(d=fahrbahnbreite);
+                                        }
+
+                }
+                //stuetzbogen
+                translate([0,-11,2])
+                rotate([90,0,-15])
+                linear_extrude(height=8)
+                    difference() {
+                        circle(20);
+                        circle(18);
+                        translate([-25,-50])
+                        square(50);
+                    }
+                //spirale
+                rotate([5,0,240])
+                    translate([0,0,plaettchenhoehe+2])
+                        union(){
+                        for (i=[1:58]){
+                            translate([0,0,i/2])
+                            rotate([0,0,10*i+60])
+                                rotate([90,0,0])
+                                translate([15,0,0])
+                                rotate([0,0,i*35])
+                                color("red")
+                                linear_extrude(height=3)
+                                        difference(){
+                                            circle(d=fahrbahnbreite+3);
+                                            circle(d=fahrbahnbreite);
+                        //                    translate([fahrbahnbreite/2,0,0])
+                        //                    circle(d=5,$fn=4);
+                                        }
+                                    }
+                                    translate([24,-17,22])
+                                    rotate([0,0,60])
+                                    cube([11,4,3]);
+                                }
+
+
+
+            translate([-31.5,-7,41.5])
+            rotate([0,0,300])
+
+            difference() {
+                union (){
+                translate([0, 0, -1])
+            rotate_extrude(convexity = 10,angle=45)
+                translate([10, 0, 0])
+                difference(){
+                        circle(d=fahrbahnbreite+3);
+                        circle(d=fahrbahnbreite);
+                }
+
+    //            anschlussstueck
+            color("green")
+                translate([-6,20.5,-1.5])
+                    rotate([0,88,313])
+                    linear_extrude(height=23.5)
+                difference(){
+                        circle(d=fahrbahnbreite+3);
+                        circle(d=fahrbahnbreite);
+                }
+            }
+                translate([9,0,3])
+                sphere(11);
+            }
+
+    //        color("blue")
+    //        rotate_extrude(angle=90)
+    //        rotate([0,0,90])
+    //        difference(){
+    //            circle(d=fahrbahnbreite+3);
+    //            circle(d=fahrbahnbreite);
+    //
+    //        }
+
+            }
+        //    rotate([10,0,0])
+        //        translate([0,4,plaettchenhoehe*1.5])
+        //            resize(newsize=[sechseckhoehe*.95,sechseckhoehe*1.25,plaettchenhoehe*2])
+        //                sphere(sechseckhoehe/2);
+    //        translate([0,5.5-sechseckhoehe/2,11.5])
+    //            rotate([10,0,0])
+    //                rotate ([-90,45,0])
+        //                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite+4, center = true, $fn=4);
+    //                    cylinder (h = sechseckhoehe, d=15, $fn=100);
+    //        exit
+            translate([0,0,10])
+                canals(slots=[3]);
+            translate([0,0,42.7])
+                difference(){
+                canals(slots=[2]);
+                translate([-40,-30,-6.1])
+                    cube([40,40,20]);
+              }
+    //        entry
+    //        translate([-25,-13,35])
+    //        rotate([0,0,-60])
+    //        union(){
+    //        translate([spurweite/2,0,0])
+    //            sphere(d=gleisdicke+1,$fn=20);
+    //        translate([-spurweite/2,0,0])
+    //            sphere(d=gleisdicke+1,$fn=20);
+    //        }
+    //        cutoff excess
+            translate([-35,-22,30])
+                rotate([0,0,30])
+                cube([10,20,20]);
+    }
+
+}

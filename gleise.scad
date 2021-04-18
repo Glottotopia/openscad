@@ -196,6 +196,10 @@ module schwelleold(spurweite=spurweite){
     cube([schwellenbreite,1,spurweite]);
 }
 
+module gleis1(){ //0.1 is the right spiel
+gleis(0.1*sechseckhoehe+sechseckhoehe*1,spurweite,extra_schwellen=0);
+}
+
 module gleis2(){ //0.1 is the right spiel
 gleis(0.1*sechseckhoehe+sechseckhoehe*2,spurweite,extra_schwellen=1);
 }
@@ -209,5 +213,5 @@ gleis(0.0*sechseckhoehe+sechseckhoehe*4,spurweite,extra_schwellen=3);
 }
 
 module gleis5(){
-gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=3);
+gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=4);
 }

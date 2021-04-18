@@ -63,48 +63,82 @@ module hakenfill(angle=0){
 
 // good
 
-////plaettchen(0,0,geometry="",runwayrotate=0,solid=true);
-//plaettchen(0,1,geometry="Cc",runwayrotate=0,solid=true);
+//plaettchen(0,0,geometry="Cc",runwayrotate=0,solid=true);
+//plaettchen(0,1,geometry="C",runwayrotate=120,solid=true);
 //plaettchen(0,-1,hakenpositionen=[],geometry="I",solid=true,runwayrotate=180);
 //plaettchen(0,-2,hakenpositionen=[],geometry="*",solid=true,runwayrotate=180);
-//plaettchen(1,-1,geometry="I",runwayrotate=240);
-//plaettchen(1,1,hakenpositionen=[5],geometry="C",runwayrotate=180, solid=false);
+//plaettchen(1,-1,geometry="I",runwayrotate=0);
 //plaettchen(2,-1,geometry="cC",runwayrotate=180);
 //plaettchen(4,-1,geometry="X",runwayrotate=120);
-//plaettchen(1,1,geometry="cC",runwayrotate=180);
+//plaettchen(1,1,geometry="c",runwayrotate=0);
+//plaettchen(1,0,geometry="X",runwayrotate=120);
+//plaettchen(1,-2,geometry="cC",runwayrotate=60);
+
+
+
 
 
 //gleis2
 //translate([132,10,0]) 
 //rotate([0,0,30])
+//translate([0,0,0])
+//gleis1(); 
+//translate([0,-30,0])
 //gleis2();
+//translate([0,-60,0])
+//gleis3();
+//translate([0,-90,0])
 //gleis4();
+//translate([0,-120,0])
 //gleis5();
-//gleis(0.1*sechseckhoehe+sechseckhoehe,spurweite);
+//gleis(0.1*sechseckhoehe+sechseckhoehe,spurweite); 
 
   
-
- 
-//enge kurve
-//translate([0,sechseckhoehe*1.5])
-//kurve(240); 
-
-
-//weite kurve
-//translate([sechseckkantenlaenge*3,sechseckhoehe/2])
+//
+//plaettchen(0,0,geometry="I",runwayrotate=0);
+//plaettchen(1,-1,geometry="I",runwayrotate=0);
+//plaettchen(2,-2,geometry="I",runwayrotate=0);
+//plaettchen(3,-3,geometry="I",runwayrotate=0);
+//
+//
+//plaettchen(-1,1,geometry="C",runwayrotate=120);
+////plaettchen(1,-1,geometry="I",runwayrotate=0);
+//plaettchen(1,1,geometry="I",runwayrotate=0);
+//plaettchen(4,-1,geometry="I",runwayrotate=0);
+//
+////enge kurve
+//translate([0,sechseckhoehe*.5])
+//kurve(120); 
+//
+//
+////weite kurve
+//translate([sechseckkantenlaenge*1.5,0])
 //kurve(60,scope=3); 
-//
-////U-turn
-//translate([sechseckkantenlaenge*1.5,2*sechseckhoehe])
-//kurve(180,scope=3); 
-// 
-//
-//S-Kurve
+////
+//////U-turn
+////translate([sechseckkantenlaenge*1.5,2*sechseckhoehe])
+////kurve(180,scope=3); 
+//// 
+////
+////S-Kurve
+//translate([sechseckkantenlaenge*1.5,sechseckhoehe*.5])
+//{
 //translate([sechseckkantenlaenge*1.5,-sechseckhoehe])
 //kurve(60,scope=3); 
 //rotate([0,0,180])
 //translate([0,-sechseckhoehe/2])
 //kurve(60,scope=3); 
+//}
+//
+//translate([210,0,0])
+//mirror([1,0,0])
+//{
+//translate([sechseckkantenlaenge*1.5,-sechseckhoehe])
+//kurve(60,scope=3); 
+//rotate([0,0,180])
+//translate([0,-sechseckhoehe/2])
+//kurve(60,scope=3); 
+//}
 ////
 
 
@@ -259,99 +293,99 @@ module looping(rotate=0,spread=20,safety=false,x_offset=0,y_offset=0){
 
 //trichter
 
-module torus(dicke=1.1, durchmesser=4, angle=360){   
-    
-    rotate_extrude(convexity = 10, angle=angle, $fn=8)
-        translate([durchmesser/2, 0])
-                circle(d=dicke,$fn=10);
-}
- 
-
-module crown(r=9.5){
-    for (i = [0:5]){
-//        rotate([0,0,30*i])
+//module torus(dicke=1.1, durchmesser=4, angle=360){   
+//    
+//    rotate_extrude(convexity = 10, angle=angle, $fn=8)
+//        translate([durchmesser/2, 0])
+//                circle(d=dicke,$fn=10);
+//}
+// 
+//
+//module crown(r=9.5){
+//    for (i = [0:5]){
+////        rotate([0,0,30*i])
+////            translate([0,r,0])
+////                torus();
+//        rotate([0,0,30+60*i])
 //            translate([0,r,0])
-//                torus();
-        rotate([0,0,30+60*i])
-            translate([0,r,0])
-                rotate([0,90,30])
-                    scale([2,1,1])
-                        torus();
-        rotate([0,0,30+60*i])
-            translate([0,r,5.8])
-                rotate([0,90,120])
-                    scale([2,1,1])
-                        torus();        
-        rotate([0,0,30+60*i])
-            translate([0,r,-5])
-                cylinder(d=.4,h=15);
-    }    
-}
-
-module stabilisator(){
-    difference(){
-        cylinder(d=3,h=60,$fn=20);
-        translate([0,0,-5])
-        cylinder(d=2.5,h=70,$fn=20);
-    }
-}
-
-translate([0,0,60])
-    rotate([0,0,120])
-        plaettchen(geometry="I");
-
-translate([-34,-19.75,0])
-union(){
-    for (i=[0:5]){
-        translate([0,0,i*11.5])
-            crown();
-    }
-
-    for (j=[0:1]){
-        translate([0,0,15+23*j])
-            difference(){
-                cylinder(d=fahrbahnbreite+6, h=4);
-                translate([0,0,-.5])
-                cylinder(d=fahrbahnbreite+5, h=5);
-            }         
-    }
-}
+//                rotate([0,90,30])
+//                    scale([2,1,1])
+//                        torus();
+//        rotate([0,0,30+60*i])
+//            translate([0,r,5.8])
+//                rotate([0,90,120])
+//                    scale([2,1,1])
+//                        torus();        
+//        rotate([0,0,30+60*i])
+//            translate([0,r,-5])
+//                cylinder(d=.4,h=15);
+//    }    
+//}
+//
+//module stabilisator(){
+//    difference(){
+//        cylinder(d=3,h=60,$fn=20);
+//        translate([0,0,-5])
+//        cylinder(d=2.5,h=70,$fn=20);
+//    }
+//}
+//
+//translate([0,0,60])
+//    rotate([0,0,120])
+//        plaettchen(geometry="I");
+//
+//translate([-34,-19.75,0])
+//union(){
+//    for (i=[0:5]){
+//        translate([0,0,i*11.5])
+//            crown();
+//    }
+//
+//    for (j=[0:1]){
+//        translate([0,0,15+23*j])
+//            difference(){
+//                cylinder(d=fahrbahnbreite+6, h=4);
+//                translate([0,0,-.5])
+//                cylinder(d=fahrbahnbreite+5, h=5);
+//            }         
+//    }
+//}
 
 //rotate_extrude(angle=90)
 //rotate([90,90,0]) 
 
 //anschluss
-translate([-24,-14,59])
-    rotate([90,-90,30])
-        rotate_extrude(convexity = 10, angle=90, $fn=20)
-            translate([12, 0])
-                    difference(){
-                        circle(d=fahrbahnbreite+3);
-                        circle(d=fahrbahnbreite+2);
-                    }
-                    
-            
-            
-translate([-44,-26,0])
-    union(){            
-        rotate([90,-180,210])
-            rotate_extrude(convexity = 10, angle=90, $fn=20)
-                translate([12, 0])
-                        difference(){
-                            circle(d=fahrbahnbreite+3);
-                            circle(d=fahrbahnbreite+2);
-                        } 
-                        
-                translate([-0,5.75,-19]) 
-                rotate([0,0,210])
-                        {
-                schiene(5,double=false);
-                translate([0,spurweite, 0])
-                schiene(5,double=false);
-                    }
-                    
-    }
-    
+//translate([-24,-14,59])
+//    rotate([90,-90,30])
+//        rotate_extrude(convexity = 10, angle=90, $fn=20)
+//            translate([12, 0])
+//                    difference(){
+//                        circle(d=fahrbahnbreite+3);
+//                        circle(d=fahrbahnbreite+2);
+//                    }
+//                    
+//            
+//            
+//translate([-44,-26,0])
+//    union(){            
+//        rotate([90,-180,210])
+//            rotate_extrude(convexity = 10, angle=90, $fn=20)
+//                translate([12, 0])
+//                        difference(){
+//                            circle(d=fahrbahnbreite+3);
+//                            circle(d=fahrbahnbreite+2);
+//                        } 
+//                        
+//                translate([-0,5.75,-19]) 
+//                rotate([0,0,210])
+//                        {
+//                schiene(5,double=false);
+//                translate([0,spurweite, 0])
+//                schiene(5,double=false);
+//                    }
+//                    
+//    }
+//    
     
 //translate([-28,-9.5,.1])
 //    stabilisator();
@@ -361,6 +395,12 @@ translate([-44,-26,0])
 //
 //translate([-23.8,-13.8,.1])
 //    stabilisator();
+
+//trichterplaettchen();
+//
+//haube();
+
+spirale();
 
 
 

@@ -156,10 +156,12 @@ if (solid){
     translate([x_offset,y_offset])
     hakenfillset(positionen=hakenpositionen);
 //    label plaettchen
-    translate([x_offset-5,y_offset,plaettchenhoehe])
-    text(str(hex_x));
-    translate([x_offset+5,y_offset,plaettchenhoehe])
-    text(str(hex_y));
+    if (False){
+        translate([x_offset-5,y_offset,plaettchenhoehe])
+        text(str(hex_x));
+        translate([x_offset+5,y_offset,plaettchenhoehe])
+        text(str(hex_y));
+        }
 //    inset
     translate([x_offset,y_offset,-3])
     difference() {

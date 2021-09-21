@@ -240,32 +240,32 @@ module myfloor(points){
 //    circle(90);
 
 
-//myfloor([[0,0],[351,0],[351,62],[363,62],[363,650],[-90,650],[-90,450],[0,350]]);
+myfloor([[0,0],[351,0],[351,62],[363,62],[363,650],[-90,650],[-90,450],[0,350]]);
 
-//cube(363,650,2);
+cube(363,650,2);
 
-//upperflurwall(151,0,0);
-//color("blue", 0.25) 
-//translate([0, 0,306]) 
-//rotate([315,0,0]) 
-//cube(351, 3, 22);
+upperflurwall(151,0,0);
+color("blue", 0.25) 
+translate([0, 0,306]) 
+rotate([315,0,0]) 
+cube(351, 3, 22);
 
-//color("blue", 0.25) 
-//translate([0, 0,306]) 
-//rotate([0,45,0]) 
-//cube(3, 200, 22);
+color("blue", 0.25) 
+translate([0, 0,306]) 
+rotate([0,45,0]) 
+cube(3, 200, 22);
 
-//color("blue", 0.25) 
-//translate([351, 0,306]) 
-//rotate([0,315,0]) 
-//cube(3, 61, 22);
+color("blue", 0.25) 
+translate([351, 0,306]) 
+rotate([0,315,0]) 
+cube(3, 61, 22);
  
-//flurwall(200,151,0);
-//flurwall(13,351,62);
-//peggywall(62,351,0);   
-//peggywall(590,363,62);      
+flurwall(200,151,0);
+flurwall(13,351,62);
+peggywall(62,351,0);   
+peggywall(590,363,62);      
             
-//door(33,0);
+door(33,0);
 
 //schrankweiss(300,540);
 //schrankbraun(307,261);
@@ -275,28 +275,28 @@ module myfloor(points){
 
 //regal(322,350);
 //kaefig(310,450);
-
+//
 //schreibtisch(200,0);
 
-//bett(220,6S0);
+bett(220,6S0);
  
 
 hochebene1(0,0);
-//hochebene2(0,0);
+hochebene2(0,0);
 pfosten(151,210);
 pfosten(151,0);
-//matratze(30,0,"white",247);
-//matratze(185,0,"white",200);
+matratze(30,0,"white",247);
+matratze(185,0,"white",200);
 
-//heizung(288,0);
+heizung(288,0);
 
-//regalwand1(161,0);
-//regalwand1(249,0);
-////brett(151,0,40);
-//brett(151,0,80);
-//brett(151,0,115);
-//brett(151,0,150);
-//regalwand1(348,0);
+regalwand1(161,0);
+regalwand1(249,0);
+//brett(151,0,40);
+brett(151,0,80);
+brett(151,0,115);
+brett(151,0,150);
+regalwand1(348,0);
  
  
 
@@ -327,8 +327,8 @@ regalwand2(0,200);
 //brett3(321,0,290); 
 //regalwand3(321,61);  
 
-//vorhang(300,61);
-//stange(340,61); 
+vorhang(300,61);
+stange(340,61); 
 
 
 //regalwand4(314,63); 
@@ -338,56 +338,56 @@ regalwand2(0,200);
 //regalwand4(314,210);
 
 
-//translate([50,210,60])
-//    linear_extrude(height = 300, twist = 2600)
-//        scale([1.5,.5])circle(d=4);
-//        
-//translate([290,180,190])
-//    color("#222222")
-//        rotate([90,0,0])
-//            linear_extrude(height = 100, twist = 12600)
-//                scale([1.5,.5])circle(d=4);
-//                
-//translate([270,180,190])
-//    color("#222222")
-//        rotate([90,0,0])
-//            linear_extrude(height = 100, twist = 12600)
-//                scale([1.5,.5])circle(d=4);
-//                
-//translate([250,180,190])
-//    color("#222222")
-//        rotate([90,0,0])
-//            linear_extrude(height = 100, twist = 12600)
-//                scale([1.5,.5])circle(d=4);
-//                
-//translate([230,180,190])
-//    color("#222222")
-//        rotate([90,0,0])
-//            linear_extrude(height = 100, twist = 12600)
-//                scale([1.5,.5])circle(d=4);
-//                
-//translate([210,180,190])
-//    color("#222222")
-//        rotate([90,0,0])
-//            linear_extrude(height = 100, twist = 12600)
-//                scale([1.5,.5])circle(d=4);
-//                
-//translate([190,180,190])
-//    color("#222222")
-//        rotate([90,0,0])
-//            linear_extrude(height = 100, twist = 12600)
-//                scale([1.5,.5])circle(d=4);
+translate([50,210,60])
+    linear_extrude(height = 300, twist = 2600)
+        scale([1.5,.5])circle(d=4);
+        
+translate([290,180,190])
+    color("#222222")
+        rotate([90,0,0])
+            linear_extrude(height = 100, twist = 12600)
+                scale([1.5,.5])circle(d=4);
+                
+translate([270,180,190])
+    color("#222222")
+        rotate([90,0,0])
+            linear_extrude(height = 100, twist = 12600)
+                scale([1.5,.5])circle(d=4);
+                
+translate([250,180,190])
+    color("#222222")
+        rotate([90,0,0])
+            linear_extrude(height = 100, twist = 12600)
+                scale([1.5,.5])circle(d=4);
+                
+translate([230,180,190])
+    color("#222222")
+        rotate([90,0,0])
+            linear_extrude(height = 100, twist = 12600)
+                scale([1.5,.5])circle(d=4);
+                
+translate([210,180,190])
+    color("#222222")
+        rotate([90,0,0])
+            linear_extrude(height = 100, twist = 12600)
+                scale([1.5,.5])circle(d=4);
+                
+translate([190,180,190])
+    color("#222222")
+        rotate([90,0,0])
+            linear_extrude(height = 100, twist = 12600)
+                scale([1.5,.5])circle(d=4);
                  
                 
-//translate([250,80,200])
-//    color("blue")
-//        linear_extrude(height = 55, twist = 99)
-//            scale([1.2,.7])circle(d=40);
+translate([250,80,200])
+    color("blue")
+        linear_extrude(height = 55, twist = 99)
+            scale([1.2,.7])circle(d=40);
         
         
-//translate([361,380,20])
-//    color("turquoise", 0.3)
-//    cube(2,80,180);
+translate([361,380,20])
+    color("turquoise", 0.3)
+    cube(2,80,180);
                 
 // 
 //translate([310,367,0])

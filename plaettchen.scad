@@ -40,7 +40,7 @@ module runways(geometry=false,rotate=0){
     if (geometry=="I"){
         rotate([0,0,rotate])
             rotate ([-90,0,0]) cylinder (h = sechseckhoehe+1, d=fahrbahnbreite, center = true, $fn=20);
-        canals(slots=[0,3]);
+        canals(slots=[0:5]);
     }
     if (geometry=="X"){
         rotate([0,0,rotate])

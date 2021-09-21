@@ -122,21 +122,22 @@ module spirale() {
 
                 }
                 //stuetzbogen
-                translate([0,-11,2])
-                rotate([90,0,-15])
-                linear_extrude(height=8)
-                    difference() {
-                        circle(20);
-                        circle(18);
-                        translate([-25,-50])
-                        square(50);
-                    }
+                //translate([0,-11,2])
+                //rotate([90,0,-15])
+                //linear_extrude(height=8)
+                //    difference() {
+                //        circle(20);
+                //        circle(18);
+                //        translate([-25,-50])
+                //        square(50);
+                //    }
                 //spirale
+                translate([0,0,2])
                 rotate([5,0,240])
                     translate([0,0,plaettchenhoehe+2])
                         union(){
                         for (i=[1:58]){
-                            translate([0,0,i/2])
+                            translate([0,0,i/2.2])
                             rotate([0,0,10*i+60])
                                 rotate([90,0,0])
                                 translate([15,0,0])
@@ -144,15 +145,15 @@ module spirale() {
                                 color("red")
                                 linear_extrude(height=3)
                                         difference(){
-                                            circle(d=fahrbahnbreite+3);
+                                            circle(d=fahrbahnbreite+1);
                                             circle(d=fahrbahnbreite);
                         //                    translate([fahrbahnbreite/2,0,0])
                         //                    circle(d=5,$fn=4);
                                         }
                                     }
-                                    translate([24,-17,22])
-                                    rotate([0,0,60])
-                                    cube([11,4,3]);
+                                    //translate([24,-17,20])
+                                    //rotate([0,0,60])
+                                    //cube([11,4,3]);
                                 }
 
 
@@ -162,26 +163,29 @@ module spirale() {
 
             difference() {
                 union (){
-                translate([0, 0, -1])
-            rotate_extrude(convexity = 10,angle=45)
-                translate([10, 0, 0])
-                difference(){
-                        circle(d=fahrbahnbreite+3);
-                        circle(d=fahrbahnbreite);
-                }
+                    translate([0, 0, -3])
+                        rotate_extrude(convexity = 10,angle=45)
+                            translate([10, 0, 0])
+                            difference(){
+                                    circle(d=fahrbahnbreite+3);
+                                    circle(d=fahrbahnbreite);
+                            }
 
-    //            anschlussstueck
-            color("green")
-                translate([-6,20.5,-1.5])
-                    rotate([0,88,313])
-                    linear_extrude(height=23.5)
-                difference(){
-                        circle(d=fahrbahnbreite+3);
-                        circle(d=fahrbahnbreite);
+        //            anschlussstueck
+                    color("green")
+                        translate([-6,20.5,-1.5])
+                            rotate([0,88,313])
+                            linear_extrude(height=23.5)
+                        difference(){
+                                circle(d=fahrbahnbreite+3);
+                                circle(d=fahrbahnbreite);
+                        }
                 }
-            }
-                translate([9,0,3])
-                sphere(11);
+               // translate([9,0,3])
+               //     sphere(11);
+                translate([12,-15,0])
+                    rotate([0,0,45])
+                        cube([30,30,20]);
             }
 
     //        color("blue")
@@ -206,10 +210,10 @@ module spirale() {
     //        exit
             translate([0,0,10])
                 canals(slots=[3]);
-            translate([0,0,42.7])
+            translate([0,0,40.7])
                 difference(){
                 canals(slots=[2]);
-                translate([-40,-30,-6.1])
+                translate([-40,-30,-5.1])
                     cube([40,40,20]);
               }
     //        entry
@@ -222,9 +226,9 @@ module spirale() {
     //            sphere(d=gleisdicke+1,$fn=20);
     //        }
     //        cutoff excess
-            translate([-35,-22,30])
+            translate([-27,-22,35])
                 rotate([0,0,30])
-                cube([10,20,20]);
+                cube([10,40,20],center=true);
     }
 
 }

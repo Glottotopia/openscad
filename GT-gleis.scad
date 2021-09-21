@@ -120,7 +120,7 @@ module hakenfill(angle=0){
 ////kurve(180,scope=3); 
 //// 
 ////
-////S-Kurve
+//S-Kurve
 //translate([sechseckkantenlaenge*1.5,sechseckhoehe*.5])
 //{
 //translate([sechseckkantenlaenge*1.5,-sechseckhoehe])
@@ -155,7 +155,11 @@ module hakenfill(angle=0){
 //translate([0,-20,9])
 //sphere(d=10);
 
-//spirale();
+mirror([0,1,0])
+spirale();
+//translate([0,0,30])
+//plaettchen(-1,1,geometry="I",runwayrotate=60,slots=[1,2,3,4,5,6]);
+
 
 module loopscheibe(r=20, spread){
     rotate([1,0,0])
@@ -400,7 +404,7 @@ module looping(rotate=0,spread=20,safety=false,x_offset=0,y_offset=0){
 //
 //haube();
 
-spirale();
+//spirale();
 
 
 

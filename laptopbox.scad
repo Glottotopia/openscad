@@ -96,15 +96,15 @@ module saegezahn_y2(){
 //}
 
 ////pseudobase (2x)
-difference(){
-    square([outerdepth,outerwidth]);
-    translate([saegezahnstep,0])
-        saegezahn_z2();
-    translate([saegezahnstep,innerwidth+mdfwidth])
-        saegezahn_z2();
-    translate([mdfwidth,0])
-        saegezahn_y2();
-}
+//difference(){
+//    square([outerdepth,outerwidth]);
+//    translate([saegezahnstep,0])
+//        saegezahn_z2();
+//    translate([saegezahnstep,innerwidth+mdfwidth])
+//        saegezahn_z2();
+//    translate([mdfwidth,0])
+//        saegezahn_y2();
+//}
 
  
 
@@ -152,22 +152,22 @@ difference(){
 //        }
 
 //pseudoside (2x)
-    translate([0,-1,0])
-rotate([90,0,0])
-color("brown")
-    difference(){ 
-    square([outerdepth,outerheight]);         
-    translate([mdfwidth,0])
-        saegezahn_y2();
-    translate([0,0])
-        saegezahn_z2(); 
-    translate([0,inlayheight])
-        saegezahn_z2();
-    translate([0,innerheight])
-        saegezahn_z2(); 
-    translate([0,innerheight+mdfwidth])
-        saegezahn_z2(); 
-    }
+//    translate([0,-1,0])
+//rotate([90,0,0])
+//color("brown")
+//    difference(){ 
+//    square([outerdepth,outerheight]);         
+//    translate([mdfwidth,0])
+//        saegezahn_y2();
+//    translate([0,0])
+//        saegezahn_z2(); 
+//    translate([0,inlayheight])
+//        saegezahn_z2();
+//    translate([0,innerheight])
+//        saegezahn_z2(); 
+//    translate([0,innerheight+mdfwidth])
+//        saegezahn_z2(); 
+//    }
 
 //back 
 //color("green")
@@ -195,30 +195,30 @@ color("brown")
 //    
 //pseudoback
 //    translate([-2,0,0])
-    rotate([90,0,90])
-color("green")
-    difference(){
-        square([outerwidth,outerheight]);
-        translate([mdfwidth,saegezahnstep])
-            saegezahn_y2();
-        translate([innerwidth+mdfwidth*2,saegezahnstep])
-            saegezahn_y2();
-        translate([saegezahnstep,0])
-            saegezahn_z2();
-        translate([saegezahnstep,inlayheight])
-            saegezahn_z2();
-        translate([saegezahnstep,innerheight])
-            saegezahn_z2();
-        translate([saegezahnstep,innerheight+mdfwidth])
-            saegezahn_z2();
-//       hdmiloch
-        translate([hdmi_offset,hdmi_z_offset+mdfwidth])
-            square([hdmi_breite,hdmi_hoehe]);  
-//        steckerloch
-        translate([power_offset,power_z_offset+mdfwidth])
-            square([power_breite,power_hoehe]);       
-    }
-//
+//    rotate([90,0,90])
+//color("green")
+//    difference(){
+//        square([outerwidth,outerheight]);
+//        translate([mdfwidth,saegezahnstep])
+//            saegezahn_y2();
+//        translate([innerwidth+mdfwidth*2,saegezahnstep])
+//            saegezahn_y2();
+//        translate([saegezahnstep,0])
+//            saegezahn_z2();
+//        translate([saegezahnstep,inlayheight])
+//            saegezahn_z2();
+//        translate([saegezahnstep,innerheight])
+//            saegezahn_z2();
+//        translate([saegezahnstep,innerheight+mdfwidth])
+//            saegezahn_z2();
+////       hdmiloch
+//        translate([hdmi_offset,hdmi_z_offset+mdfwidth])
+//            square([hdmi_breite,hdmi_hoehe]);  
+////        steckerloch
+//        translate([power_offset,power_z_offset+mdfwidth])
+//            square([power_breite,power_hoehe]);       
+//    }
+
 //  
 //    
 //color("red")  
@@ -242,17 +242,17 @@ color("green")
 //        }
   
 //pseudorot  
-color("red")  
-    translate([0,0,innerheight+6])
-        difference(){
-            square([outerdepth,outerwidth]);
-            translate([saegezahnstep,0])
-                saegezahn_z2();
-            translate([saegezahnstep,innerwidth+mdfwidth])
-                saegezahn_z2();
-            translate([mdfwidth,0])
-                saegezahn_y2();            
-        }
+//color("red")  
+//    translate([0,0,innerheight+6])
+//        difference(){
+//            square([outerdepth,outerwidth]);
+//            translate([saegezahnstep,0])
+//                saegezahn_z2();
+//            translate([saegezahnstep,innerwidth+mdfwidth])
+//                saegezahn_z2();
+//            translate([mdfwidth,0])
+//                saegezahn_y2();            
+//        }
         
 //        
 //color("pink")    
@@ -278,8 +278,8 @@ color("red")
 //        }
 
 //pseudopink   
-color("pink")    
-    translate([0,0,innerheight+mdfwidth+6])
+//color("pink")    
+//    translate([0,0,innerheight+mdfwidth+6])
         difference(){
         square([outerdepth,outerwidth]);
         translate([saegezahnstep,0])

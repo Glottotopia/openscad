@@ -7,7 +7,7 @@ pseudohexforplaettchen = 6;
 totalplaettchen = 108;
 plaettchendurchmesser1 = 75;
 plaettchendurchmesser2 = 86;
-spiel=1;
+spiel=3;
 plaettchendurchmesser3 = plaettchendurchmesser2+spiel+mdfwidth*2;
 hexpileheight = 58;
 pseudohexheight = 21;
@@ -19,6 +19,42 @@ numberofhextiles = 18;
 trapezeupperwidth=22;
 trapezelowerwidth=39;
 trapezeheight=15;
+trapezecolors = ["yellow","orange","brown","red"];
+
+
+module hextileseparator(){
+    cube([trapezelowerwidth,mdfwidth,(1+pseudohexforplaettchen)*mdfwidth]); 
+    }
+    
+module hextileseparatorstar(){ 
+xoffset = -8;
+yoffset = -20.5;    
+//                hextileseparator(); 
+    rotate([0,0,0])
+        color("blue")
+        translate([xoffset,yoffset,0]) 
+                hextileseparator();
+    rotate([0,0,60])
+        translate([xoffset,yoffset,0]) 
+                hextileseparator();
+    rotate([0,0,120])
+        translate([xoffset,yoffset,0]) 
+                hextileseparator();
+    rotate([0,0,180])
+        translate([xoffset,yoffset,0]) 
+                hextileseparator();
+    rotate([0,0,240])
+        translate([xoffset,yoffset,0]) 
+                hextileseparator();
+    rotate([0,0,300])
+        translate([xoffset,yoffset,0]) 
+                hextileseparator();  
+} 
+    
+module cardholder(){
+    translate([0,0,(cardheight-10)/2])
+    cube([mdfwidth,plaettchendurchmesser1,cardheight-10], center=true);
+}
 
 module trapeze(){
     translate([trapezeheight/2,0,mdfwidth/2])
@@ -34,7 +70,6 @@ module trapeze(){
 }
  
 
-trapezecolors = ["yellow","orange","brown","red"];
 
 module trapezepile(){
 
@@ -47,35 +82,37 @@ module trapezepile(){
 }
 
 module trapezepseudotile(){
+xoffset = 21;
+yoffset = 12;    
     rotate([0,0,0])
-        translate([20,10,0])
+        translate([xoffset,yoffset,0])
             color(trapezecolors[0],.8)
                 trapeze();
     rotate([0,0,60])
-        translate([20,10,0])
+        translate([xoffset,yoffset,0])
             color(trapezecolors[1],.8)
                 trapeze();
     rotate([0,0,120])
-        translate([20,10,0])
+        translate([xoffset,yoffset,0])
             color(trapezecolors[2],.8)
                 trapeze();
     rotate([0,0,180])
-        translate([20,10,0])
+        translate([xoffset,yoffset,0])
             color(trapezecolors[3],.8)
                 trapeze();
     rotate([0,0,240])
-        translate([20,10,0])
+        translate([xoffset,yoffset,0])
             color(trapezecolors[0],.8)
                 trapeze();
     rotate([0,0,300])
-        translate([20,10,0])
+        translate([xoffset,yoffset,0])
             color(trapezecolors[1],.8)
                 trapeze(); 
-    translate([2,0,0])//keep order of translate rotate here
+    translate([1,0,0])//keep order of translate rotate here
         rotate([0,0,0])
             color(trapezecolors[2],.8)
                 trapeze();
-    translate([-2,0,0])//keep order of translate rotate here
+    translate([-1,0,0])//keep order of translate rotate here
         rotate([0,0,180])
             color(trapezecolors[3],.8)
                 trapeze();
@@ -118,12 +155,13 @@ module deck(){
 }
 
 module separator(height=0){
-//    color("blue",.4)
-//        translate([0,0,height])
-//            cylinder(h=mdfwidth,$fn=6,d=plaettchendurchmesser3);
+    color("blue",.4)
+        translate([0,0,height])
+            cylinder(h=mdfwidth,$fn=6,d=plaettchendurchmesser3);
 }
 
-separator(-mdfwidth);
+//separator(-mdfwidth);
+hextileseparatorstar();
 trapezepseudotilepile();
 color("yellow",.2)
     cylinder(h=pseudohexheight,$fn=6,d=plaettchendurchmesser3);              
@@ -136,20 +174,20 @@ translate([0,0,pseudohexheight+separatorwidth]){
 separator(pseudohexheight+separatorwidth+hexpileheight);
 translate([0,0,pseudohexheight+separatorwidth+hexpileheight+separatorwidth]){
     deck();
-    translate([20,0,0])
+    translate([cardnumber/2*cardthickness+mdfwidth/2+1,0,0])
+        color("gray")
+            cardholder();  
+    translate([-(cardnumber/2*cardthickness+mdfwidth/2+1),0,0])
+        color("gray")
+            cardholder();  
+    translate([22,0,0])
         trapezepile();
-    translate([-20,0,0])
+    translate([-22,0,0])
         rotate([0,0,180])
         trapezepile();
     color("green",.2)
         cylinder(h=cardheight,$fn=6,d=plaettchendurchmesser3);
 }
 separator(pseudohexheight+separatorwidth+hexpileheight+separatorwidth+cardheight);
-
-//color("black")
-//    translate([0,0,-mdfwidth])
-//        cylinder(h=mdfwidth,$fn=6,d=plaettchendurchmesser2);
-//color("black")
-//    translate([0,0,pseudohexheight+hexpileheight+cardheight]) 
-//            cylinder(h=mdfwidth,$fn=6,d=plaettchendurchmesser2); 
-  
+ 
+//translate([0,0,mdfwidth])

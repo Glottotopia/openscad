@@ -23,22 +23,31 @@ module disc(){
 }
 
 module disc1(){ 
-    color("red")
-        linear_extrude(mdfwidth)  
+//    color("red")
+//        linear_extrude(mdfwidth)  
             difference(){
                 circle(d=diameter);
-                circle(d=diameter/2,$fn=5);
+                difference(){
+                    circle(d=diameter/2);
+                    circle(d=diameter/1.9,$fn=4);                    
+                }
+                circle(d=diameter/6,$fn=8);
             }
 }
 
 
 module disc2(){
-    color("yellow")
-        linear_extrude(mdfwidth) 
+//    color("yellow")
+//        linear_extrude(mdfwidth) 
+        union(){
             difference(){
                 circle(d=diameter);
-                circle(d=diameter/2,$fn=3);
+                circle(d=diameter/1.2,$fn=3);
+                rotate([0,0,60])
+                circle(d=diameter/1.2,$fn=3);
             }
+            circle(d=diameter/1.8);
+        }
 }
 
 module minicircle(){ 
@@ -47,7 +56,7 @@ module minicircle(){
   
 
 module blade(){
-    linear_extrude(mdfwidth)
+//    linear_extrude(mdfwidth)
         translate([0,-querspiel,0]){
         difference(){
             square([plattenhoehe,plattenbreite]);  
@@ -64,6 +73,8 @@ module blade(){
             }
             for (j=[0:columns]){ 
                 translate([0,(j+.5)*diameter+(j-1)*zwischenspiel,0]) 
+                    square([mdfwidth,mdfwidth]);
+                translate([plattenhoehe-mdfwidth,(j+.5)*diameter+(j-1)*zwischenspiel,0]) 
                     square([mdfwidth,mdfwidth]);
             }
         }
@@ -163,8 +174,8 @@ module staender(){
 
 //discset();
 //abstandhalterset();
-translate([0,,0,-mdfwidth/2+.5*discspiel])
-wanne();
+//translate([0,,0,-mdfwidth/2+.5*discspiel])
+//wanne();
 //    
 //translate([0,,0,wannenbreite/2])
 //wannenbegrenzung();
@@ -173,15 +184,15 @@ wanne();
 //    
 //stopper();
 //     
-translate([0,-querspiel+mdfwidth,0])
-    staender(); 
-    
-translate([0,plattenbreite-querspiel,0])
-    staender();    
+//translate([0,-querspiel+mdfwidth,0])
+//    staender(); 
+//    
+//translate([0,plattenbreite-querspiel,0])
+//    staender();    
 
-//translate([0,0,mdfwidth+discspiel])
-//    color("brown",.7)
-//    blade();
+translate([0,0,mdfwidth+discspiel])
+    color("brown",.7)
+    blade();
 //translate([0,0,-(mdfwidth+discspiel)])
 //    color("brown",.7)
 //    blade();

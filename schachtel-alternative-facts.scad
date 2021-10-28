@@ -75,31 +75,38 @@ module antiwanne(){
 }
 
 module hextileseparator(){
-    cube([trapezelowerwidth,mdfwidth,(1+pseudohexforplaettchen)*mdfwidth]); 
+//    cube([trapezelowerwidth,mdfwidth,(1+pseudohexforplaettchen)*mdfwidth]); 
+    rotate([90,0,0])
+    linear_extrude(mdfwidth)
+        union(){
+        square([trapezelowerwidth, (1+pseudohexforplaettchen)*mdfwidth]);
+            translate([-0,-mdfwidth])
+            square([15,mdfwidth]);
+        }
     }
+   
+xoffset = -8;
+yoffset = -20.5;  
     
 module hextileseparatorstar(){ 
-xoffset = -8;
-yoffset = -20.5;    
-//                hextileseparator(); 
     rotate([0,0,0])
         color("blue")
-        translate([xoffset,yoffset,0]) 
+        translate([xoffset,yoffset+mdfwidth,0]) 
                 hextileseparator();
     rotate([0,0,60])
-        translate([xoffset,yoffset,0]) 
+        translate([xoffset,yoffset+mdfwidth,0]) 
                 hextileseparator();
     rotate([0,0,120])
-        translate([xoffset,yoffset,0]) 
+        translate([xoffset,yoffset+mdfwidth,0]) 
                 hextileseparator();
     rotate([0,0,180])
-        translate([xoffset,yoffset,0]) 
+        translate([xoffset,yoffset+mdfwidth,0]) 
                 hextileseparator();
     rotate([0,0,240])
-        translate([xoffset,yoffset,0]) 
+        translate([xoffset,yoffset+mdfwidth,0]) 
                 hextileseparator();
     rotate([0,0,300])
-        translate([xoffset,yoffset,0]) 
+        translate([xoffset,yoffset+mdfwidth,0]) 
                 hextileseparator();  
 } 
     
@@ -109,15 +116,21 @@ module cardholder(){
 }
 
 module cardcover(){
-    color("grey", .6)
+    color("green", .6)
     translate([-cardpilethickness/2,-cardwidth/2,-pseudohexheight+hexpileheight+cardheight/2-mdfwidth])
     rotate([90,0,0])
         linear_extrude(mdfwidth)
+            difference(){
             union(){
                 square([cardpilethickness,cardheight]);
                 translate([5,cardheight+.1])
                 square([cardpilethickness-10,mdfwidth+1]);
-            }                
+            }            
+            translate([20,2,0])
+            rotate([0,0,90])
+            scale(.85)
+            text("Alternative Facts");
+            }    
 }
 
 module trapeze(){
@@ -224,17 +237,50 @@ module separator(height=0){
             cylinder(h=mdfwidth,$fn=6,d=plaettchendurchmesser3);
 }
 
+module bottomseparator(height=0){
+    color("#664422",.4)
+        translate([0,0,height])
+            linear_extrude(mdfwidth)
+                difference(){
+                    circle($fn=6,d=plaettchendurchmesser3+2*mdfwidth);
+                        rotate([0,0,0])
+                            color("blue")
+                                translate([xoffset,yoffset]) 
+                                        square([15,mdfwidth]);
+                            rotate([0,0,60])
+                                translate([xoffset,yoffset]) 
+                                        square([15,mdfwidth]);
+                            rotate([0,0,120])
+                                translate([xoffset,yoffset]) 
+                                        square([15,mdfwidth]);
+                            rotate([0,0,180])
+                                translate([xoffset,yoffset]) 
+                                        square([15,mdfwidth]);
+                            rotate([0,0,240])
+                                translate([xoffset,yoffset]) 
+                                        square([15,mdfwidth]);
+                            rotate([0,0,300])
+                                translate([xoffset,yoffset]) 
+                                        square([15,mdfwidth]);
+            }
+                    
+}
 
 
-separator(-mdfwidth);
+
+
+
+rotate([0,90,0])
+translate([0,0,-100])
+{
+bottomseparator(-mdfwidth);
 hextileseparatorstar();
-//trapezepseudotilepile();
+trapezepseudotilepile();
 //color("yellow",.2)
 //    cylinder(h=pseudohexheight,$fn=6,d=plaettchendurchmesser3);              
 //separator(pseudohexheight);
-//translate([0,0,pseudohexheight]){
+//translate([0,0,pseudohexheight])
 //    hextilepile(); 
-//}
 //degenerateseparator(pseudohexheight+separatorwidth+hexpileheight);
 translate([0,0,pseudohexheight+hexpileheight]){
 //    deck();
@@ -255,9 +301,10 @@ translate([0,0,pseudohexheight+hexpileheight]){
 separator(pseudohexheight+hexpileheight+cardheight);
  
 translate([0,0,mdfwidth])
-color("#664422",.4)
+color("#664422",.9)
     wanne();
-color("#664422",.4)
+color("#664422",.7)
     antiwanne();
 
 cardcover();
+}

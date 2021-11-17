@@ -1,6 +1,6 @@
-staerke = 3;
-spiel = 3;
-buchbreite  = 50;
+staerke = 2;
+spiel = 1;
+buchbreite  = 40;
 aussenbreite = buchbreite + 2 * staerke + spiel;
 xoffset1 = 23;
 zoffset1 = 20;
@@ -20,7 +20,7 @@ difference(){
     cube([50,aussenbreite,50]);
     translate([staerke, staerke, staerke])
         cube([50,buchbreite+spiel/2,50]);
-    translate([0, buchbreite+staerke-.1, buchbreite+staerke])
+    translate([0, buchbreite+staerke+.49, 50+staerke])
         rotate([0,45,0])
             cube([150,aussenbreite,50]);
 //    translate([xoffset1,0,zoffset1])
@@ -36,7 +36,7 @@ difference(){
 
 element();
 
-//translate([-2,0,0])
-//mirror([[0,1,0]])
-//    element();
+translate([-2,0,0])
+mirror([[0,1,0]])
+    element();
     

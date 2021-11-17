@@ -107,6 +107,9 @@ module antiwanne(){
                             translate([mdfwidth,pseudohexheight])
                             difference(){
                                 square([kantenlaenge*.97,totalheight-pseudohexheight]);
+                                translate([17,20])
+                                rotate([180,0,90])                                
+                                text("Alternative Facts");    
                                 //aussparungen
 //                                translate([1.5,pseudohexheight/2+mdfwidth/2])
 //                                    square([mdfwidth,pseudohexheight/2+mdfwidth/2]);
@@ -118,6 +121,16 @@ module antiwanne(){
 //                                    translate([-1,pseudohexheight+mdfwidth+hexpileheight])
 //                                        square([kantenlaenge+3*mdfwidth,cardheight+mdfwidth*2]);   
                             }
+                            translate([22.5,44.5])//A
+                            square([2,2]);                            
+                            translate([22.5,60])//e
+                            square([2,2]);                        
+                            translate([22.5,79])//a
+                            square([2,2]);                      
+                            translate([22.5,100.5])//e
+                            square([2,2]);                      
+                            translate([22.5,120])//a
+                            square([2,2]);       
                         translate([kantenlaenge/2-4,pseudohexheight-2*mdfwidth]) //#FIXME
                             square([15,mdfwidth*2]); 
                         translate([kantenlaenge/2-4,totalheight]) //#FIXME
@@ -324,7 +337,7 @@ module hextilepile(){
     for (i=[0:numberofhextiles-1]){
         index = i%3;
         translate([0,0,mdfwidth*i])
-            color(colors[index],.5)
+            color(colors[index],.99)
                 hextile();
     }
 }
@@ -538,12 +551,12 @@ translate([0,0,-100])
 //    bottomseparatorhalfshembra(pseudohexheight-2*mdfwidth);
 //    rotate([0,0,180])
 //    bottomseparatorhalfmacho(pseudohexheight-2*mdfwidth);
-//    translate([0,0,pseudohexheight])
-//        hextilepile(); 
+    translate([0,0,pseudohexheight])
+        hextilepile(); 
 //    degenerateseparator(pseudohexheight+separatorwidth+hexpileheight);
     translate([0,0,pseudohexheight+hexpileheight]){
-    //    translate([0,-kantenlaenge/2+cardwidth/2,0])
-    //    deck();
+        translate([0,-kantenlaenge/2+cardwidth/2,0])
+        deck();
         translate([cardnumber/2*cardthickness+mdfwidth/2+1,0,-mdfwidth])
             color("red")
                 cardholder();  

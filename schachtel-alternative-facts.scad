@@ -102,40 +102,40 @@ module antiwanne(){
 ////        translate([-kantenlaenge/2-mdfwidth,plaettchendurchmesser1/2+mdfwidth,0])
 ////            rotate([90,0,0])
 ////                linear_extrude(mdfwidth)
-//                    union(){
-////                        translate([0,0,mdfwidth])
-//                            translate([mdfwidth,pseudohexheight])
-//                            difference(){
-//                                square([kantenlaenge*.97,totalheight-pseudohexheight]);
-//                                translate([17,20])
-//                                rotate([180,0,90])                                
-//                                text("Alternative Facts");    
-//                                //aussparungen
-////                                translate([1.5,pseudohexheight/2+mdfwidth/2])
-////                                    square([mdfwidth,pseudohexheight/2+mdfwidth/2]);
-////                                translate([kantenlaenge+1.5,pseudohexheight/2+mdfwidth/2])
-////                                    square([mdfwidth,pseudohexheight/2+mdfwidth/2]);
-//                                //oberseite
-////                                    translate([-1,pseudohexheight+mdfwidth])
-////                                        square([kantenlaenge+3*mdfwidth,hexpileheight]);  
-////                                    translate([-1,pseudohexheight+mdfwidth+hexpileheight])
-////                                        square([kantenlaenge+3*mdfwidth,cardheight+mdfwidth*2]);   
-//                            }
-//                            translate([22.5,44.5])//A
-//                            square([2,2]);                            
-//                            translate([22.5,60])//e
-//                            square([2,2]);                        
-//                            translate([22.5,79])//a
-//                            square([2,2]);                      
-//                            translate([22.5,100.5])//e
-//                            square([2,2]);                      
-//                            translate([22.5,120])//a
-//                            square([2,2]);       
-//                        translate([kantenlaenge/2-4,pseudohexheight-2*mdfwidth]) //#FIXME
-//                            square([15,mdfwidth*2]); 
-//                        translate([kantenlaenge/2-4,totalheight]) //#FIXME
-//                            square([15,mdfwidth*2]);
-//                    }
+                    union(){
+//                        translate([0,0,mdfwidth])
+                            translate([mdfwidth,pseudohexheight])
+                            difference(){
+                                square([kantenlaenge*.97,totalheight-pseudohexheight]);
+                                translate([17,20])
+                                rotate([180,0,90])                                
+                                text("Alternative Facts");    
+                                //aussparungen
+//                                translate([1.5,pseudohexheight/2+mdfwidth/2])
+//                                    square([mdfwidth,pseudohexheight/2+mdfwidth/2]);
+//                                translate([kantenlaenge+1.5,pseudohexheight/2+mdfwidth/2])
+//                                    square([mdfwidth,pseudohexheight/2+mdfwidth/2]);
+                                //oberseite
+//                                    translate([-1,pseudohexheight+mdfwidth])
+//                                        square([kantenlaenge+3*mdfwidth,hexpileheight]);  
+//                                    translate([-1,pseudohexheight+mdfwidth+hexpileheight])
+//                                        square([kantenlaenge+3*mdfwidth,cardheight+mdfwidth*2]);   
+                            }
+                            translate([22.5,44.5])//A
+                            square([2,2]);                            
+                            translate([22.5,60])//e
+                            square([2,2]);                        
+                            translate([22.5,79])//a
+                            square([2,2]);                      
+                            translate([22.5,100.5])//e
+                            square([2,2]);                      
+                            translate([22.5,120])//a
+                            square([2,2]);       
+                        translate([kantenlaenge/2-4,pseudohexheight-2*mdfwidth]) //#FIXME
+                            square([15,mdfwidth*2]); 
+                        translate([kantenlaenge/2-4,totalheight]) //#FIXME
+                            square([15,mdfwidth*2]);
+                    }
 //    rotate([0,0,120])
 //        translate([-kantenlaenge/2-mdfwidth,plaettchendurchmesser1/2+mdfwidth,0])
 //            rotate([90,0,0])
@@ -165,11 +165,11 @@ module antiwanne(){
 //        translate([-kantenlaenge/2-mdfwidth,plaettchendurchmesser1/2+mdfwidth,0])
 //            rotate([90,0,0])
 //               linear_extrude(mdfwidth)  
-                    union(){
+//                    union(){
 //                        translate([0,0,mdfwidth])  
-                            translate([mdfwidth,pseudohexheight])                
-                            difference(){
-                                square([kantenlaenge*.97,totalheight-pseudohexheight]);
+//                            translate([mdfwidth,pseudohexheight])                
+//                            difference(){
+//                                square([kantenlaenge*.97,totalheight-pseudohexheight]);
                                 //aussparungen
 //                                translate([1.5,pseudohexheight/2+mdfwidth/2])
 //                                    square([mdfwidth,pseudohexheight/2+mdfwidth/2]);
@@ -180,12 +180,12 @@ module antiwanne(){
 //                                    square([kantenlaenge+3*mdfwidth,hexpileheight]);    
 //                                translate([2,pseudohexheight+pseudohexheight+mdfwidth])
 //                                    square([mdfwidth*1.2,80]);                     
-                            }
-                        translate([kantenlaenge/2-4,pseudohexheight-2*mdfwidth]) //#FIXME
-                            square([15,mdfwidth*2]);
-                        translate([kantenlaenge/2-4,totalheight]) //#FIXME
-                            square([15,mdfwidth*2]);
-                        }
+//                            }
+//                        translate([kantenlaenge/2-4,pseudohexheight-2*mdfwidth]) //#FIXME
+//                            square([15,mdfwidth*2]);
+//                        translate([kantenlaenge/2-4,totalheight]) //#FIXME
+//                            square([15,mdfwidth*2]);
+//                        }
 }
 
 module hextileseparator(){
@@ -242,9 +242,9 @@ module cardholder(){
 
 module cardlid(){
     color("green", .6)
-    translate([-54/2,-24,-pseudohexheight+hexpileheight+cardheight/2-mdfwidth])
-    rotate([90,0,0])
-       linear_extrude(mdfwidth)
+//    translate([-54/2,-24,-pseudohexheight+hexpileheight+cardheight/2-mdfwidth])
+//    rotate([90,0,0])
+//       linear_extrude(mdfwidth)
             difference(){
             union(){
                 square([54,cardheight]);
@@ -252,22 +252,22 @@ module cardlid(){
                 square([15,mdfwidth+1]);
             }            
             translate([30,2,0])
-            rotate([0,0,90])
-            scale(.85)
-            text("Alternative Facts");
+                rotate([0,0,90])
+                    scale(.85)
+                        text("Alternative Facts");
             }    
 }
 
 module trapeze(){
     translate([trapezeheight/2,0,mdfwidth/2])
     difference(){
-        cube([trapezeheight,trapezelowerwidth,mdfwidth],center=true);
+        square([trapezeheight,trapezelowerwidth],center=true);
         translate([12,17,0])
             rotate([0,0,60])        
-                cube([trapezeheight,trapezelowerwidth,mdfwidth+1],center=true);
+                square([trapezeheight,trapezelowerwidth],center=true);
         translate([12,-17,0])
             rotate([0,0,-60])        
-                cube([trapezeheight,trapezelowerwidth,mdfwidth+1],center=true);
+                square([trapezeheight,trapezelowerwidth],center=true);
     }
 }
  
@@ -446,8 +446,13 @@ module topseparator2(height=0){
             square([120,120]);
         }
 //        translate([0,0,height-.1])
-//        linear_extrude(mdfwidth*1.1)
-        circle(d=20,$fn=6,center=true);
+//        linear_extrude(mdfwidth*1.1) 
+         translate([0,-27,0])
+        union(){
+            circle(d=20,$fn=6,center=true);
+                translate([-10,0])
+                    square([20,40]);
+        } 
 }
 }
     
@@ -455,7 +460,7 @@ module topseparator2(height=0){
 
 
 
-module bottomseparator(height=0){
+module bottomseparator(height=0,slots=6){
 //    color("#664422",.4)
 //        translate([0,0,height])
 //           linear_extrude(mdfwidth)
@@ -482,25 +487,12 @@ module bottomseparator(height=0){
 //                            translate([xoffset,yoffset]) 
 //                                    square([15,schlitztwidth]);
 //                        outer circle
-                    rotate([0,0,0])
+                    for(i=[1:slots]){
+                    rotate([0,0,i*60])
                         color("blue")
                             translate([xoffset,yoffset-20]) 
                                     square([15,schlitztwidth]);
-                        rotate([0,0,60])
-                            translate([xoffset,yoffset-20]) 
-                                    square([15,schlitztwidth]);
-                        rotate([0,0,120])
-                            translate([xoffset,yoffset-20]) 
-                                    square([15,schlitztwidth]);
-                        rotate([0,0,180])
-                            translate([xoffset,yoffset-20]) 
-                                    square([15,schlitztwidth]);
-                        rotate([0,0,240])
-                            translate([xoffset,yoffset-20]) 
-                                    square([15,schlitztwidth]);
-                        rotate([0,0,300])
-                            translate([xoffset,yoffset-20]) 
-                                    square([15,schlitztwidth]);
+                    } 
             }
                     
 }
@@ -519,11 +511,16 @@ module bottomseparatorhalfmacho(width){
         }
 //        translate([0,0,width-.1])
 //        linear_extrude(mdfwidth*1.1)
-        circle(d=20,$fn=6,center=true);
+        translate([0,27,0])
+        union(){
+            circle(d=20,$fn=6,center=true);
+                translate([-10,-40])
+                    square([20,40]);
+        }
 }
 
 module bottomseparatorhalfhembra(width){
-    color("red")
+    color("red",.4)
     difference(){
         bottomseparator(width=0);
 //        translate([0,0,width-.1])
@@ -533,7 +530,13 @@ module bottomseparatorhalfhembra(width){
 //        linear_extrude(mdfwidth+2)
             translate([-60,0])
             square([120,120]);
-        }
+        translate([0,-27,0])
+        union(){
+            circle(d=20,$fn=6,center=true);
+                translate([-10,0])
+                    square([20,40]);
+        } 
+    }
 }
 
 
@@ -562,7 +565,7 @@ module bottomseparatorhalfhembra(width){
 //                cardholder();  
 //        translate([-(cardnumber/2*cardthickness+mdfwidth/2+1),0,-mdfwidth])
 //            color("red")
-                cardholder();  
+//                cardholder();  
 //    //    translate([0,-22.5,0])
 //    //        rotate([0,0,-90])
 //    //        trapezepile();
@@ -589,4 +592,226 @@ module bottomseparatorhalfhembra(width){
     //cardlid();
 //}
 
-//wanne();
+translate([37,-44]){
+    {
+rotate([0,0,120])
+    bottomseparatorhalfmacho(pseudohexheight-2*mdfwidth);
+translate([304,0,0])
+rotate([0,0,120])
+    topseparator2(pseudohexheight+hexpileheight+cardheight-mdfwidth);
+    
+color("green")    
+translate([76,44,0])
+    bottomseparatorhalfhembra(pseudohexheight-2*mdfwidth);
+color("blue")    
+translate([228,44,0])
+    bottomseparatorhalfhembra(pseudohexheight-2*mdfwidth);
+
+color("black")    
+translate([152,0,0])
+    rotate([0,0,180])
+    bottomseparator(pseudohexheight-2*mdfwidth,slots=3);
+    
+color("orange")    
+translate([76,-44,0])
+    rotate([0,0,180])
+    bottomseparator(pseudohexheight-2*mdfwidth,slots=3);
+    }
+
+
+    translate([304,-88])
+rotate([0,0,180])    
+    {
+rotate([0,0,60])
+    bottomseparatorhalfmacho(pseudohexheight-2*mdfwidth);
+translate([304,0,0])
+rotate([0,0,60])
+    topseparator2(pseudohexheight+hexpileheight+cardheight-mdfwidth);
+    
+color("green")    
+translate([76,44,0])
+    bottomseparatorhalfhembra(pseudohexheight-2*mdfwidth);
+color("blue")    
+translate([228,44,0])
+    bottomseparatorhalfhembra(pseudohexheight-2*mdfwidth);
+
+color("black")    
+translate([152,0,0])
+    rotate([0,0,180])
+    bottomseparator(pseudohexheight-2*mdfwidth,slots=3);
+    
+color("orange")    
+translate([76,-44,0])
+    rotate([0,0,180])
+    bottomseparator(pseudohexheight-2*mdfwidth,slots=3);
+    }
+   
+ 
+translate([-36,-133])
+    rotate([0,0,-90])    
+        cardholder();   
+translate([62,-133])
+    rotate([0,0,-90])    
+        cardholder();    
+translate([145,-130])
+    rotate([0,0,-90])    
+        antiwanne();
+    
+    
+translate([-36,-190])
+    rotate([0,0,-90])    
+        cardholder();   
+translate([62,-190])
+    rotate([0,0,-90])    
+        cardholder();  
+translate([145,-174])
+    rotate([0,0,-90])    
+        antiwanne();
+}
+
+translate([0,-2,0]){
+translate([375,-20])
+trapeze();
+translate([375,-81])
+trapeze();
+translate([375,-142])
+trapeze();
+translate([375,-203])
+trapeze();
+translate([375,-264])
+trapeze();
+
+translate([390,-50.5])
+trapeze();
+translate([390,-111.5])
+trapeze();
+translate([390,-172.5])
+trapeze();
+translate([390,-233.5])
+trapeze();
+translate([390,-294.5])
+trapeze();
+
+translate([405,-20])
+trapeze(); 
+translate([405,-81])
+trapeze();
+translate([405,-142])
+trapeze();
+translate([405,-203])
+trapeze();
+translate([405,-264])
+trapeze();
+translate([405,-81])
+trapeze();
+
+
+ 
+translate([360,-172.5])
+trapeze();
+translate([360,-233.5])
+trapeze();
+translate([360,-294.5])
+trapeze();
+}
+
+translate([20,-307,0])
+rotate([0,0,90])
+    trapeze();
+translate([82,-307,0])
+rotate([0,0,90])
+    trapeze();
+translate([144,-307,0])
+rotate([0,0,90])
+    trapeze();
+translate([206,-307,0])
+rotate([0,0,90])
+    trapeze();
+translate([268,-307,0])
+rotate([0,0,90])
+    trapeze();
+translate([330,-307,0])
+rotate([0,0,90])
+    trapeze();
+
+translate([51,-291,0])
+rotate([0,0,-90])
+    trapeze();
+translate([113,-291,0])
+rotate([0,0,-90])
+    trapeze();
+translate([175,-291,0])
+rotate([0,0,-90])
+    trapeze();
+translate([237,-291,0])
+rotate([0,0,-90])
+    trapeze();
+translate([299,-291,0])
+    rotate([0,0,-90])
+        trapeze();
+
+ 
+translate([211,-290,0])
+rotate([0,0,90])
+    trapeze(); 
+translate([272,-290,0])
+rotate([0,0,90])
+    trapeze(); 
+translate([333,-290,0])
+rotate([0,0,90])
+    trapeze(); 
+ 
+ 
+ translate([242,-273,0])
+rotate([0,0,-90])
+    trapeze(); 
+translate([303,-273,0])
+rotate([0,0,-90])
+    trapeze(); 
+ 
+ 
+ 
+translate([52,-71,0])
+rotate([0,0,-150])
+    trapeze(); 
+translate([52,-105.5,0])
+rotate([0,0,150])
+    trapeze(); 
+    
+translate([24.5,-88,0])
+rotate([0,0,90])
+    trapeze(); 
+translate([24.5,-88.5,0])
+rotate([0,0,-90])
+    trapeze(); 
+    
+    
+translate([21,-18,0])
+rotate([0,0,-150])
+    trapeze(); 
+translate([21,-158,0])
+rotate([0,0,150])
+    trapeze(); 
+    
+translate([326,-18])
+    rotate([0,0,30])
+        trapeze(); 
+        
+translate([356.5,-70])
+    rotate([0,0,30])
+        trapeze(); 
+            
+translate([326,-159])
+    rotate([0,0,-30])
+        trapeze(); 
+        
+translate([356.5,-106])
+    rotate([0,0,-30])
+        trapeze(); 
+
+translate([420,-320]) square([.1,320]);
+translate([376,-320]) square([.1,320]);
+translate([361,-320]) square([.1,320]);
+
+        
+ 

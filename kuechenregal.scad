@@ -152,7 +152,15 @@ module vbrett_mitte(){
 //linear_extrude(mdfwidth)
     difference(){   
     brett(4*jarheight+2*mdfwidth+2*spiel);
-    translate([jarheight*2+spiel,jarwidth/2-schlitzwidth/2])    
+//    translate([jarheight*2+spiel,jarwidth/2-schlitzwidth/2])    
+//        square([mdfwidth,schlitzwidth]);
+//    translate([jarheight*4+spiel*2+mdfwidth,0])    
+//        square([mdfwidth,schlitzwidth]);
+//    translate([jarheight*4+spiel*2+mdfwidth,jarwidth-schlitzwidth])    
+//        square([mdfwidth,schlitzwidth]);
+    translate([jarheight*2+spiel,0])    
+        square([mdfwidth,schlitzwidth]);
+    translate([jarheight*2+spiel,jarwidth-schlitzwidth])    
         square([mdfwidth,schlitzwidth]);
     translate([jarheight*4+spiel*2+mdfwidth,0])    
         square([mdfwidth,schlitzwidth]);
@@ -239,7 +247,7 @@ module spiess(){
 //        }
 }
     
-//joint();
+joint2();
 
 
 
@@ -333,37 +341,50 @@ module spiess(){
 //    joint();  
 //} 
 
-translate([0,0])
-    vbrett_aussen();
-translate([0,91])
-    vbrett_aussen();
-translate([0,182])
-    vbrett_mitte(); 
-translate([433,182])
-mirror([1,0,0])
-    vbrett_innen_mitte();
-translate([363,0])
-    vbrett_innen_bottom();
-translate([363,91])
-    vbrett_innen_bottom();
-translate([0,276])
-rotate([0,0,-90])     
-    spiess();
-translate([0,280])
-rotate([0,0,-90])     
-    spiess();  
-   
-translate([mdfwidth,400]){
-    translate([0,0])
-        hbrett_middle(); 
-    translate([mdfwidth*2,91])
-        hbrett_long_left();
-    translate([0,182])
-        hbrett_long_right();
-    translate([373,0])
-        hbrett_kurz();
-    translate([379,91])
-        hbrett_kurz();
-    translate([376,182])
-        vbrett_innen_mitte();
-}
+
+//420 * 295
+
+//translate([0,0])
+//    vbrett_aussen();
+//translate([0,91])
+//    vbrett_aussen();
+//translate([3,182])
+//    hbrett_middle(); 
+//translate([0,275.1])
+//rotate([0,0,-90])     
+//    spiess();
+//translate([0,278])
+//rotate([0,0,-90])     
+//    spiess();  
+    
+//translate([mdfwidth,400]){
+//    translate([0,0])
+//        hbrett_long_right();
+//    translate([mdfwidth*2,91])
+//        hbrett_long_left();
+//    translate([-mdfwidth,182])
+//        vbrett_mitte();  
+//}    
+//    
+//translate([mdfwidth,800]){
+//    translate([90,0])
+//        rotate([0,0,90])
+//            vbrett_innen_mitte();
+//    translate([181,6])
+//        rotate([0,0,90])
+//            hbrett_kurz();
+//    translate([272,6])
+//        rotate([0,0,90])
+//            hbrett_kurz(); 
+//    translate([363,142])
+//        rotate([0,0,90])
+//        mirror([1,0,0])
+//            vbrett_innen_mitte();
+//    translate([90,146])
+//        rotate([0,0,90])
+//        vbrett_innen_bottom();
+//    translate([363,146])
+//        rotate([0,0,90])
+//        vbrett_innen_bottom();
+//}
+

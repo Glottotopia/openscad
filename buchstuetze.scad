@@ -1,6 +1,6 @@
 staerke = 2;
 spiel = 1;
-buchbreite  = 40;
+buchbreite  = 30;
 aussenbreite = buchbreite + 2 * staerke + spiel;
 xoffset1 = 23;
 zoffset1 = 20;

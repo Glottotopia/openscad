@@ -668,150 +668,163 @@ translate([145,-174])
     rotate([0,0,-90])    
         antiwanne();
 }
+//
+//translate([0,-2,0]){
+//translate([375,-20])
+//trapeze();
+//translate([375,-81])
+//trapeze();
+//translate([375,-142])
+//trapeze();
+//translate([375,-203])
+//trapeze();
+//translate([375,-264])
+//trapeze();
+//
+//translate([390,-50.5])
+//trapeze();
+//translate([390,-111.5])
+//trapeze();
+//translate([390,-172.5])
+//trapeze();
+//translate([390,-233.5])
+//trapeze();
+//
+//
+//translate([405,-20])
+//trapeze(); 
+//translate([405,-81])
+//trapeze();
+//translate([405,-142])
+//trapeze();
+//translate([405,-203])
+//trapeze();
+//translate([405,-264])
+//trapeze();
+//translate([405,-81])
+//trapeze();
+//
+//
+//
+//translate([420,-50.5])
+//trapeze();
+//translate([420,-111.5])
+//trapeze();
+//translate([420,-172.5])
+//trapeze();
+//translate([420,-233.5])
+//trapeze();
+////translate([420,-294.5])
+////trapeze();
+//
+//
+// 
+//translate([360,-172.5])
+//trapeze();
+//translate([360,-233.5])
+//trapeze();
+////translate([360,-294.5])
+////trapeze();
+//}
 
-translate([0,-2,0]){
-translate([375,-20])
-trapeze();
-translate([375,-81])
-trapeze();
-translate([375,-142])
-trapeze();
-translate([375,-203])
-trapeze();
-translate([375,-264])
-trapeze();
+//translate([20,-307,0])
+//rotate([0,0,90])
+//    trapeze();
+//translate([82,-307,0])
+//rotate([0,0,90])
+//    trapeze();
+//translate([144,-307,0])
+//rotate([0,0,90])
+//    trapeze();
+//translate([211,-298,0])
+//rotate([0,0,90])
+//    trapeze();
+//translate([268,-29,0])
+//rotate([0,0,90])
+//    trapeze();
+//translate([330,-29,0])
+//rotate([0,0,90])
+//    trapeze();
+//
+//translate([51,-291,0])
+//rotate([0,0,-90])
+//    trapeze();
+//translate([113,-291,0])
+//rotate([0,0,-90])
+//    trapeze();
+//translate([175,-291,0])
+//rotate([0,0,-90])
+//    trapeze();
+//translate([242,-282,0])
+//rotate([0,0,-90])
+//    trapeze();
+//translate([304,-282,0])
+//    rotate([0,0,-90])
+//        trapeze();
+//
+// 
+//translate([211,-281,0])
+//rotate([0,0,90])
+//    trapeze(); 
+//translate([272,-281,0])
+//rotate([0,0,90])
+//    trapeze(); 
+//translate([333,-281,0])
+//rotate([0,0,90])
+//    trapeze(); 
+// 
+// 
+// translate([242,-265,0])
+//rotate([0,0,-90])
+//    trapeze(); 
+//translate([303,-265,0])
+//rotate([0,0,-90])
+//    trapeze(); 
+// 
+// 
+// 
+//translate([52,-71,0])
+//rotate([0,0,-150])
+//    trapeze(); 
+//translate([52,-105.5,0])
+//rotate([0,0,150])
+//    trapeze(); 
+//    
+//translate([24.5,-88,0])
+//rotate([0,0,90])
+//    trapeze(); 
+//translate([24.5,-88.5,0])
+//rotate([0,0,-90])
+//    trapeze(); 
+//    
+//    
+//translate([21,-18,0])
+//rotate([0,0,-150])
+//    trapeze(); 
+//translate([21,-158,0])
+//rotate([0,0,150])
+//    trapeze(); 
+//    
+//translate([326,-18])
+//    rotate([0,0,30])
+//        trapeze(); 
+//        
+//translate([356.5,-70])
+//    rotate([0,0,30])
+//        trapeze(); 
+//            
+//translate([326,-159])
+//    rotate([0,0,-30])
+//        trapeze(); 
+//        
+//translate([356.5,-106])
+//    rotate([0,0,-30])
+//        trapeze(); 
 
-translate([390,-50.5])
-trapeze();
-translate([390,-111.5])
-trapeze();
-translate([390,-172.5])
-trapeze();
-translate([390,-233.5])
-trapeze();
-translate([390,-294.5])
-trapeze();
-
-translate([405,-20])
-trapeze(); 
-translate([405,-81])
-trapeze();
-translate([405,-142])
-trapeze();
-translate([405,-203])
-trapeze();
-translate([405,-264])
-trapeze();
-translate([405,-81])
-trapeze();
-
-
- 
-translate([360,-172.5])
-trapeze();
-translate([360,-233.5])
-trapeze();
-translate([360,-294.5])
-trapeze();
-}
-
-translate([20,-307,0])
-rotate([0,0,90])
-    trapeze();
-translate([82,-307,0])
-rotate([0,0,90])
-    trapeze();
-translate([144,-307,0])
-rotate([0,0,90])
-    trapeze();
-translate([206,-307,0])
-rotate([0,0,90])
-    trapeze();
-translate([268,-307,0])
-rotate([0,0,90])
-    trapeze();
-translate([330,-307,0])
-rotate([0,0,90])
-    trapeze();
-
-translate([51,-291,0])
-rotate([0,0,-90])
-    trapeze();
-translate([113,-291,0])
-rotate([0,0,-90])
-    trapeze();
-translate([175,-291,0])
-rotate([0,0,-90])
-    trapeze();
-translate([237,-291,0])
-rotate([0,0,-90])
-    trapeze();
-translate([299,-291,0])
-    rotate([0,0,-90])
-        trapeze();
-
- 
-translate([211,-290,0])
-rotate([0,0,90])
-    trapeze(); 
-translate([272,-290,0])
-rotate([0,0,90])
-    trapeze(); 
-translate([333,-290,0])
-rotate([0,0,90])
-    trapeze(); 
- 
- 
- translate([242,-273,0])
-rotate([0,0,-90])
-    trapeze(); 
-translate([303,-273,0])
-rotate([0,0,-90])
-    trapeze(); 
- 
- 
- 
-translate([52,-71,0])
-rotate([0,0,-150])
-    trapeze(); 
-translate([52,-105.5,0])
-rotate([0,0,150])
-    trapeze(); 
-    
-translate([24.5,-88,0])
-rotate([0,0,90])
-    trapeze(); 
-translate([24.5,-88.5,0])
-rotate([0,0,-90])
-    trapeze(); 
-    
-    
-translate([21,-18,0])
-rotate([0,0,-150])
-    trapeze(); 
-translate([21,-158,0])
-rotate([0,0,150])
-    trapeze(); 
-    
-translate([326,-18])
-    rotate([0,0,30])
-        trapeze(); 
-        
-translate([356.5,-70])
-    rotate([0,0,30])
-        trapeze(); 
-            
-translate([326,-159])
-    rotate([0,0,-30])
-        trapeze(); 
-        
-translate([356.5,-106])
-    rotate([0,0,-30])
-        trapeze(); 
-
-translate([420,-320]) square([.1,320]);
-translate([376,-320]) square([.1,320]);
-translate([361,-320]) square([.1,320]);
+//translate([435,-320]) square([.1,300]);
+//translate([420,-320]) square([.1,300]);
+//translate([376,-320]) square([.1,300]);
+//translate([361,-320]) square([.1,300]);
 
         
  

@@ -46,7 +46,9 @@ function randpercent(i,p)= 100*(rands(1-p,1+p,1)[0]+i);
 
 for (h=[0:hpieces]){
     for (v=[0:vpieces]){ 
-        puzzlestueck(h,v);
+        if(h%2==v%2){
+            puzzlestueck(h,v);
+        }
     }
 }
     
@@ -54,13 +56,23 @@ module puzzlestueck(i,j){
 //    translate([hpos,v*blockwidth]){ 
 //        color("orange",.2)
 //                difference(){
-    p1 = matrix[i][j];
-    p2 = matrix[i+1][j]; 
-    p3 = matrix[i+1][j+1];
-    p4 = matrix[i][j+1];
-    echo(p1,p2,p3,p4);
+    corner1 = matrix[i][j];
+    corner2 = matrix[i+1][j]; 
+    corner3 = matrix[i+1][j+1];
+    corner4 = matrix[i][j+1];
+    lateraloffset1 = 10*rands(1-randomspread,1+randomspread,1)[0];
+    lateraloffset2 = 10*rands(1-randomspread,1+randomspread,1)[0];
+    orthogonaloffset1 = 20*rands(1-randomspread,1+randomspread,1)[0];
+    orthogonaloffset2 = 20*rands(1-randomspread,1+randomspread,1)[0];
+    sign_ = sign(rand1 = rands(-1,1,1)[0]);    
+    echo(sign_);
+    m12a = [(corner1[0]+corner2[0])/2-lateraloffset1,(corner1[1]+corner2[1])/2+0]; 
+    m12b = [(corner1[0]+corner2[0])/2-lateraloffset1,(corner1[1]+corner2[1])/2-orthogonaloffset1*sign_];  
+    m12c = [(corner1[0]+corner2[0])/2+lateraloffset2,(corner1[1]+corner2[1])/2-orthogonaloffset2*sign_];
+    m12d = [(corner1[0]+corner2[0])/2+lateraloffset2,(corner1[1]+corner2[1])/2+0]; 
+    echo(corner1,m12a,corner2,corner3,corner4);
     color("green",rands(.2,1,1)[0])
-    polygon([p1,p2,p3,p4]); 
+    polygon([corner1,m12a,m12b,m12c,m12d,corner2,corner3,corner4]); 
     rand = rands(-entrywidth,entrywidth,1)[0]; 
     rand2 = rands(-entrywidth,entrywidth,1)[0];  
 //    if (rand>0){           

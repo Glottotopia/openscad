@@ -1,60 +1,139 @@
-hpieces = 8;
-vpieces = 5;
+hpieces = 4;
+vpieces = 3;
 blockwidth = 20;
 entrywidth = 4;
 paroiwidth = (blockwidth-entrywidth)/2;
 linkersize = 4;
+randomspread = .1;
+
+matrix = concat(
+    [[for (i=[0:hpieces+1]) [0,i*100]]],
+    [for (i=[0:hpieces+1]) 
+        concat(
+            [[(i+1)*100,0]],
+            [for (j=[0:vpieces+1]) 
+                    [randpercent(i,randomspread),randpercent(j,randomspread)]
+            ]
+        )
+]
+);
+//echo(matrix);
+    
+//
+//for (h=[0:hpieces]){
+//    if (h%2==1){
+////        continue
+//    }
+//    else{
+//        for (v=[0:vpieces]){
+//            hpos = h*blockwidth;
+//            if (v%2==0){
+//                hpos = (h+1)*blockwidth;
+//                translate([hpos,v*blockwidth]){
+//                    puzzlestueck();
+//                }
+//            }
+//            else{
+//                translate([hpos,v*blockwidth]){
+//                    puzzlestueck(); 
+//                }         
+//            }  
+//        }      
+//    }
+//}
+
+function randpercent(i,p)= 100*(rands(1-p,1+p,1)[0]+i); 
 
 for (h=[0:hpieces]){
-    for (v=[0:vpieces]){
-        translate([h*blockwidth,v*blockwidth]){
-            color("orange",.2)
-                difference(){
-                square([blockwidth,blockwidth]);
-                translate([.1,.1])
-                    square([blockwidth-.2,blockwidth-.2]);
-                }
-                    
-//            color("black")
-//                square([linkersize,linkersize],center=true);
-            
-//            translate([paroiwidth,0])
-//                color("red")
-//                    square([linkersize/2,linkersize/2],center=true);
-//            translate([paroiwidth+entrywidth,0])
-//                color("red")
-//                    square([linkersize/2,linkersize/2],center=true);   
-            
-            rand = rands(-entrywidth,entrywidth,1)[0];
-            offset = 0;
-            if (rand>0){                 
-                color("pink",.9)
-                translate([paroiwidth,0])
-                square([entrywidth,entrywidth]);
-            }
-            else{
-                translate([paroiwidth,-entrywidth])
-                color("pink",.5)
-                square([entrywidth,entrywidth]);
-            } 
-//            translate([0,paroiwidth])
-//                color("green")
-//                    square([linkersize/2,linkersize/2],center=true);
-//            translate([0,paroiwidth+entrywidth])
-//                color("green")
-//                    square([linkersize/2,linkersize/2],center=true);  
-            rand = rands(-entrywidth,entrywidth,1)[0];
-            offset = 0;
-            if (rand>0){                 
-                color("brown",.9)
-                translate([0,paroiwidth])
-                square([entrywidth,entrywidth]);
-            }
-            else{
-                translate([-entrywidth,paroiwidth])
-                color("brown",.5)
-                square([entrywidth,entrywidth]);
-            }         
-        }        
+    for (v=[0:vpieces]){ 
+        puzzlestueck(h,v);
     }
 }
+    
+module puzzlestueck(i,j){       
+//    translate([hpos,v*blockwidth]){ 
+//        color("orange",.2)
+//                difference(){
+    p1 = matrix[i][j];
+    p2 = matrix[i+1][j]; 
+    p3 = matrix[i+1][j+1];
+    p4 = matrix[i][j+1];
+    echo(p1,p2,p3,p4);
+    color("green",rands(.2,1,1)[0])
+    polygon([p1,p2,p3,p4]); 
+    rand = rands(-entrywidth,entrywidth,1)[0]; 
+    rand2 = rands(-entrywidth,entrywidth,1)[0];  
+//    if (rand>0){           
+//        if (rand2>0){ //weg weg
+//            difference(){
+//                square([blockwidth,blockwidth]);        
+//                translate([paroiwidth,0])
+//                    fuesschen();
+//                translate([paroiwidth,blockwidth-entrywidth]) 
+//                    rotatefuesschen();
+//            }
+//        }
+//        else{//weg dazu
+//            union(){                    
+//                difference(){
+//                    square([blockwidth,blockwidth]);        
+//                translate([paroiwidth,0])
+//                    fuesschen();
+//                }
+//                translate([paroiwidth,blockwidth]) 
+//                    fuesschen();
+//            } 
+//        }
+//    }
+//    else{          
+//        if (rand2>0){ //dazu weg
+//            union(){
+//                difference(){
+//                    square([blockwidth,blockwidth]);        
+//                    translate([paroiwidth,blockwidth-entrywidth])
+//                        rotatefuesschen();
+//                }
+//                translate([paroiwidth,-entrywidth]) 
+//                rotatefuesschen();
+//            }
+//        }
+//        else{//dazu dazu
+//            union(){ 
+//                square([blockwidth,blockwidth]);        
+//                translate([paroiwidth,-entrywidth])
+//                    rotatefuesschen();   
+//                translate([paroiwidth,blockwidth])
+//                    fuesschen();
+//                } 
+//            }
+//        } 
+    }   
+    
+
+module fuesschen(angle=0){
+    union(){
+        translate([0,0])
+            hals();
+        translate([0,3])
+            kopf();
+    }
+}
+
+module rotatefuesschen(){
+    translate([0,3.3])
+    rotate(180)
+        fuesschen();
+}
+    
+module hals(){
+    circle(1,$fn=20);
+}
+
+module kopf(){
+    circle(3,$fn=20);
+}
+
+//fuesschen();
+    
+    
+        

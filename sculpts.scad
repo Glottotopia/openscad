@@ -232,3 +232,55 @@ module spirale() {
     }
 
 }
+
+module looping2(){
+    breite = fahrbahnbreite;
+    radius = 25;
+    umfang = 2 * 3.1415 * radius; 
+    steps = 555;
+    bandenbreite = 1;
+    shift = breite-bandenbreite;
+    bandenhoehe = spurweite*.66;
+    fahrbahndicke = 1;
+
+    for (i=[0:steps]){
+        rotate([i*360/steps,0,0])    
+            translate([-i*shift/steps,0,-radius])
+                    element();
+    }
+
+
+    module element(){
+        linear_extrude(fahrbahndicke)
+            square([breite,umfang/steps]);
+        linear_extrude(bandenhoehe)
+            square(bandenbreite,umfang/steps);
+        translate([breite-bandenbreite,0,0])
+            linear_extrude(bandenhoehe)
+                square(bandenbreite,umfang/steps);
+    }
+}
+
+module loopingplaettchen(){
+//    difference() {
+        union() {
+            plaettchen(geometry="X");
+            rotate([0,0,50])
+            translate([-4,0,35])            
+            looping2();
+        }
+    //    rotate([10,0,0])
+    //        translate([0,4,plaettchenhoehe*1.5])
+    //            resize(newsize=[sechseckhoehe*.95,sechseckhoehe*1.25,plaettchenhoehe*2])
+    //                sphere(sechseckhoehe/2);
+//        translate([0,5.5-sechseckhoehe/2,11.5])
+//            rotate([10,0,0])
+//                rotate ([-90,45,0])
+//    //                cylinder (h = sechseckhoehe*.55, d=fahrbahnbreite+4, center = true, $fn=4);
+//                    cylinder (h = sechseckhoehe, d=15, $fn=100);
+//        translate([0,0,10])
+//            canals(slots=[3]);
+
+  }
+  
+  

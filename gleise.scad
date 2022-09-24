@@ -215,3 +215,7 @@ gleis(0.0*sechseckhoehe+sechseckhoehe*4,spurweite,extra_schwellen=3);
 module gleis5(){
 gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=4);
 }
+
+module gleis_mm(length){
+gleis(length,spurweite,extra_schwellen=length/50);
+}

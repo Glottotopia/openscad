@@ -237,7 +237,7 @@ module looping2(){
     breite = fahrbahnbreite;
     radius = 25;
     umfang = 2 * 3.1415 * radius; 
-    steps = 555;
+    steps = 12;
     bandenbreite = 1;
     shift = breite-bandenbreite;
     bandenhoehe = spurweite*.66;

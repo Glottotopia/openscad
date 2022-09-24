@@ -1,0 +1,23 @@
+boardwidth=15;
+innerwidth=453;
+frontheight=75;
+backheight=90;
+frontextra=10;
+backextra=5;
+horizontalextra=10;
+hookwidth=5;
+hookheight=10;
+holderwidth=10;
+color("brown",.7)
+//linear_extrude(4)
+{
+square([innerwidth,frontheight]);
+translate([-boardwidth,frontheight])
+    square([boardwidth+horizontalextra,frontextra]);
+translate([innerwidth-horizontalextra,backheight])
+    square([horizontalextra+boardwidth,backextra]);
+translate([innerwidth-holderwidth,0])    
+    square([holderwidth,backheight+backextra]);
+translate([innerwidth+boardwidth,backheight-hookheight])
+    square([hookwidth,hookheight+backextra]);
+}

@@ -26,12 +26,12 @@ module brett(length){
 }
 
 module hbrett(length){
-//    linear_extrude(mdfwidth)
+    linear_extrude(mdfwidth)
         brett(length);
 }
 
 module hbrett_long_left(){
-//    linear_extrude(mdfwidth)
+    linear_extrude(mdfwidth)
     union(){
         difference(){    
             brett(4*jarwidth+mdfwidth); 
@@ -62,7 +62,7 @@ module hbrett_long_left(){
 
 
 module hbrett_long_right(){
-//    linear_extrude(mdfwidth)
+    linear_extrude(mdfwidth)
     union(){
         difference(){    
             brett(4*jarwidth+mdfwidth); 
@@ -93,7 +93,7 @@ module hbrett_long_right(){
 
 
 module hbrett_kurz(){
-//    linear_extrude(mdfwidth)
+    linear_extrude(mdfwidth)
     union(){    
         brett(2*jarwidth); 
         translate([2*jarwidth,jarwidth/2-schlitzwidth/2])
@@ -114,7 +114,7 @@ module hbrett_kurz(){
 }
     
 module hbrett_middle(){
-//    linear_extrude(mdfwidth)
+    linear_extrude(mdfwidth)
     union(){
         difference(){    
             brett(4*jarwidth+mdfwidth); 
@@ -135,8 +135,8 @@ module hbrett_middle(){
 
 module vbrett_aussen(){   
 color("yellow",.2)    
-//rotate([0,-90,0])
-//linear_extrude(mdfwidth)
+rotate([0,-90,0])
+linear_extrude(mdfwidth)
     difference(){    
     brett(5*jarheight+2*mdfwidth+2*spiel); 
     translate([jarheight*2+spiel,jarwidth/2-schlitzwidth/2])    
@@ -148,8 +148,8 @@ color("yellow",.2)
 
 
 module vbrett_mitte(){   
-//rotate([0,-90,0])
-//linear_extrude(mdfwidth)
+rotate([0,-90,0])
+linear_extrude(mdfwidth)
     difference(){   
     brett(4*jarheight+2*mdfwidth+2*spiel);
 //    translate([jarheight*2+spiel,jarwidth/2-schlitzwidth/2])    
@@ -171,15 +171,15 @@ module vbrett_mitte(){
 
 
 module vbrett_innen(){   
-//rotate([0,-90,0])
-//linear_extrude(mdfwidth)
+rotate([0,-90,0])
+linear_extrude(mdfwidth)
     brett(jarheight*2+spiel);
 }
 
 
 module vbrett_innen_bottom(){   
-//rotate([0,-90,0])
-//linear_extrude(mdfwidth)
+rotate([0,-90,0])
+linear_extrude(mdfwidth)
     union(){
         brett(jarheight*2+spiel);
         translate([jarheight*2+spiel,10])
@@ -188,8 +188,8 @@ module vbrett_innen_bottom(){
 }
 
 module vbrett_innen_mitte(){   
-//rotate([0,-90,0])
-//linear_extrude(mdfwidth)
+rotate([0,-90,0])
+linear_extrude(mdfwidth)
     union(){
         brett(jarheight*2+spiel);
         translate([-mdfwidth,jarwidth/2+schlitzwidth/2-10])
@@ -240,151 +240,150 @@ module joint2(){
 
 
 module spiess(){
-//    translate([0,mdfwidth,0])
-//    rotate([90,0,0])
-//    linear_extrude(mdfwidth){
+    translate([0,mdfwidth,0])
+    rotate([90,0,0])
+    linear_extrude(mdfwidth){
         square([mdfwidth,5*jarheight+2*mdfwidth+2*spiel]);
-//        }
+        }
 }
     
 joint2();
 
 
 
-//translate([0,0,0])    
-//    jarrow();
-//translate([0,0,1*jarheight])    
-//    jarrow();
-//translate([0,0,2*jarheight+mdfwidth+spiel])    
-//    jarrow();
-//translate([0,0,3*jarheight+mdfwidth+spiel])    
-//    jarrow(); 
-//translate([0,0,4*jarheight+mdfwidth*2+spiel*2])    
-//    jarrow();
-// 
-//translate([4*jarwidth+mdfwidth,0,0])
-//{
-//translate([0,0,0])    
-//    jarrow();
-//translate([0,0,1*jarheight])    
-//    jarrow();
-//translate([0,0,2*jarheight+mdfwidth+spiel])    
-//    jarrow();
-//translate([0,0,3*jarheight+mdfwidth+spiel])    
-//    jarrow(); 
-//translate([0,0,4*jarheight+mdfwidth*2+spiel*2])    
-//    jarrow();
-//}
+translate([0,0,0])    
+    jarrow();
+translate([0,0,1*jarheight])    
+    jarrow();
+translate([0,0,2*jarheight+mdfwidth+spiel])    
+    jarrow();
+translate([0,0,3*jarheight+mdfwidth+spiel])    
+    jarrow(); 
+translate([0,0,4*jarheight+mdfwidth*2+spiel*2])    
+    jarrow();
+ 
+translate([4*jarwidth+mdfwidth,0,0])
+{
+translate([0,0,0])    
+    jarrow();
+translate([0,0,1*jarheight])    
+    jarrow();
+translate([0,0,2*jarheight+mdfwidth+spiel])    
+    jarrow();
+translate([0,0,3*jarheight+mdfwidth+spiel])    
+    jarrow(); 
+translate([0,0,4*jarheight+mdfwidth*2+spiel*2])    
+    jarrow();
+}
 
 
-//color("black")
-//translate([-2*mdfwidth,jarwidth/2-mdfwidth/2,0])
-//spiess();
-//
-//color("yellow",.6)
-//translate([0,0])
-//vbrett_aussen();
-//
-//color("grey")
-//translate([0,0,2*jarheight+spiel])
-//    hbrett_long_left();
-//
-//color("pink")    
-//translate([0,0,4*jarheight+spiel*2+mdfwidth])
-//    hbrett_kurz();
+color("black")
+translate([-2*mdfwidth,jarwidth/2-mdfwidth/2,0])
+spiess();
+
+color("yellow",.6)
+translate([0,0])
+vbrett_aussen();
+
+color("grey")
+translate([0,0,2*jarheight+spiel])
+    hbrett_long_left();
+
+color("pink")    
+translate([0,0,4*jarheight+spiel*2+mdfwidth])
+    hbrett_kurz();
+    
+color("brown")    
+translate([2*jarwidth+mdfwidth,0,4*jarheight+spiel*2+mdfwidth])
+    hbrett_middle();
+
+color("red")    
+translate([2*jarwidth+mdfwidth,0,0])    
+vbrett_innen_bottom();
+
+color("green")    
+translate([2*jarwidth+mdfwidth,0,jarheight*2+spiel+mdfwidth])    
+vbrett_innen_mitte();
+
+
+translate([mdfwidth+4*jarwidth+mdfwidth,0,0])    
+vbrett_mitte();
+
+color("grey")
+translate([4*jarwidth+2*mdfwidth,0,2*jarheight+spiel])
+    hbrett_long_right();
+
+color("pink")    
+translate([6*jarwidth+3*mdfwidth,0,4*jarheight+spiel*2+mdfwidth])
+    hbrett_kurz(2*jarwidth);
 //    
-//color("brown")    
-//translate([2*jarwidth+mdfwidth,0,4*jarheight+spiel*2+mdfwidth])
-//    hbrett_middle();
-//
-//color("red")    
-//translate([2*jarwidth+mdfwidth,0,0])    
-//vbrett_innen_bottom();
-//
-//color("green")    
-//translate([2*jarwidth+mdfwidth,0,jarheight*2+spiel+mdfwidth])    
-//vbrett_innen_mitte();
-//
-//
-//translate([mdfwidth+4*jarwidth+mdfwidth,0,0])    
-//vbrett_mitte();
-//
-//color("grey")
-//translate([4*jarwidth+2*mdfwidth,0,2*jarheight+spiel])
-//    hbrett_long_right();
-//
-//color("pink")    
-//translate([6*jarwidth+3*mdfwidth,0,4*jarheight+spiel*2+mdfwidth])
-//    hbrett_kurz(2*jarwidth);
-////    
-//color("brown")    
-//translate([2*jarwidth,0,4*jarheight+spiel*2+mdfwidth])
-//    hbrett(4*jarwidth);
-//
-//
-//color("red")    
-//translate([mdfwidth*2+6*jarwidth+mdfwidth,0,0])    
-//vbrett_innen_bottom();
-//
-//color("green")    
-//translate([mdfwidth*2+6*jarwidth+mdfwidth,0,jarheight*2+spiel+mdfwidth])    
-//vbrett_innen_mitte();
-//
-//
-//translate([8*jarwidth+4*mdfwidth,0,0])  
-//vbrett_aussen();
-//
-//for(i=[0:4]){
-//    translate([-2*mdfwidth+2*i*jarwidth+i*mdfwidth,-1,2*jarheight-1])
-//    joint2();
-//    translate([-2*mdfwidth+2*i*jarwidth+i*mdfwidth,-1,4*jarheight+mdfwidth+spiel-1])
-//    joint();  
-//} 
+color("brown")    
+translate([2*jarwidth,0,4*jarheight+spiel*2+mdfwidth])
+    hbrett(4*jarwidth);
+
+
+color("red")    
+translate([mdfwidth*2+6*jarwidth+mdfwidth,0,0])    
+vbrett_innen_bottom();
+
+color("green")    
+translate([mdfwidth*2+6*jarwidth+mdfwidth,0,jarheight*2+spiel+mdfwidth])    
+vbrett_innen_mitte();
+
+
+translate([8*jarwidth+4*mdfwidth,0,0])  
+vbrett_aussen();
+
+for(i=[0:4]){
+    translate([-2*mdfwidth+2*i*jarwidth+i*mdfwidth,-1,2*jarheight-1])
+    joint2();
+    translate([-2*mdfwidth+2*i*jarwidth+i*mdfwidth,-1,4*jarheight+mdfwidth+spiel-1])
+    joint();  
+} 
 
 
 //420 * 295
 
-//translate([0,0])
-//    vbrett_aussen();
-//translate([0,91])
-//    vbrett_aussen();
-//translate([3,182])
-//    hbrett_middle(); 
-//translate([0,275.1])
-//rotate([0,0,-90])     
-//    spiess();
-//translate([0,278])
-//rotate([0,0,-90])     
-//    spiess();  
+translate([0,0])
+    vbrett_aussen();
+translate([0,91])
+    vbrett_aussen();
+translate([3,182])
+    hbrett_middle(); 
+translate([0,275.1])
+rotate([0,0,-90])     
+    spiess();
+translate([0,278])
+rotate([0,0,-90])     
+    spiess();  
     
-//translate([mdfwidth,400]){
-//    translate([0,0])
-//        hbrett_long_right();
-//    translate([mdfwidth*2,91])
-//        hbrett_long_left();
-//    translate([-mdfwidth,182])
-//        vbrett_mitte();  
-//}    
-//    
-//translate([mdfwidth,800]){
-//    translate([90,0])
-//        rotate([0,0,90])
-//            vbrett_innen_mitte();
-//    translate([181,6])
-//        rotate([0,0,90])
-//            hbrett_kurz();
-//    translate([272,6])
-//        rotate([0,0,90])
-//            hbrett_kurz(); 
-//    translate([363,142])
-//        rotate([0,0,90])
-//        mirror([1,0,0])
-//            vbrett_innen_mitte();
-//    translate([90,146])
-//        rotate([0,0,90])
-//        vbrett_innen_bottom();
-//    translate([363,146])
-//        rotate([0,0,90])
-//        vbrett_innen_bottom();
-//}
-
+translate([mdfwidth,400]){
+    translate([0,0])
+        hbrett_long_right();
+    translate([mdfwidth*2,91])
+        hbrett_long_left();
+    translate([-mdfwidth,182])
+        vbrett_mitte();  
+}    
+    
+translate([mdfwidth,800]){
+    translate([90,0])
+        rotate([0,0,90])
+            vbrett_innen_mitte();
+    translate([181,6])
+        rotate([0,0,90])
+            hbrett_kurz();
+    translate([272,6])
+        rotate([0,0,90])
+            hbrett_kurz(); 
+    translate([363,142])
+        rotate([0,0,90])
+        mirror([1,0,0])
+            vbrett_innen_mitte();
+    translate([90,146])
+        rotate([0,0,90])
+        vbrett_innen_bottom();
+    translate([363,146])
+        rotate([0,0,90])
+        vbrett_innen_bottom();
+}

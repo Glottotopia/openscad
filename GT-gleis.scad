@@ -63,16 +63,16 @@ module hakenfill(angle=0){
 
 // good
 
-//plaettchen(0,0,geometry="Cc",runwayrotate=0,solid=true);
-//plaettchen(0,1,geometry="C",runwayrotate=120,solid=true);
-//plaettchen(0,-1,hakenpositionen=[],geometry="I",solid=true,runwayrotate=180);
-//plaettchen(0,-2,hakenpositionen=[],geometry="*",solid=true,runwayrotate=180);
-//plaettchen(1,-1,geometry="I",runwayrotate=0);
-//plaettchen(2,-1,geometry="cC",runwayrotate=180);
-//plaettchen(4,-1,geometry="X",runwayrotate=120);
-//plaettchen(1,1,geometry="c",runwayrotate=0);
-//plaettchen(1,0,geometry="X",runwayrotate=120);
-//plaettchen(1,-2,geometry="cC",runwayrotate=60);
+plaettchen(0,0,geometry="Cc",runwayrotate=0,solid=true);
+plaettchen(0,1,geometry="C",runwayrotate=120,solid=true);
+plaettchen(0,-1,hakenpositionen=[],geometry="I",solid=true,runwayrotate=180);
+plaettchen(0,-2,hakenpositionen=[],geometry="*",solid=true,runwayrotate=180);
+plaettchen(1,-1,geometry="I",runwayrotate=0);
+plaettchen(2,-1,geometry="cC",runwayrotate=180);
+plaettchen(4,-1,geometry="X",runwayrotate=120);
+plaettchen(1,1,geometry="c",runwayrotate=0);
+plaettchen(1,0,geometry="X",runwayrotate=120);
+plaettchen(1,-2,geometry="cC",runwayrotate=60);
 
 
 
@@ -106,9 +106,9 @@ module hakenfill(angle=0){
 //plaettchen(1,1,geometry="I",runwayrotate=0);
 //plaettchen(4,-1,geometry="I",runwayrotate=0);
 //
-////enge kurve
-//translate([0,sechseckhoehe*.5])
-//kurve(120); 
+//enge kurve
+translate([0,sechseckhoehe*.5])
+kurve(120); 
 //
 //
 ////weite kurve
@@ -381,7 +381,6 @@ module looping(rotate=0,spread=20,safety=false,x_offset=0,y_offset=0){
 //                        } 
 //                        
 //                translate([-0,5.75,-19]) 
-//                rotate([0,0,210])
 //                        {
 //                schiene(5,double=false);
 //                translate([0,spurweite, 0])
@@ -404,9 +403,15 @@ module looping(rotate=0,spread=20,safety=false,x_offset=0,y_offset=0){
 //
 //haube();
 
-//spirale();
+spirale();
 
-loopingplaettchen();
+//loopingplaettchen();
+
+gleis_mm(750);
+translate([0,20,0])
+gleis3();
+translate([0,40,0])
+gleis4();
 
 
 

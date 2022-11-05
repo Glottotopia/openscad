@@ -7,7 +7,7 @@ quiverbottomwidth = spooldiameter+spiel;
 quivertopwidth = spooldiameter+spiel+spiel; 
 quiverstep = 2;
 
-framewidth = 72;
+framewidth = 32;
 frameheight = 1200;
 stepheight = 15; 
 quivertilt = 40;
@@ -132,6 +132,10 @@ difference(){
     band();  
     translate([0,0,-50])
     cube([4000,4000,100],center=true);
+    translate([-framewidth/2,frameheight,-10])
+        cylinder(h=1000,$fn=20,d=4);
+    translate([-framewidth/2,10,-10])
+        cylinder(h=1000,$fn=20,d=4);
 }
 //quiver(letter="a");
         

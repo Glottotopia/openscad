@@ -185,5 +185,5 @@ if (solid){
     }
 }
 
-plaettchen();
+//plaettchen();
 

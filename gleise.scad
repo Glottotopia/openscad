@@ -1,9 +1,9 @@
 
-module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true){
+module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true, hooks=true){
     translate([0,0, fahrbahnhoehe])
-    schiene(laenge-hakenrotationradius);
+    schiene(laenge-hakenrotationradius,hooks=hooks);
     translate([0,spurweite, fahrbahnhoehe])
-    schiene(laenge-hakenrotationradius);
+    schiene(laenge-hakenrotationradius,hooks=hooks);
     faecher=1+extra_schwellen;
     schwellenoffset=(laenge-2*schwellensafety-schwellenbreite)/faecher;
     for (i=[0:faecher]){
@@ -13,7 +13,7 @@ module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true){
 //    color("red")
 //    translate([laenge-schwellensafety,0,0])
 //    schwelle(spurweite);
-//    if (fluegel){
+    if (fluegel){
         translate([-hakenrotationradius/2,0,fahrbahnhoehe])
         fluegel();
     //
@@ -29,15 +29,27 @@ module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true){
         mirror([1,0,0])
         mirror([0,1,0])
         fluegel();
-//    }
+    }
 }
 
-module schiene(laenge, radius=gleisdicke/2, double=true){
+module schiene(laenge, radius=gleisdicke/2, double=true, hooks=true){
     stange(laenge,radius=radius);
     color("red")
-    haken(xoffset=laenge,knob=false);
-    if (double){
-        rotatehaken(xoffset=0, knob=false);
+    if (hooks){
+        haken(xoffset=laenge,knob=false);
+        if (double){
+            rotatehaken(xoffset=0, knob=false);
+        }
+    }
+    else{ 
+//        translate([-5,0,0]) 
+//            rotate([0,90,0])
+//                linear_extrude(5) 
+//                    circle(d = 2, $fn=fn);
+//        translate([laenge,0,0]) 
+//            rotate([0,90,0])
+//                linear_extrude(5) 
+//                    circle(d = 2, $fn=fn);
     }
 }
 
@@ -144,7 +156,7 @@ module doppelscheibe(abstand=spurweite){
     scheibe();
 }
 
-module kurve(winkel=120,scope=1){
+module kurve(winkel=120,scope=1,hooks=true){
     drehschwelle(spurweite=spurweite,winkel=winkel,scope=scope);
 //    rotate([0,0,30])
 //    translate([scope*.5*5,scope*.5*20])
@@ -155,12 +167,26 @@ module kurve(winkel=120,scope=1){
 //    rotate([0,0,90])
 //    schwelle();
 //    haken
-    rotate([0,0,270])
-    translate([0,.5*spurweite,fahrbahnhoehe])
-    haken();
-    rotate([0,0,270])
-    translate([0,-.5*spurweite,fahrbahnhoehe])
-    haken();
+    if (hooks){
+        rotate([0,0,270])
+            translate([0,.5*spurweite,fahrbahnhoehe])
+                haken();
+        rotate([0,0,270])
+            translate([0,-.5*spurweite,fahrbahnhoehe])
+                haken();
+    }
+    else{
+        rotate([0,0,270])
+            translate([0,.5*spurweite,fahrbahnhoehe])                   
+                rotate([0,90,0])
+                    linear_extrude(5) 
+                        circle(d = 2, $fn=fn);
+                rotate([0,0,270])
+                    translate([0,-.5*spurweite,fahrbahnhoehe]) 
+                        rotate([0,90,0])
+                            linear_extrude(5) 
+                                circle(d = 2, $fn=fn);
+    }
     translate([-scope*0.5*sechseckkantenlaenge, 0])
     rotate_extrude(convexity = 10, angle=winkel, $fn=fn)
     translate([scope*.5*sechseckkantenlaenge, fahrbahnhoehe])
@@ -216,6 +242,6 @@ module gleis5(){
 gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=4);
 }
 
-module gleis_mm(length){
-gleis(length,spurweite,extra_schwellen=length/50);
+module gleis_mm(length, hooks=true, fluegel=true){
+gleis(length,spurweite,extra_schwellen=length/50,hooks=false,fluegel=fluegel);
 }

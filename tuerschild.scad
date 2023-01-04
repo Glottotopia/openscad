@@ -82,7 +82,26 @@ module saegezahndreieck(){
 //        saegezahndreieck();
 //color("blue",.5)
 //    rotate([anstellwinkel2,120,0]) 
+// linear_extrude(1)
+ 
+ scale([.5,.5,.5])
+ difference(){
         saegezahndreieck();
+// color("orange")
+//    linear_extrude(3)
+        translate([40,220,0])
+            rotate([0,0,170])
+                scale([2,2,2])
+                    import("diver3.svg");
+//        translate([35,225,0])
+//            rotate([0,0,175])
+//                scale([2,2,2])
+//                    import("diver2.svg");
+//        translate([42,240,0])
+//            rotate([0,0,175])
+//                scale([2,2,2])
+//                    import("diver1.svg");
+ }
 
  
 

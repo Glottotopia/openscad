@@ -17,19 +17,30 @@ mapsizes = [
 //Large:    104 x 64  (10 players, 20 city-states, 6 natural wonders)
 //Huge:     128 x 80  (12 players, 24 city-states, 7 natural wonders)
 
-size = 5;
+size = 1;
 mapspecs = mapsizes[size];
 xrange = mapspecs[0];
 yrange = mapspecs[1];
 number_of_continents = mapspecs[2];
 number_of_islands = mapspecs[3];
 
-
 surface_=(xrange+1)*(yrange+1);
 percent_landmass = .25;
 land_tiles = surface_*percent_landmass;
+
+
+//number_of_mountain_ranges = number_of_continents; 
+
+number_of_smaller_mountains = floor(number_of_islands/percent_landmass);
+number_of_vegetation_ranges= floor(number_of_islands/percent_landmass);
+
+hill_percentage = 10;
+
+
 tiles_per_continent = floor(land_tiles/number_of_continents)-1;
 tiles_per_island = 20;
+tiles_per_mountain = tiles_per_island;
+tiles_per_vegetation_range = tiles_per_island;
 //echo(tiles_per_continent);
 
 module hex(x,y,color="blue"){
@@ -97,22 +108,20 @@ function is_in (coord,list) = len(search(coord, list)) > 0 ? true:false;
 
 function is_in_vector(c,v) = len(search(1,[ for (el = v)  c==el?1:0 ]))>0;
   
+function expand_coastal_waters(list) = [for(i=[0:floor(len(coastal_waters*extra_coastal_waters_factor))+1])
+                        get_one_neighboring_tile(
+                                            list[random_int(0, len(list)-1)]
+                                        )
+                        ];
 
-//continent_seeds = [
-//random_coord(xrange*.1,yrange*.1,xrange*.4,yrange*.4),
-//random_coord(xrange*.6,yrange*.1,xrange*.9,yrange*.4),
-//random_coord(xrange*.1,yrange*.6,xrange*.4,yrange*.9),
-//random_coord(xrange*.6,yrange*.6,xrange*.9,yrange*.9)
-//];
-
-stray=number_of_continents*1;
+stray=floor(number_of_continents*1.4);
 effective_x_range = xrange  ;
 effective_y_range = yrange  ;
 
 
 x_slice_range = 2*floor(effective_x_range/(number_of_continents+1));
 y_slice_range = floor(effective_y_range/3);
-echo(xrange,yrange,x_slice_range,y_slice_range);
+//echo(xrange,yrange,x_slice_range,y_slice_range);
 
 number_of_x_slices = number_of_continents/2;
 
@@ -125,52 +134,42 @@ continent_seeds = [
 ];
 
 island_seeds = [for (i=[1:number_of_islands]) random_coord(0,0,xrange,yrange)];
+single_mountain_seeds = [for (i=[1:number_of_smaller_mountains]) random_coord(0,0,xrange,yrange)];
+vegetation_seeds = [for (i=[1:number_of_vegetation_ranges]) random_coord(0,0,xrange,yrange)]; 
 
   
 
 continent_tiles = [for (i=[0:len(continent_seeds)-1]) continent_tile_list([continent_seeds[i]],tiles_per_continent)];    
-   
-
-island_tiles = [for (i=[0:number_of_islands-1]) for (coord=island_tile_list([island_seeds[i]],tiles_per_island)) coord];  
-     
- 
+island_tiles = [for (i=[0:number_of_islands-1]) for (coord=island_tile_list([island_seeds[i]],tiles_per_island)) coord];   
+smaller_mountain_tiles = [for (i=[0:number_of_smaller_mountains-1]) for (coord=island_tile_list([single_mountain_seeds[i]],tiles_per_mountain)) coord];  
+vegetation_tiles= [for (i=[0:number_of_vegetation_ranges-1]) for (coord=island_tile_list([vegetation_seeds[i]],tiles_per_vegetation_range)) coord];  
    
 landmass_tiles = concat(island_tiles,[for (continent=continent_tiles) for (coord=continent) coord]); 
 coastal_waters = [for(coord=landmass_tiles) for (neighbor_tile=all_surrounding_tiles(coord)) is_in_vector(neighbor_tile,landmass_tiles)?[-1,-1]:neighbor_tile]; 
-
-//coastal_waters = [[8,18],[6,8],[7,8],[8,7],[6,8],[8,5],[8,10],[9,8],[7,7],[6,4]];
-extra_coastal_waters_factor = .01;
-//extra_coastal_waters_length = floor(len(coastal_waters*extra_coastal_waters_factor)); 
-
-function expand_coastal_waters(list) = [for(i=[0:floor(len(coastal_waters*extra_coastal_waters_factor))+1])
-                        get_one_neighboring_tile(
-                                            list[random_int(0, len(list)-1)]
-                                        )
-                        ];
-
-//echo(coastal_waters);
+ 
+extra_coastal_waters_factor = .01; 
 extra_coastal_waters = expand_coastal_waters(coastal_waters);
-extra_coastal_waters2 = expand_coastal_waters(extra_coastal_waters);
-//extra_coastal_waters3 = expand_coastal_waters(extra_coastal_waters2);
-
-
-
+extra_coastal_waters2 = expand_coastal_waters(extra_coastal_waters); 
 total_base_coastal_waters = concat(coastal_waters,extra_coastal_waters,extra_coastal_waters2);
 
-
-//total_base_coastal_waters = coastal_waters;
-
 deep_water_intrusion_factor = 2;
-
-//echo(total_base_coastal_waters);
-total_coastal_waters = [for(coord=total_base_coastal_waters) if(random_int(0,deep_water_intrusion_factor) != deep_water_intrusion_factor) coord];
-//total_coastal_waters = coastal_waters;
  
-//echo(total_coastal_waters);
- 
+total_coastal_waters = [for(coord=total_base_coastal_waters) if(random_int(0,deep_water_intrusion_factor) != deep_water_intrusion_factor) coord]; 
+     
+effective_mountain_tiles = [for(coord=landmass_tiles) if(is_in_vector(coord,smaller_mountain_tiles)) coord];  
+hill_tiles =  [for(coord=landmass_tiles) (is_in_vector(coord,effective_mountain_tiles) || (rands(0,100,1)[0] > hill_percentage))? [-1,-1]:coord];  
+     
+effective_vegetation_tiles = [for(coord=landmass_tiles) if(is_in_vector(coord,vegetation_tiles) && (!is_in_vector(effective_mountain_tiles))) coord];   
+jungle_tiles =   [for(coord=effective_vegetation_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10) coord];     
+forest_tiles =   [for(coord=effective_vegetation_tiles) if(!is_in_vector(jungle_tiles)) coord];     
+//echo(hill_tiles);
 function get_terrain(coord) = 
     is_in_vector(coord,continent_seeds)?"red":
-        is_in_vector(coord,landmass_tiles)?"black":
+        is_in_vector(coord,effective_mountain_tiles)?"#222222":
+//            is_in_vector(coord,hill_tiles)?"#bbaabb":
+                is_in_vector(coord,jungle_tiles) ?"#449944":
+                    is_in_vector(coord,forest_tiles) ?"#44ff44":
+                        is_in_vector(coord,landmass_tiles) ?"#ddccdd":
 //            is_in_vector(coord,continent_tiles[2])?"black":
 //                is_in_vector(coord,continent_tiles[3])?"black":
 //                    is_in_vector(coord,island_tiles)?"black":
@@ -179,8 +178,6 @@ function get_terrain(coord) =
     
 
 color_matrix=[ for (x = [ 0 : xrange ]) [ for (y = [ 0 : yrange ])  get_terrain([x,y])  ] ];
-     
-
 for (i=[0:xrange]){
     for (j=[0:yrange]){
         hex(i,j,color_matrix[i][j]);

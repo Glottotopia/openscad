@@ -17,7 +17,7 @@ mapsizes = [
 //Large:    104 x 64  (10 players, 20 city-states, 6 natural wonders)
 //Huge:     128 x 80  (12 players, 24 city-states, 7 natural wonders)
 
-size = 1;
+size = 5;
 mapspecs = mapsizes[size];
 xrange = mapspecs[0];
 yrange = mapspecs[1];
@@ -35,12 +35,15 @@ number_of_smaller_mountains = floor(number_of_islands/percent_landmass);
 number_of_vegetation_ranges= floor(number_of_islands/percent_landmass);
 
 hill_percentage = 10;
+jungle_percentage = 80;
+snow_percentage = 80;
+desert_percentage_equator = 50;
 
 
 tiles_per_continent = floor(land_tiles/number_of_continents)-1;
 tiles_per_island = 20;
 tiles_per_mountain = tiles_per_island;
-tiles_per_vegetation_range = tiles_per_island;
+tiles_per_vegetation_range = 2*tiles_per_island;
 //echo(tiles_per_continent);
 
 module hex(x,y,color="blue"){
@@ -160,24 +163,38 @@ effective_mountain_tiles = [for(coord=landmass_tiles) if(is_in_vector(coord,smal
 hill_tiles =  [for(coord=landmass_tiles) (is_in_vector(coord,effective_mountain_tiles) || (rands(0,100,1)[0] > hill_percentage))? [-1,-1]:coord];  
      
 effective_vegetation_tiles = [for(coord=landmass_tiles) if(is_in_vector(coord,vegetation_tiles) && (!is_in_vector(effective_mountain_tiles))) coord];   
-jungle_tiles =   [for(coord=effective_vegetation_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10) coord];     
+jungle_tiles =   [for(coord=effective_vegetation_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10 && (rands(0,100,1)[0] < jungle_percentage)) coord];     
 forest_tiles =   [for(coord=effective_vegetation_tiles) if(!is_in_vector(jungle_tiles)) coord];     
+    
+equator = yrange/2;
+function desert_percentage(latitude) = (100-log((latitude-equator)*(latitude-equator)+1))/3;
+ 
+
+desert_tiles =   [for(coord=landmass_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10 && (rands(0,100,1)[0] < desert_percentage(coord[1]))) coord];   
+snow_tiles =   [for(coord=landmass_tiles) if((coord[1]<3 || coord[1]>yrange-3) && (rands(0,100,1)[0] < snow_percentage)) coord];   
+tundra_tiles =   [for(coord=landmass_tiles) if((coord[1]<6 || coord[1]>yrange-6) && (rands(0,100,1)[0] < snow_percentage)) coord];   
+    
+echo(snow_tiles)   ;
 //echo(hill_tiles);
 function get_terrain(coord) = 
     is_in_vector(coord,continent_seeds)?"red":
         is_in_vector(coord,effective_mountain_tiles)?"#222222":
-//            is_in_vector(coord,hill_tiles)?"#bbaabb":
                 is_in_vector(coord,jungle_tiles) ?"#449944":
                     is_in_vector(coord,forest_tiles) ?"#44ff44":
-                        is_in_vector(coord,landmass_tiles) ?"#ddccdd":
+                        is_in_vector(coord,snow_tiles) ?"#FFFFFF":
+                            is_in_vector(coord,tundra_tiles) ?"#cccccc":
+                                is_in_vector(coord,hill_tiles)?"#cc9999":
+                                    is_in_vector(coord,desert_tiles)?"yellow":
+                                        is_in_vector(coord,landmass_tiles) ?"#bbaabb":
 //            is_in_vector(coord,continent_tiles[2])?"black":
 //                is_in_vector(coord,continent_tiles[3])?"black":
 //                    is_in_vector(coord,island_tiles)?"black":
-                        is_in_vector(coord,total_coastal_waters)?"#6666ff":
+                        is_in_vector(coord,total_coastal_waters)?"#3333ff":
                             "blue"; 
     
 
 color_matrix=[ for (x = [ 0 : xrange ]) [ for (y = [ 0 : yrange ])  get_terrain([x,y])  ] ];
+   
 for (i=[0:xrange]){
     for (j=[0:yrange]){
         hex(i,j,color_matrix[i][j]);

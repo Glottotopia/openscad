@@ -2,6 +2,14 @@ radius=1;
 long_diameter=2; 
 short_diameter=2*sin(60)*radius;
 
+mapsizes = [
+ [40,25,2,6],
+ [56,36,4,10],
+ [66,42,6,15],
+ [80,52,8,20],
+ [104,64,10,30],
+ [128,80,12,40]
+];
 //Duel:      40 x 25  (2 players, 4 city-states, 2 natural wonders)
 //Tiny:      56 x 36  (4 players, 8 city-states, 3 natural wonders)
 //Small:     66 x 42  (6 players, 12 city-states, 3 natural wonders)
@@ -9,21 +17,20 @@ short_diameter=2*sin(60)*radius;
 //Large:    104 x 64  (10 players, 20 city-states, 6 natural wonders)
 //Huge:     128 x 80  (12 players, 24 city-states, 7 natural wonders)
 
-xrange=80;
-yrange=52;
+size = 5;
+mapspecs = mapsizes[size];
+xrange = mapspecs[0];
+yrange = mapspecs[1];
+number_of_continents = mapspecs[2];
+number_of_islands = mapspecs[3];
 
-
-number_of_continents=4;
-
-
-number_of_islands=10;
 
 surface_=(xrange+1)*(yrange+1);
 percent_landmass = .25;
 land_tiles = surface_*percent_landmass;
 tiles_per_continent = floor(land_tiles/number_of_continents)-1;
 tiles_per_island = 20;
-echo(tiles_per_continent);
+//echo(tiles_per_continent);
 
 module hex(x,y,color="blue"){
     x_offset=x*1.5*long_diameter;  
@@ -33,19 +40,17 @@ module hex(x,y,color="blue"){
     translate([x_offset,y_offset])
         {
         circle($fn=6,long_diameter);
-            scale([.1,.1]){                
-            translate([-6,3])
-            text(str(x));
-            translate([-6,-10])
-            text(str(y));
-            }
+//            scale([.1,.1]){                
+//            translate([-6,3])
+//            text(str(x));
+//            translate([-6,-10])
+//            text(str(y));
+//            }
         }
 }
 
 function f_y_offsetc(x,y)=x%2==0?(y*2-x)+x:(y*2-x)+x+1;
-
-//10 10 -- +-
-//9 9 -+ ++
+ 
 function all_surrounding_tiles(coord) = coord[0]%2==0? 
                                         [[coord[0],coord[1]+1],
                                          [coord[0],coord[1]-1],
@@ -76,6 +81,8 @@ island_reduction = tiles_per_island/4;
 function island_tile_list(list,count) = count < 0 ? list : island_tile_list(concat(get_one_more_tile(list)),count-random_int(1,island_reduction));
   
 function random_coord(xbottom,ybottom,xtop,ytop)=[floor(rands(xbottom,xtop,1)[0]),floor(rands(ybottom,ytop,1)[0])];
+
+function continent_seed(x,y,stray) = [x+floor(rands(-stray,stray,1)[0]),y+floor(rands(-stray,stray,1)[0])];
  
 function random_int(bottom,top) = floor(rands(bottom,top+1,1)[0]);
  
@@ -89,19 +96,39 @@ function is_in (coord,list) = len(search(coord, list)) > 0 ? true:false;
 
 
 function is_in_vector(c,v) = len(search(1,[ for (el = v)  c==el?1:0 ]))>0;
- 
+  
+
+//continent_seeds = [
+//random_coord(xrange*.1,yrange*.1,xrange*.4,yrange*.4),
+//random_coord(xrange*.6,yrange*.1,xrange*.9,yrange*.4),
+//random_coord(xrange*.1,yrange*.6,xrange*.4,yrange*.9),
+//random_coord(xrange*.6,yrange*.6,xrange*.9,yrange*.9)
+//];
+
+stray=number_of_continents*1;
+effective_x_range = xrange  ;
+effective_y_range = yrange  ;
+
+
+x_slice_range = 2*floor(effective_x_range/(number_of_continents+1));
+y_slice_range = floor(effective_y_range/3);
+echo(xrange,yrange,x_slice_range,y_slice_range);
+
+number_of_x_slices = number_of_continents/2;
+
 continent_seeds = [
-random_coord(xrange*.1,yrange*.1,xrange*.4,yrange*.4),
-random_coord(xrange*.6,yrange*.1,xrange*.9,yrange*.4),
-random_coord(xrange*.1,yrange*.6,xrange*.4,yrange*.9),
-random_coord(xrange*.6,yrange*.6,xrange*.9,yrange*.9)
+ for (longitude_index=[1:number_of_x_slices])
+    for (latitude_index=[1:2])
+         continent_seed(x_slice_range * longitude_index,
+                        y_slice_range * latitude_index,
+                        stray)
 ];
 
 island_seeds = [for (i=[1:number_of_islands]) random_coord(0,0,xrange,yrange)];
 
   
 
-continent_tiles = [for (i=[0:number_of_continents-1]) continent_tile_list([continent_seeds[i]],tiles_per_continent)];    
+continent_tiles = [for (i=[0:len(continent_seeds)-1]) continent_tile_list([continent_seeds[i]],tiles_per_continent)];    
    
 
 island_tiles = [for (i=[0:number_of_islands-1]) for (coord=island_tile_list([island_seeds[i]],tiles_per_island)) coord];  
@@ -142,11 +169,11 @@ total_coastal_waters = [for(coord=total_base_coastal_waters) if(random_int(0,dee
 //echo(total_coastal_waters);
  
 function get_terrain(coord) = 
-    is_in_vector(coord,continent_tiles[0])?"red":
-        is_in_vector(coord,continent_tiles[1])?"green":
-            is_in_vector(coord,continent_tiles[2])?"orange":
-                is_in_vector(coord,continent_tiles[3])?"yellow":
-                    is_in_vector(coord,island_tiles)?"#cccccc":
+    is_in_vector(coord,continent_seeds)?"red":
+        is_in_vector(coord,landmass_tiles)?"black":
+//            is_in_vector(coord,continent_tiles[2])?"black":
+//                is_in_vector(coord,continent_tiles[3])?"black":
+//                    is_in_vector(coord,island_tiles)?"black":
                         is_in_vector(coord,total_coastal_waters)?"#6666ff":
                             "blue"; 
     

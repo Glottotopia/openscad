@@ -25,7 +25,7 @@ number_of_continents = mapspecs[2];
 number_of_islands = mapspecs[3];
 
 surface_=(xrange+1)*(yrange+1);
-percent_landmass = .25;
+percent_landmass = .45;
 land_tiles = surface_*percent_landmass;
 
 
@@ -33,6 +33,7 @@ land_tiles = surface_*percent_landmass;
 
 number_of_smaller_mountains = floor(number_of_islands/percent_landmass);
 number_of_vegetation_ranges= floor(number_of_islands/percent_landmass);
+number_of_rivers=number_of_continents*2;
 
 hill_percentage = 10;
 jungle_percentage = 80;
@@ -56,12 +57,12 @@ module hex(x,y,elevation=.1,resource="",color_="blue"){
         {
         color(color_,.5)
         cylinder($fn=6,d1=long_diameter*1.95,d2=long_diameter/2,h=elevation);
-//            scale([.1,.1]){                
-//            translate([-6,3])
-//            text(str(x));
-//            translate([-6,-10])
-//            text(str(y));
-//            }
+            scale([.1,.1]){                
+            translate([-6,3])
+            text(str(x));
+            translate([-6,-10])
+            text(str(y));
+            }
         color("black")
         translate([-1,-1,elevation])
             scale([.2,.2])
@@ -94,6 +95,57 @@ function get_one_more_tile(list) =
 //            floor(rands(0,len(list),1)[0])
             ])]
         );
+        
+//module river_edge(coord,edge){ 
+//    translate([coord[0]*1.5*long_diameter,f_y_offsetc(coord[0],coord[1])*short_diameter]) 
+//        rotate([0,0,60*edge])
+//            translate([-long_diameter/2,short_diameter])
+//                rotate([0,90])
+//                    color("red") 
+//                    rotate([0,0,45])
+//                        cylinder(h=2.25,d=1,$fn=4);    
+//}
+
+function get_corners(x,y) =
+        x%2==0?
+            [
+                [x, y, 0],
+                [x+1, y, 1],
+                [x-1, y, 0],
+                [x, y, 1],
+                [x-1, y-1, 0],
+                [x+1, y-1, 1]
+            ]:            
+            [
+                [x, y, 0],
+                [x+1, y+1, 1],
+                [x-1, y+1, 0],
+                [x, y, 1],
+                [x-1, y, 0],
+                [x+1, y, 1]
+            ]           
+;
+
+module river_corner(x,y,o){        
+    translate([x*1.5*long_diameter,f_y_offsetc(x,y)*short_diameter]) 
+        rotate([0,0,o*180-60])
+            translate([long_diameter/2,short_diameter])
+                    cylinder(d=.2,h=.22,$fn=6);
+}
+ 
+module river_edge(start,end){ 
+    color("#2288ff",.8) 
+    hull(){
+        river_corner(start[0],start[1],start[2]);
+        river_corner(end[0],end[1],end[2]); 
+    }
+}
+
+module river(corners){
+    for (i=[0:len(corners)-2]){
+        river_edge(corners[i],corners[i+1]);
+    }
+}
              
 function continent_tile_list(list,count) = count == 0 ? list : continent_tile_list(concat(get_one_more_tile(list)),count-1);
 
@@ -151,7 +203,7 @@ function get_terrain(coord) =
                                                         deepsea_color; 
 
 function get_resource(coord,color_) = 
-    rands(0,100,1)[0]>resource_percentage? "":
+    rand100()>resource_percentage? "":
         color_==coastal_waters_color? get_coastal_waters_resource():
             !is_in_vector(coord,landmass_tiles)? "":
                 is_in_vector(coord,effective_mountain_tiles)? "":
@@ -176,43 +228,49 @@ function get_elevation(coord) =
                 
 resource_percentage = 12;      
 
+function rand100() = rands(0,100,1)[0];
 
-
-function get_coastal_waters_resource() = rands(0,100,1)[0]<70?"f":
-                                            rands(0,100,1)[0]<70?"W":
-                                                "C";
+function get_coastal_waters_resource() = rand100()<70?"f":
+                                            rand100()<70?"W":
+                                                rand100()<70?"C":
+                                                    "P";
                                                 
                                                 
-function get_jungle_resource() = rands(0,100,1)[0]<100?"b":
-                                                "R";
+function get_jungle_resource() = rand100()<80?"b":
+                                    rand100()<50?"S":
+                                        "C";
                                                 
                                                 
-function get_desert_resource() = rands(0,100,1)[0]<50?"w":
-                                                "s";
+function get_desert_resource() = rand100()<33?"w":
+                                    rand100()<33?"s":
+                                        "G";
                                                 
-function get_plains_resource() = rands(0,100,1)[0]<25?"w":
-                                        rands(0,100,1)[0]<33?"c":
-                                            rands(0,100,1)[0]<50?"b":
-                                                "s";
+function get_plains_resource() = rand100()<25?"w":
+                                        rand100()<33?"c":
+                                            rand100()<50?"b": 
+                                                rand100()<66?"s":
+                                                   rand100()<50? "G": 
+                                                        "I";
                                                 
-                                                
-function get_grassland_resource() = rands(0,100,1)[0]<33?"c":
-                                        rands(0,100,1)[0]<50?"b":
+function get_grassland_resource() = rand100()<33?"c":
+                                        rand100()<50?"b":
                                             "s";
                                                 
                                                 
-function get_hills_resource() = rands(0,100,1)[0]<100?"s":
+function get_hills_resource() = rand100()<80?"s":
+                                                "G";
+                                                
+                                                
+function get_forest_resource() = rand100()<80?"d":
+                                                rand100()<50?"Z": //seide
+                                                "S";
+                                                
+function get_snow_resource() = rand100()<100?"s":
                                                 "R";
                                                 
-                                                
-function get_forest_resource() = rands(0,100,1)[0]<100?"d":
-                                                "R";
-                                                
-function get_snow_resource() = rands(0,100,1)[0]<100?"s":
-                                                "R";
-                                                
-function get_tundra_resource() = rands(0,100,1)[0]<50?"d":
-                                                "s";
+function get_tundra_resource() = rand100()<50?"d":
+                                    rand100()<66?"s":
+                                        "G"; 
                                                 
                                                 
     
@@ -263,26 +321,48 @@ total_coastal_waters = [for(coord=total_base_coastal_waters) if(random_int(0,dee
      
 landmass_pole_tiles = concat(landmass_tiles,pole_tiles);
 effective_mountain_tiles = [for(coord=landmass_pole_tiles) if(is_in_vector(coord,smaller_mountain_tiles)) coord];  
-hill_tiles =  [for(coord=landmass_pole_tiles) (is_in_vector(coord,effective_mountain_tiles) || (rands(0,100,1)[0] > hill_percentage))? [-1,-1]:coord];  
+hill_tiles =  [for(coord=landmass_pole_tiles) (is_in_vector(coord,effective_mountain_tiles) || (rand100() > hill_percentage))? [-1,-1]:coord];  
      
 effective_vegetation_tiles = [for(coord=landmass_tiles) if(is_in_vector(coord,vegetation_tiles) && (!is_in_vector(effective_mountain_tiles))) coord];   
-jungle_tiles =   [for(coord=effective_vegetation_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10 && (rands(0,100,1)[0] < jungle_percentage)) coord];     
+jungle_tiles =   [for(coord=effective_vegetation_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10 && (rand100() < jungle_percentage)) coord];     
 forest_tiles =   [for(coord=effective_vegetation_tiles) if(!is_in_vector(jungle_tiles)) coord];     
     
 equator = yrange/2;
 function desert_percentage(latitude) = (100-log((latitude-equator)*(latitude-equator)+1))/3;
  
 
-desert_tiles =   [for(coord=landmass_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10 && (rands(0,100,1)[0] < desert_percentage(coord[1]))) coord];   
-snow_tiles =   [for(coord=landmass_tiles) if((coord[1]<3 || coord[1]>yrange-3) && (rands(0,100,1)[0] < snow_percentage)) coord];   
-tundra_tiles =   [for(coord=landmass_tiles) if((coord[1]<6 || coord[1]>yrange-6) && (rands(0,100,1)[0] < snow_percentage)) coord];   
+desert_tiles =   [for(coord=landmass_tiles) if(coord[1]>yrange/2-yrange/10 && coord[1]<yrange/2+yrange/10 && (rand100() < desert_percentage(coord[1]))) coord];   
+snow_tiles =   [for(coord=landmass_tiles) if((coord[1]<3 || coord[1]>yrange-3) && (rand100() < snow_percentage)) coord];   
+tundra_tiles =   [for(coord=landmass_tiles) if((coord[1]<6 || coord[1]>yrange-6) && (rand100() < snow_percentage)) coord];   
     
 
-grassland_tiles =   [for(coord=landmass_tiles) if(rands(0,100,1)[0] < grassland_percentage) coord];     
+grassland_tiles =   [for(coord=landmass_tiles) if(rand100() < grassland_percentage) coord];     
 //plains_tiles =   [for(coord=landmass_tiles) if(!is_in_vector(grassland_tiles)) coord];     
  
-
+water_corners = [for (coord=total_base_coastal_waters) get_corners(coord[0],coord[1])];
     
+function  pick_one(list) = list[floor(rands(0,len(list),1)[0])];
+
+function next_corner(x,y,o,exclude=[-1,-1,0]) = 
+    // get the three corner, discard the one you are coming from, pick one randomly
+    [for (c=get_corners(x,y)) if (c!=exclude) c][rand100()%2];
+
+echo(effective_mountain_tiles);
+river_seeds = [for (i=[0:number_of_rivers]) pick_one(effective_mountain_tiles)];
+echo(river_seeds);
+
+function generate_river(coord) = generate_river_segment([coord[0],coord[1],0], [], old=[-1,-1,0]);
+
+function generate_river_segment(corner, list, old=[-1,-1,0]) = 
+    len(list)>10? list:
+//        is_in_vector(corner,water_corners)? list: 
+            generate_river_segment(next_corner(corner[0],corner[1],corner[2],exclude=old),concat(list,[corner]),old=corner);
+
+test_river_corners = generate_river(river_seeds[0]);
+
+echo(test_river_corners);
+
+river(test_river_corners);
 
 color_matrix=[ for (x = [ 0 : xrange ]) [ for (y = [ 0 : yrange ])  get_terrain([x,y])  ] ];
     
@@ -297,4 +377,7 @@ for (i=[0:xrange]){
     }
 }
 
+
+ 
+//river([[11,11,0],[12,12,1],[11,12,0],[13,12,1],[12,13,0],[13,13,1],[11,13,0]]);
 

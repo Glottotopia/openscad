@@ -126,6 +126,36 @@ function get_corners(x,y) =
             ]           
 ;
 
+function get_corners_for_corner(x,y,o) =
+        o==0 && x%2==0?
+            [
+                [x+1, y, 1],
+                [x+1, y-1, 1],
+                [x+2, y, 1]
+            ]: o==0 && x%2==1?        
+                [
+                    [x+1, y, 1],
+                    [x+1, y+1, 1],
+                    [x+2, y, 1]
+                ]  : o==1 && x%2==0?        
+                    [
+                        [x-1, y, 0],
+                        [x-1, y-1, 0],
+                        [x-2, y, 0]
+                    ]     :        
+                        [
+                            [x-1, y+1, 0],
+                            [x-1, y, 0],
+                            [x-2, y, 0]
+                        ]        
+;
+
+
+function next_corner(x,y,o,exclude=[-1,-1,0]) = 
+    // get the three corners, discard the one you are coming from, pick one randomly
+    [for (c=get_corners_for_corner(x,y,o)) if (c!=exclude) c][rand100()%2];
+        
+
 module river_corner(x,y,o){        
     translate([x*1.5*long_diameter,f_y_offsetc(x,y)*short_diameter]) 
         rotate([0,0,o*180-60])
@@ -343,9 +373,6 @@ water_corners = [for (coord=total_base_coastal_waters) get_corners(coord[0],coor
     
 function  pick_one(list) = list[floor(rands(0,len(list),1)[0])];
 
-function next_corner(x,y,o,exclude=[-1,-1,0]) = 
-    // get the three corner, discard the one you are coming from, pick one randomly
-    [for (c=get_corners(x,y)) if (c!=exclude) c][rand100()%2];
 
 echo(effective_mountain_tiles);
 river_seeds = [for (i=[0:number_of_rivers]) pick_one(effective_mountain_tiles)];

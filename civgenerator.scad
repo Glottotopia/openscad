@@ -151,9 +151,9 @@ function get_corners_for_corner(x,y,o) =
 ;
 
 
-function next_corner(x,y,o,exclude=[-1,-1,0]) = 
+function next_corner(x,y,o,exclude=[]) = 
     // get the three corners, discard the one you are coming from, pick one randomly
-    [for (c=get_corners_for_corner(x,y,o)) if (c!=exclude) c][rand100()%2];
+    [for (c=get_corners_for_corner(x,y,o)) if (!is_in_vector(c,exclude)) c][rand100()%2];
         
 
 module river_corner(x,y,o){        
@@ -368,28 +368,39 @@ tundra_tiles =   [for(coord=landmass_tiles) if((coord[1]<6 || coord[1]>yrange-6)
 
 grassland_tiles =   [for(coord=landmass_tiles) if(rand100() < grassland_percentage) coord];     
 //plains_tiles =   [for(coord=landmass_tiles) if(!is_in_vector(grassland_tiles)) coord];     
- 
-water_corners = [for (coord=total_base_coastal_waters) get_corners(coord[0],coord[1])];
+  
+//echo(total_coastal_waters);
+water_corners =  [for (coord=[[4,4],[5,5],[6,6]]) for (x=get_corners(coord[0],coord[1])) x];
     
+//water_corners =  [for (coord=total_coastal_waters) for (x=get_corners(coord[0],coord[1])) x];
+echo(water_corners);
 function  pick_one(list) = list[floor(rands(0,len(list),1)[0])];
 
 
-echo(effective_mountain_tiles);
-river_seeds = [for (i=[0:number_of_rivers]) pick_one(effective_mountain_tiles)];
-echo(river_seeds);
+//echo(effective_mountain_tiles);
+////river_seeds = [for (i=[0:number_of_rivers]) pick_one(effective_mountain_tiles)];
+    
+river_seeds = [for (seed=continent_seeds) [seed[0],seed[1],1]];
+//echo(river_seeds);
 
 function generate_river(coord) = generate_river_segment([coord[0],coord[1],0], [], old=[-1,-1,0]);
 
+//echo(water_corners);
 function generate_river_segment(corner, list, old=[-1,-1,0]) = 
     len(list)>10? list:
-//        is_in_vector(corner,water_corners)? list: 
-            generate_river_segment(next_corner(corner[0],corner[1],corner[2],exclude=old),concat(list,[corner]),old=corner);
+        is_in_vector(corner,water_corners)? list: 
+            generate_river_segment(next_corner(corner[0],corner[1],corner[2],exclude=list),concat(list,[corner]),old=corner);
 
-test_river_corners = generate_river(river_seeds[0]);
+//test_river_corners = generate_river(river_seeds[0]);
+ 
+river(generate_river(river_seeds[0]));
+river(generate_river(river_seeds[1]));
+//river(generate_river(river_seeds[2]));
+//river(generate_river(river_seeds[3]));
+//river(generate_river(river_seeds[4]));
 
-echo(test_river_corners);
-
-river(test_river_corners);
+ 
+//river(test_river_corners);
 
 color_matrix=[ for (x = [ 0 : xrange ]) [ for (y = [ 0 : yrange ])  get_terrain([x,y])  ] ];
     

@@ -50,13 +50,21 @@ module minimuffe(){
                     circle(d=outer_diameter);
                     circle(d=inner_diameter); 
                     translate([6,5])
-                    circle(d=4.2,$fn=4); 
+                        circle(d=4.2,$fn=4); 
                     translate([6,-5])
-                    circle(d=4.2,$fn=4);    
+                        circle(d=4.2,$fn=4);    
                     translate([-3,7])
-                    circle(d=4.2,$fn=4);   
+                        circle(d=4.2,$fn=4);   
                     translate([-3,-7])
-                    circle(d=4.2,$fn=4);    
+                        circle(d=4.2,$fn=4);   
+                   
+                   
+                    translate([1,-8])
+                        square([10,9],center=true);   
+                    translate([1,8])
+                        square([10,9],center=true);   
+//                    translate([3,9])
+//                        square([10,12]);  
                 }    
 //                translate([4.5,0,-14])
 //                cylinder(d=16,h=30);

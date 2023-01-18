@@ -136,13 +136,13 @@ module gleislochpaar(){
             gleisloch();
 }
 
-module peg(height=20){
+module peg(height=10){
     cylinder(h=height,d=6, $fn=resolution);
 }
 
 module pegs(height=20){
-   x=40;
-   y=50;
+   x=25;
+   y=30;
     translate([0,0,-height]){
    peg(height=height);
    translate([x,0]) 
@@ -166,27 +166,33 @@ module pegs(height=20){
 //rotate([90,0,0])
 //doppelring();
 
-pegs();
-translate([-10,-10,0])
-    difference(){ 
-        cube([60,70,30]);  
-        translate([11-epsilon,12,0])  
-        union(){
-            translate([-10,-10,0])
-                translate([-1,40,15])
-                    rotate([0,0,90])
-                        connector2(kruemmungsradius=30,winkel=90,solid=true);
-            translate([19,30,30+epsilon])
-                rotate([0,-90,180])
-                connector2(kruemmungsradius=15,solid=true);
-        }
-        translate([30,48,24])
-            gleislochpaar();
-        
-        translate([-epsilon,2,15])
-            rotate([0,90,0])
-                gleislochpaar();
-}
+//pegs();
+//translate([-5,-20,0])
+//    difference(){ 
+//        cube([42,70,30]);  
+//        translate([11-epsilon,12,0])  
+//        union(){
+//            translate([-10,-10,0])
+//                translate([-1,40,15])
+//                    rotate([0,0,90])
+//                        connector2(kruemmungsradius=30,winkel=90,solid=true);
+//            translate([19,30,30+epsilon])
+//                rotate([0,-90,180])
+//                connector2(kruemmungsradius=15,solid=true);
+//        }
+//        translate([30,48,24])
+//            gleislochpaar();
+//        
+//        translate([-epsilon,2,15])
+//            rotate([0,90,0])
+//                gleislochpaar();
+//}
+
+translate([5,5,10])
+rotate([0,90,0])
+roehre(30);
+//rotate([180,0,0])
+gleis_mm(500,hooks=true,fluegel=false,double=false);
 
 
 

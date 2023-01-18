@@ -408,7 +408,7 @@ module looping(rotate=0,spread=20,safety=false,x_offset=0,y_offset=0){
 //loopingplaettchen();
 
 rotate([180,0,0])
-gleis_mm(700,hooks=false,fluegel=false);
+gleis_mm(500,hooks=true,fluegel=false);
 //translate([0,20,0])
 //gleis3();
 //translate([0,40,0])

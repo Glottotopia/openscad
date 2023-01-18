@@ -1,9 +1,9 @@
 
-module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true, hooks=true){
+module gleis(laenge, spurweite, extra_schwellen=0, fluegel=true, hooks=true,double=true){
     translate([0,0, fahrbahnhoehe])
-    schiene(laenge-hakenrotationradius,hooks=hooks);
+    schiene(laenge-hakenrotationradius,hooks=hooks,double=double);
     translate([0,spurweite, fahrbahnhoehe])
-    schiene(laenge-hakenrotationradius,hooks=hooks);
+    schiene(laenge-hakenrotationradius,hooks=hooks,double=double);
     faecher=1+extra_schwellen;
     schwellenoffset=(laenge-2*schwellensafety-schwellenbreite)/faecher;
     for (i=[0:faecher]){
@@ -242,6 +242,6 @@ module gleis5(){
 gleis(.0*sechseckhoehe+sechseckhoehe*5,spurweite,extra_schwellen=4);
 }
 
-module gleis_mm(length, hooks=true, fluegel=true){
-gleis(length,spurweite,extra_schwellen=length/50,hooks=false,fluegel=fluegel);
+module gleis_mm(length, hooks=true, double=true,fluegel=true){
+gleis(length,spurweite,extra_schwellen=length/50,hooks=hooks,fluegel=fluegel,double=double);
 }

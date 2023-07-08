@@ -71,7 +71,7 @@ module connector(){
 }
 
 module connector2(winkel=90,kruemmungsradius=10,solid=false){
-    echo(solid)
+    echo(solid);
     rotate_extrude(angle=winkel)
         translate([-kruemmungsradius,0,0])
             scheibe(solid=solid);
@@ -125,7 +125,7 @@ module doppelring(){
 }
 
 module gleisloch(){
-    cylinder(d=gleisdicke*1.02,h=8,$fn=resolution);
+    cylinder(d=gleisdicke*1.1,h=8,$fn=resolution);
 }
 
 
@@ -142,21 +142,21 @@ module peg(height=10){
 
 module pegs(height=20){
    x=25;
-   y=30;
+//   y=30;
     translate([0,0,-height]){
    peg(height=height);
    translate([x,0]) 
     peg(height=height);
-   translate([0,y]) 
-    peg(height=height);
-   translate([x,y]) 
-    peg(height=height);
+//   translate([0,y]) 
+//    peg(height=height);
+//   translate([x,y]) 
+//    peg(height=height);
     }
 }
     
    
 
-
+//
 //translate([-14.9,-47,9])
 //rotate([0,0,-90])
 //gleis_mm(140);
@@ -165,7 +165,7 @@ module pegs(height=20){
 //translate([-10,-45,23])
 //rotate([90,0,0])
 //doppelring();
-
+//
 //pegs();
 //translate([-5,-20,0])
 //    difference(){ 
@@ -188,11 +188,48 @@ module pegs(height=20){
 //                gleislochpaar();
 //}
 
-translate([5,5,10])
-rotate([0,90,0])
-roehre(30);
-//rotate([180,0,0])
-gleis_mm(500,hooks=true,fluegel=false,double=false);
+//translate([5,5,10])
+//rotate([0,90,0])
+//roehre(30);
+////rotate([180,0,0])
+gleis_mm(500,hooks=false,fluegel=true,double=false);
+
+module minimalumlenker(solid=false){
+rotate([0,90,90])
+connector2(solid=solid); 
+color("red")
+translate([10,-10])
+rotate([0,-90,180])
+connector2(solid=solid); 
+}
+
+//difference(){
+//union(){
+//translate([3,5,0])
+//rotate([90,0,0])
+//pegs();
+//translate([18,5,-3])
+//    cube([10,5,6]);
+//    translate([-0,-10,-25])
+//    cube([20,20,50]);
+//}
+//    minimalumlenker(solid=true);
+//
+//rotate([90,0,90])
+//    gleislochpaar();
+//translate([0,0,20])
+//    rotate([90,0,90])
+//        gleislochpaar();
+//
+//translate([10,-2,0])
+//rotate([90,0,0])
+//    gleislochpaar();
+//translate([10,-2,-20])
+//rotate([90,0,0])
+//    gleislochpaar(); 
+//}
+
+//minimalumlenker(solid=true);
 
 
 

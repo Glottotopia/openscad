@@ -17,7 +17,7 @@ mapsizes = [
 //Large:    104 x 64  (10 players, 20 city-states, 6 natural wonders)
 //Huge:     128 x 80  (12 players, 24 city-states, 7 natural wonders)
 
-size = 0;
+size = 1;
 mapspecs = mapsizes[size];
 xrange = mapspecs[0];
 yrange = mapspecs[1];
@@ -38,7 +38,7 @@ number_of_rivers=number_of_continents*2;
 hill_percentage = 10;
 jungle_percentage = 80;
 snow_percentage = 80;
-desert_percentage_equator = 50;
+desert_percentage_equator = 20;
 grassland_percentage = 40;
 
 
@@ -57,12 +57,12 @@ module hex(x,y,elevation=.1,resource="",color_="blue"){
         {
         color(color_,.5)
         cylinder($fn=6,d1=long_diameter*1.95,d2=long_diameter/2,h=elevation);
-            scale([.1,.1]){                
-            translate([-6,3])
-            text(str(x));
-            translate([-6,-10])
-            text(str(y));
-            }
+//            scale([.1,.1]){                
+//            translate([-6,3])
+//            text(str(x));
+//            translate([-6,-10])
+//            text(str(y));
+//            }
         color("black")
         translate([-1,-1,elevation])
             scale([.2,.2])
@@ -306,7 +306,8 @@ function get_tundra_resource() = rand100()<50?"d":
     
                 
 
-stray=floor(number_of_continents*1.4);
+//stray=floor(number_of_continents*1.4);
+stray=floor(number_of_continents*1);
 effective_x_range = xrange  ;
 effective_y_range = yrange  ;
 

@@ -118,101 +118,6 @@ for (i=[0:5]){
 }
 
 
-pawnheight=35;
-officer_height=45;
-royalty_height=55;
-pawnbase_diameter=15;
-pawnhead_diameter=12;
-officerhead_diameter=15;
-officer_base_diameter=20;
-
-module pawn(){
-    cylinder(d1=pawnbase_diameter,d2=0,h=pawnheight);
-    translate([0,0,pawnheight-pawnhead_diameter/2]) 
-        sphere(d=pawnhead_diameter);
-}
-
-
-module bishop(){
-    cylinder(d1=officer_base_diameter,d2=0,h=officer_height);
-    translate([0,0,officer_height-officerhead_diameter/2]) 
-        difference(){
-            sphere(d=officerhead_diameter);
-            translate([-5,0,5])
-            rotate([0,60,0])
-            cylinder(d=20,h=2);
-        }
-}
-
-
-module knight(){
-    cylinder(d1=officer_base_diameter,d2=0,h=officer_height*.8);
-    hull(){
-    translate([0,0,officer_height*.7]) 
-        sphere(d=officerhead_diameter);
-    translate([0,12,officer_height-officerhead_diameter/2-15]) 
-        sphere(d=6,$fn=8);
-    }
-    translate([2.5,5,officer_height-officerhead_diameter/2-3]) 
-        sphere(d=4,$fn=80);
-    translate([-2.5,5,officer_height-officerhead_diameter/2-3]) 
-        sphere(d=4,$fn=80);
-}
-
-
-module rook(){
-    rotate([0,0,45])
-    cylinder(d1=officer_base_diameter,d2=officer_base_diameter,h=officer_height*.8,$fn=4); 
-    rotate([0,0,45])
-    cylinder(h=6,d=officer_base_diameter+3,$fn=4);
-    translate([0,0,officer_height*.7])
-        rotate([0,0,45])
-        difference(){
-            cylinder(h=6,d=officer_base_diameter+3,$fn=4);
-            translate([0,0,2])
-            cylinder(h=6,d=officer_base_diameter,$fn=4);
-        }
-}
-
-module king(){
-    cylinder(d1=officer_base_diameter,d2=officer_base_diameter,h=royalty_height);
-    translate([0,0,pawnheight+pawnhead_diameter/2]) 
-        cylinder(d=officerhead_diameter+15,h=10);    
-    translate([0,0,pawnheight+pawnhead_diameter+12])
-        rotate([90,0,0])
-            union(){
-            difference(){
-                cylinder(d=15,h=3,center=true,$fn=12);
-                translate([3,3,-6/2])
-                    cylinder(d=3,h=6,$fn=8);
-                translate([3,-3,-6/2])
-                    cylinder(d=3,h=6,$fn=8);
-                translate([-3,3,-6/2])
-                    cylinder(d=3,h=6,$fn=8);
-                translate([-3,-3,-6/2])
-                    cylinder(d=3,h=4,$fn=8);
-            }   
-            rotate([0,90,0])
-                difference(){
-                    cylinder(d=15,h=3,center=true,$fn=12);
-                    translate([3,3,-6/2])
-                        cylinder(d=3,h=6,$fn=8);
-                    translate([3,-3,-6/2])
-                        cylinder(d=3,h=6,$fn=8);
-                    translate([-3,3,-6/2])
-                        cylinder(d=3,h=6,$fn=8);
-                    translate([-3,-3,-6/2])
-                        cylinder(d=3,h=6,$fn=8);
-                }    
-        }           
-}
-
-
-module queen(){
-    cylinder(d1=officer_base_diameter,d2=officer_base_diameter,h=royalty_height); 
-    translate([0,0,pawnheight+pawnhead_diameter-13]) 
-        cylinder(d1=officerhead_diameter,d2=officerhead_diameter+15,h=20,$fn=6);
-}
 
 module aufstellung(){ 
 
@@ -259,18 +164,18 @@ translate([kantenlaenge/2-0*feldbreite_grundlinie-officer_base_diameter/2+12,-ka
 }
 
 
-//color("grey")
-//aufstellung();
-//
-//color("brown")
-//rotate([0,0,120])
-//    aufstellung();
-//
-//color("beige")
-//rotate([0,0,-120])
-//    aufstellung();
+color("grey")
+aufstellung();
 
-rook();
+color("brown")
+rotate([0,0,120])
+    aufstellung();
+
+color("beige")
+rotate([0,0,-120])
+    aufstellung();
+
+//rook();
 
 
 //translate([-100,-10]) 

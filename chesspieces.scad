@@ -174,9 +174,9 @@ module queen(){
 module aufstellung(){ 
 
 translate([-kantenlaenge/2+officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+2]) 
-    rook();
+    queen();
 translate([kantenlaenge/2-officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+2]) 
-    rook();
+    king();
 
 translate([-kantenlaenge/2+feldbreite_grundlinie+officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+4]) 
     bishop();
@@ -184,17 +184,19 @@ translate([kantenlaenge/2-feldbreite_grundlinie-officer_base_diameter/2,-kante_b
     bishop();
 
 translate([kantenlaenge/2-2*feldbreite_grundlinie-officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+8]) 
+    rotate([0,0,90])
     knight();
 translate([-kantenlaenge/2+2*feldbreite_grundlinie+officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+8]) 
+    rotate([0,0,90])
     knight();
 
-translate([kantenlaenge/2-3*feldbreite_grundlinie-officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+10]) 
-    king();    
+translate([kantenlaenge/2-3*feldbreite_grundlinie-officer_base_diameter/2-3,-kante_bis_mitte+officer_base_diameter/2+10]) 
+    rook();    
 translate([-kantenlaenge/2+3*feldbreite_grundlinie+officer_base_diameter/2,-kante_bis_mitte+officer_base_diameter/2+10]) 
-    queen();
+    rook();
  
  
- 
+translate([-340,-35]){
 translate([-kantenlaenge/2+3*feldbreite_grundlinie+officer_base_diameter/2,-kante_bis_mitte+feldhoehe+officer_base_diameter/2+5]) 
     pawn();
 translate([-kantenlaenge/2+2*feldbreite_grundlinie+officer_base_diameter/2-4,-kante_bis_mitte+feldhoehe+officer_base_diameter/2-2]) 
@@ -210,15 +212,14 @@ translate([kantenlaenge/2-2*feldbreite_grundlinie-officer_base_diameter/2+4,-kan
     pawn();
 translate([kantenlaenge/2-1*feldbreite_grundlinie-officer_base_diameter/2+9,-kante_bis_mitte+feldhoehe+officer_base_diameter/2-9]) 
     pawn();
-translate([kantenlaenge/2-0*feldbreite_grundlinie-officer_base_diameter/2+12,-kante_bis_mitte+feldhoehe+officer_base_diameter/2-16]) 
-    pawn();
     
+}
 }
 
 
 
 color("grey")
-aufstellung();
+//aufstellung();
 
 //color("brown")
 //rotate([0,0,120])
@@ -228,4 +229,17 @@ aufstellung();
 //rotate([0,0,-120])
 //    aufstellung();
 
-unicorn();
+//translate([-180,-70]){
+//translate([33,-90])
+//    rotate([0,0,90])
+//unicorn();
+//translate([-33,-90])
+//    rotate([0,0,90])
+//unicorn();
+//translate([55,-100])
+//pawn();
+//translate([0,-88])
+//pawn();
+translate([-55,-100])
+pawn(); 
+//}

@@ -399,16 +399,23 @@ module looping(rotate=0,spread=20,safety=false,x_offset=0,y_offset=0){
 //translate([-23.8,-13.8,.1])
 //    stabilisator();
 
-//trichterplaettchen();
-//
-//haube();
+translate([0,0,0])
+trichterplaettchen();
 
-//spirale();
 
-//loopingplaettchen();
+translate([100,0,0])
+haube();
 
-rotate([180,0,0])
-gleis_mm(500,hooks=true,fluegel=false);
+
+translate([100,100,0])
+spirale();
+
+
+translate([0,100,0])
+loopingplaettchen();
+
+//rotate([180,0,0])
+//gleis_mm(500,hooks=true,fluegel=false);
 //translate([0,20,0])
 //gleis3();
 //translate([0,40,0])

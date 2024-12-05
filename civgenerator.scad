@@ -17,7 +17,7 @@ mapsizes = [
 //Large:    104 x 64  (10 players, 20 city-states, 6 natural wonders)
 //Huge:     128 x 80  (12 players, 24 city-states, 7 natural wonders)
 
-size = 1;
+size = 3;
 mapspecs = mapsizes[size];
 xrange = mapspecs[0];
 yrange = mapspecs[1];

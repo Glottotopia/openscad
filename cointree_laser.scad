@@ -150,99 +150,36 @@ module muenzrutsche(){
     
 module einwurf(){
     color("red",.8)
-    translate([20,-20,30]){
-        difference(){
-            scale([1,1,2])
-                sphere(20,$fn=100);
-                translate([-20,-20,-40])
-                    cube([40,40,40]);
-            rotate([-30,0,0])
-                translate([-20,-40,-20])
-                    cube([40,40,80]);
-    //        rotate([0,0,10])
-            rotate([-110,0,0])
-                translate([0,-5,-0.5])
-                    linear_extrude(7)
-                        square([30,100],center=true);        
+        translate([20,-20,30]){
+            difference(){
+                scale([1,1,2])
+                    sphere(20,$fn=100);
+                    translate([-20,-20,-40])
+                        cube([40,40,40]);
+                rotate([-30,0,0])
+                    translate([-20,-40,-20])
+                        cube([40,40,80]);
+        //        rotate([0,0,10])
+                rotate([-110,0,0])
+                    translate([0,-5,-0.5])
+                        linear_extrude(7)
+                            square([30,100],center=true);        
+            }
+            translate([-7.5,10,-3])
+            cube([15,3,3]);
         }
-        translate([-7.5,10,-3])
-        cube([15,3,3]);
-    }
 }
  
     
 module braune_platte(){
     color("brown")
-    translate([0,0,-130])
-        rotate([90.0,0])        
-            linear_extrude(mdf_width)
-    {        
-                difference(){
-                union(){
-                    square([breite,160]);
-                    for (o=offsets){ 
-                        translate([o,-1]) 
-                        difference(){
-                                circle(8);
-                            translate([0,-2]) 
-                                circle(3,$fn=100) ; 
-                        }
-                    }
-                }
-    //                umrahmung
-                    translate([0,0,0])
-                        saegezahnstrahl(mdf_width,20,400,offset=0) ;                
-                   translate([breite-mdf_width,0,0])
-                        saegezahnstrahl(mdf_width,20,400,offset=0) ;     
-    //                translate([0,mdf_width,0])
-    //                    rotate([0,0,-90])
-    //                        saegezahnstrahl(mdf_width,20,400,offset=0) ;
-                    translate([0,160,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ;
-                    translate([0,2*mdf_width,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ;
-    //                schienenloecher
-                    translate([0,160,0])
-                        rotate([0,0,-107.1])
-                            saegezahnstrahl(6,20,400,offset=-2.56) ;
-                    for (o=offsets){    
-                        this_height=kamin_start_height-o*kamin_reduction_factor; 
-                        translate([o-mdf_width,2])  
-                            difference(){                
-                                saegezahnstrahl(mdf_width,20,370,offset=-2.95) ;    
-                                translate([0,this_height])
-                                    square([12,200]);
-                            }
-                    }                   
-    //                  aufhaengloecher
-                    translate([145,42])
-                        circle(1.5,$fn=100); 
-                    }                    
-                    translate([50,160]) 
-                            difference(){
-                                circle(10,$fn=100);
-                                translate([0,4])
-                                    circle(1.5,$fn=100);
-                            }                                
-                    translate([250,160]) 
-                            difference(){
-                            circle(10,$fn=100);
-                            translate([0,4])
-                                circle(1.5,$fn=100);
-                            }
-            }
-        }
-
-module plexi_platte(){
-    color("grey",.25)
-    translate([0,-39,-130])
-        rotate([90.0,0]){        
-            linear_extrude(mdf_width)  {    
-                difference(){
+//        translate([0,0,-130])
+//            rotate([90.0,0])        
+//                linear_extrude(mdf_width)
+        {        
+                    difference(){
                     union(){
-                        square([breite,160]);                                  
+                        square([breite,160]);
                         for (o=offsets){ 
                             translate([o,-1]) 
                             difference(){
@@ -252,43 +189,108 @@ module plexi_platte(){
                             }
                         }
                     }
-                        saegezahnstrahl(mdf_width,20,400,offset=1) ;      
-    //                umrahmung          
-                    translate([breite-mdf_width,0,0])
-                        saegezahnstrahl(mdf_width,20,400,offset=0) ; 
-                    translate([0,160,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ;
-                    translate([0,2*mdf_width,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ;
-    //                schienenloecher
-                    translate([-2,126.9,0])
-                        rotate([0,0,-107.1])
-                            saegezahnstrahl(5.5,20,370,offset=-2.95) ;    
-            for (o=offsets){    
-                this_height=kamin_start_height-o*kamin_reduction_factor; 
-                translate([o-mdf_width,2])  
-                    difference(){                
-                        saegezahnstrahl(mdf_width,20,370,offset=-2.95) ;    
-                        translate([0,this_height])
-                            square([12,200]);
-                    }
-            }         
-            translate([145,42])
-                circle(5,$fn=100);  
-//                translate([-100,-88])
-//                    rotate(anstellwinkel_y)
-//                        square([400,200]);
+        //                umrahmung
+                        translate([0,0,0])
+                            saegezahnstrahl(mdf_width,20,400,offset=0) ;                
+                       translate([breite-mdf_width,0,0])
+                            saegezahnstrahl(mdf_width,20,400,offset=0) ;     
+        //                translate([0,mdf_width,0])
+        //                    rotate([0,0,-90])
+        //                        saegezahnstrahl(mdf_width,20,400,offset=0) ;
+                        translate([0,160,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ;
+                        translate([0,2*mdf_width,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ;
+        //                schienenloecher
+                        translate([0,160,0])
+                            rotate([0,0,-107.1])
+                                saegezahnstrahl(6,20,400,offset=-2.56) ;
+                        for (o=offsets){    
+                            this_height=kamin_start_height-o*kamin_reduction_factor; 
+                            translate([o-mdf_width,2])  
+                                difference(){                
+                                    saegezahnstrahl(mdf_width,20,370,offset=-2.95) ;    
+                                    translate([0,this_height])
+                                        square([12,200]);
+                                }
+                        }                   
+        //                  aufhaengloecher
+                        translate([145,42])
+                            circle(1.5,$fn=100); 
+                        }                    
+                        translate([50,160]) 
+                                difference(){
+                                    circle(10,$fn=100);
+                                    translate([0,4])
+                                        circle(1.5,$fn=100);
+                                }                                
+                        translate([250,160]) 
+                                difference(){
+                                circle(10,$fn=100);
+                                translate([0,4])
+                                    circle(1.5,$fn=100);
+                                }
+                }
+        }
+
+module plexi_platte(){
+    color("grey",.25)
+//        translate([0,-39,-130])
+//            rotate([90.0,0])
+    {        
+//                linear_extrude(mdf_width)  
+    {    
+                    difference(){
+                        union(){
+                            square([breite,160]);                                  
+                            for (o=offsets){ 
+                                translate([o,-1]) 
+                                difference(){
+                                        circle(8);
+                                    translate([0,-2]) 
+                                        circle(3,$fn=100) ; 
+                                }
+                            }
+                        }
+                            saegezahnstrahl(mdf_width,20,400,offset=1) ;      
+        //                umrahmung          
+                        translate([breite-mdf_width,0,0])
+                            saegezahnstrahl(mdf_width,20,400,offset=0) ; 
+                        translate([0,160,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ;
+                        translate([0,2*mdf_width,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ;
+        //                schienenloecher
+                        translate([-2,126.9,0])
+                            rotate([0,0,-107.1])
+                                saegezahnstrahl(5.5,20,370,offset=-2.95) ;    
+                for (o=offsets){    
+                    this_height=kamin_start_height-o*kamin_reduction_factor; 
+                    translate([o-mdf_width,2])  
+                        difference(){                
+                            saegezahnstrahl(mdf_width,20,370,offset=-2.95) ;    
+                            translate([0,this_height])
+                                square([12,200]);
+                        }
+                }         
+                translate([145,42])
+                    circle(5,$fn=100);  
+    //                translate([-100,-88])
+    //                    rotate(anstellwinkel_y)
+    //                        square([400,200]);
+                }
             }
         }
-    }
 }
         
 module gruene_platte(){        
     color("green")            
-        translate([0,-39-mdf_width,30-mdf_width])
-            linear_extrude(mdf_width)
+//        translate([0,-39-mdf_width,30-mdf_width])
+//            linear_extrude(mdf_width)
                 difference(){
                     square([breite,39+mdf_width]);
                     translate([0,mdf_width,0])
@@ -319,53 +321,53 @@ module gruene_platte(){
 
 module orangene_platte(){
     color("orange",.95)            
-        translate([mdf_width,0,30])
-        rotate([0,90,180])
-            linear_extrude(mdf_width)
-                difference(){
-                    square([160,39+mdf_width]);
-                    translate([0,mdf_width,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ;
-                    translate([0,39+mdf_width,0])
-                        rotate([0,0,-90])
-                            translate([0,-320])
-                                saegezahnstrahl(mdf_width,20,400,offset=1) ;
-//                 abschlussnegativ
-                   translate([mdf_width,9.5])
-                        rotate([0,0,90])
-                            square([20+mdf_width,mdf_width+epsilon]); 
-                   translate([160-mdf_width,9.5])
-                        rotate([0,0,90])
-                            square([20+mdf_width,mdf_width+epsilon]); 
+//        translate([mdf_width,0,30])
+//            rotate([0,90,180])
+//                linear_extrude(mdf_width)
+                    difference(){
+                        square([160,39+mdf_width]);
+                        translate([0,mdf_width,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ;
+                        translate([0,39+mdf_width,0])
+                            rotate([0,0,-90])
+//                                translate([0,-320])
+                                    saegezahnstrahl(mdf_width,20,400,offset=1) ;
+    //                 abschlussnegativ
+                       translate([mdf_width,9.5])
+                            rotate([0,0,90])
+                                square([20+mdf_width,mdf_width+epsilon]); 
+                       translate([160-mdf_width,9.5])
+                            rotate([0,0,90])
+                                square([20+mdf_width,mdf_width+epsilon]); 
+                    }
                 }
-            }
             
 module pinke_platte(){            
     color("pink",.95)            
-        translate([breite,0,30])
-        rotate([0,90,180])
-            linear_extrude(mdf_width)
-                difference(){
-                    square([160,39+mdf_width]);
-                    translate([0,mdf_width,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ;
-                    translate([0,39+mdf_width,0])
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ; 
-//                    translate([98,0])
-//                        rotate([0,0,52])
-//                            square([30,4.5]);
-//                 abschlussnegativ
-                   translate([mdf_width,9.5])
-                        rotate([0,0,90])
-                            square([20+mdf_width,mdf_width+epsilon]);
-                   translate([160-mdf_width,9.5])
-                        rotate([0,0,90])
-                            square([20+mdf_width,mdf_width+epsilon]); 
-                }       
-            }
+//        translate([breite,0,30])
+//            rotate([0,90,180])
+//                linear_extrude(mdf_width)
+                    difference(){
+                        square([160,39+mdf_width]);
+                        translate([0,mdf_width,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ;
+                        translate([0,39+mdf_width,0])
+                            rotate([0,0,-90])
+                                saegezahnstrahl(mdf_width,20,400,offset=0) ; 
+    //                    translate([98,0])
+    //                        rotate([0,0,52])
+    //                            square([30,4.5]);
+    //                 abschlussnegativ
+                       translate([mdf_width,9.5])
+                            rotate([0,0,90])
+                                square([20+mdf_width,mdf_width+epsilon]);
+                       translate([160-mdf_width,9.5])
+                            rotate([0,0,90])
+                                square([20+mdf_width,mdf_width+epsilon]); 
+                    }       
+                }
             
 
 
@@ -389,8 +391,8 @@ module bac(width,height){
 
 module lila_platte(){      
     color("purple")            
-        translate([0,-39-mdf_width,-130+mdf_width])
-            linear_extrude(mdf_width)
+//        translate([0,-39-mdf_width,-130+mdf_width])
+//            linear_extrude(mdf_width)
                 difference(){
                     square([breite,39+mdf_width]);
                     translate([0,mdf_width,0])
@@ -430,9 +432,9 @@ module lila_platte(){
 
 module kamin(height){
     color("black"){
-        translate([0,-tiefe,-130+mdf_width])
-            rotate([0,-90,0])
-                linear_extrude(3)
+//        translate([0,-tiefe,-130+mdf_width])
+//            rotate([0,-90,0])
+//                linear_extrude(3)
                     difference(){
                         translate([0,-3])
                             square([height+3,42]);    
@@ -440,11 +442,19 @@ module kamin(height){
                             square([3,7.5]);
                         translate([0,30+1.5])
                             square([3,9]); 
-                        rotate([0,0,-90])
-                            saegezahnstrahl(mdf_width,20,400,offset=0) ; 
-                        translate([0,39])
-                            rotate([0,0,-90])
-                                saegezahnstrahl(mdf_width,20,400,offset=0) ; 
+//                        rotate([0,0,-90])
+//                            saegezahnstrahl(mdf_width,20,400,offset=0) ;                         
+                        translate([0,-3])
+                           square([40,mdf_width]);
+                        translate([60,-3])
+                           square([140,mdf_width]);                 
+                        translate([0,36])
+                           square([40,mdf_width]);
+                        translate([60,36])
+                           square([140,mdf_width]);
+//                        translate([0,39])
+//                            rotate([0,0,-90])
+//                                saegezahnstrahl(mdf_width,20,400,offset=0) ; 
                     }
 //        translate([27+mdf_width,-tiefe+1.5,-130-mdf_width])
 //            rotate([0,-90,0])
@@ -490,22 +500,28 @@ module kamin(height){
 //}
  
  
-            
-muenzrutsche();   
+          
+//einwurf();       
+//muenzrutsche();   
 //////reling();    
 //braune_platte();       
-plexi_platte();
-gruene_platte();    
-einwurf();        
+//plexi_platte();
+//gruene_platte();       
 //orangene_platte();   
-pinke_platte();       
-lila_platte();   
+//pinke_platte();       
+//lila_platte();   
          
 for (o=offsets){
+for (i=[0:9]){
+    o=offsets[i];
     this_height=kamin_start_height-o*kamin_reduction_factor;
-    translate([o,0,0]) 
+    translate([20*(i%2),3+i*42]) 
         kamin(this_height);
 }
+}
+
+
+
 //
 //translate([20,-18,18])
 //    rotate([70,0,0])                
